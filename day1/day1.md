@@ -158,11 +158,13 @@ function draw() {
 !["Form 2"](form2.png?raw=true "Form 2")
 
 
-### Tangram
+## Tangram
 
 Recreate a tangram pattern from the following tangram patterns:
 
 !["Tangram](tangram_examples.jpeg?raw=true "Tangram")
+
+### Recreated tangram
 
 ```
 
@@ -189,3 +191,7 @@ function draw() {
 }
 
 ```
+
+### Resulting image
+
+!["Recreated tangram](tangram_result.jpeg?raw=true "Recreated tangram")
