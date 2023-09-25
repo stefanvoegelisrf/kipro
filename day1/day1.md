@@ -1,6 +1,6 @@
 # 25.9.2023
 
-## Übung Bild beschreiben
+## Excercise describe image
 
 Describe the image so it can be recreated
 
@@ -100,7 +100,7 @@ function draw() {
 
 ## Excercise recreate forms
 
-### Forms to recreate
+Recreate forms from the following image
 
 !["Excercise forms"](forms.png?raw=true "Excercise forms")
 
