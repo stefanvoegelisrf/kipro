@@ -1,3 +1,3 @@
 # Kickstart programming documentation
 
-- [Day 1](day1)
+- [1 - 25.09.2023](day1)
