@@ -6,7 +6,7 @@ Describe the image so it can be recreated
 
 ### Image
 
-
+![image to be recreated](bild_beschreiben.'png'?raw=true "Image to be recreated")
 
 ### Description(prompt for ChatGPT)
 
