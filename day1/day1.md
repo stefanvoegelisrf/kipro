@@ -129,3 +129,30 @@ function draw() {
 ```
 
 !["Form 1"](form1.png?raw=true "Form 1")
+
+
+### Form 2
+
+```
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(255)
+  strokeWeight(2)
+  noFill()
+  let startX=5
+  let startY=5
+  const rectWidth=250
+  for(let i=0;i<10;i++){
+    rect(startX,startY,rectWidth,rectWidth)
+    startX+=5
+    startY+=5
+  }
+}
+
+```
+
+!["Form 2"](form2.png?raw=true "Form 2")
