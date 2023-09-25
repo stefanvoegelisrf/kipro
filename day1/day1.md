@@ -102,6 +102,6 @@ function draw() {
 
 ### Forms to recreate
 
-!["Excercise forms"](übung_formen.png?raw=true "Excercise forms")
+!["Excercise forms"](forms.png?raw=true "Excercise forms")
 
 ### Form 1
