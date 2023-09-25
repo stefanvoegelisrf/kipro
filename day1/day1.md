@@ -166,6 +166,26 @@ Recreate a tangram pattern from the following tangram patterns:
 
 ```
 
+function setup() {
+  createCanvas(400, 400);
+}
 
+function draw() {
+  background(255)
+  stroke(255)
+  fill(0)
+  // bottom right triangle
+  triangle(133,400,400,400,400,133)
+  // bottom left triangle
+  triangle(0,400,133,400,133,266)
+  // top right rectangle
+  rect(266,0,133,133)
+  // top triangle
+  triangle(0,0,266,0,266,266)
+  // left trapezoid
+  quad(0,266,133,133,133,266,0,400)
+  //center triangle
+  triangle(133,133,266,266,133,400)
+}
 
 ```
