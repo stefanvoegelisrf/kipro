@@ -105,3 +105,27 @@ function draw() {
 !["Excercise forms"](forms.png?raw=true "Excercise forms")
 
 ### Form 1
+
+```
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(0)
+  fill(255)
+  circle(200,200,400)
+  fill(0)
+  rect(40,40,320,320)
+  fill(255)
+  circle(200,200,320)
+  fill(0)
+  rect(80,80,240,240)
+  fill(255)
+  circle(200,200,240)
+}
+
+```
+
+!["Form 1"](forms.png?raw=true "Form 1")
