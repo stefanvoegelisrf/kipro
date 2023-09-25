@@ -74,3 +74,26 @@ function draw() {
 ### Generated image
 
 ![generated image](bild_beschreiben_result.png?raw=true "Generated image")
+
+## Übung Formen und Koordinaten
+
+```
+
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(220)
+  strokeWeight(2)
+  point(1,1);
+  point(1,399);
+  point(399,1);
+  point(399,399);
+  rect(50,50,300,300)
+  line(50, 50, 350, 350);
+  line(50, 350, 350, 50);
+  ellipse(200, 200, 100, 100);
+}
+
+```
