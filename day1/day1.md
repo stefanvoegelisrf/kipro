@@ -194,4 +194,4 @@ function draw() {
 
 ### Resulting image
 
-!["Recreated tangram](tangram_result.jpeg?raw=true "Recreated tangram")
+!["Recreated tangram](tangram_result.png?raw=true "Recreated tangram")
