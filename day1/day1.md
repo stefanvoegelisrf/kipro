@@ -162,7 +162,7 @@ function draw() {
 
 Recreate a tangram pattern from the following tangram patterns:
 
-!["Tangram](form2.png?raw=true "Tangram")
+!["Tangram](tangram_examples.png?raw=true "Tangram")
 
 ```
 
