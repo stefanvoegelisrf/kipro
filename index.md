@@ -1,3 +1,3 @@
 # Kickstart programming documentation
 
-- [Day 1](/day1)
+- [Day 1](day1)
