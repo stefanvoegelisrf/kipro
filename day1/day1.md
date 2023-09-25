@@ -70,3 +70,7 @@ function draw() {
 
 
 ```
+
+### Generated image
+
+![generated image](bild_beschreiben_result.png?raw=true "Generated image)
