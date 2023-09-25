@@ -1,5 +1,11 @@
 # 25.9.2023
 
+## Resources
+
+- https://www.getty.edu/research/exhibitions_events/exhibitions/bauhaus/new_artist/form_color/form/
+- https://www.bauhaus-imaginista.org/articles/1489/shifting-rotating-mirroring/de
+- http://www.generative-gestaltung.de/2/
+
 ## Excercise describe image
 
 Describe the image so it can be recreated
