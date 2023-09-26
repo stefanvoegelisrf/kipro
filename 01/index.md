@@ -2,10 +2,10 @@
 
 ## Resources
 
-- https://www.getty.edu/research/exhibitions_events/exhibitions/bauhaus/new_artist/form_color/form/
-- https://www.bauhaus-imaginista.org/articles/1489/shifting-rotating-mirroring/de
-- http://www.generative-gestaltung.de/2/
-- https://p5js.org/reference/
+- [Bauhaus primary forms](https://www.getty.edu/research/exhibitions_events/exhibitions/bauhaus/new_artist/form_color/form/)
+- [Bauhaus generative Gestaltung](https://www.bauhaus-imaginista.org/articles/1489/shifting-rotating-mirroring/de)
+- [Generative Gestaltung](http://www.generative-gestaltung.de/2/)
+- [P5js reference](https://p5js.org/reference/)
 
 ## Excercise describe image
 
