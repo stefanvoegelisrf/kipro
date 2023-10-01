@@ -202,3 +202,7 @@ function draw() {
 ### Resulting image
 
 !["Recreated tangram](tangram_result.png?raw=true "Recreated tangram")
+
+### Advanced tangram
+
+[p5js sketch](https://editor.p5js.org/stefanvoegelisrf/sketches/9hUcSjyQp)
