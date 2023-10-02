@@ -1,4 +1,4 @@
-# 25.9.2023
+# 25.09.2023
 
 ## Resources
 
@@ -202,7 +202,3 @@ function draw() {
 ### Resulting image
 
 !["Recreated tangram](tangram_result.png?raw=true "Recreated tangram")
-
-### Advanced tangram
-
-[p5js sketch](https://editor.p5js.org/stefanvoegelisrf/sketches/9hUcSjyQp)
