@@ -8,9 +8,9 @@
     - [Solution](#solution-1)
   - [Loop excercise 3](#loop-excercise-3)
     - [Solution](#solution-2)
-  - [Paul Rand excercise](#paul-rand-excercise)
-    - [Solution](#solution-3)
   - [Annie Albers excercise](#annie-albers-excercise)
+    - [Notes](#notes)
+    - [Solution](#solution-3)
 
 
 ## Resources
@@ -138,16 +138,6 @@ function draw() {
 
 [p5js loops excercise 3 sketch](https://editor.p5js.org/stefanvoegelisrf/sketches/Diu5oV6eI)
 
-## Paul Rand excercise
-
-Take a look at the following poster and try to recreate it.
-
-![Paul Rand generative art poster](paulrandposter.jpeg)
-
-### Solution
-
-TODO: add solution
-
 ## Annie Albers excercise
 
 Use the following script as inspiration and try to create something like the following image.
@@ -242,3 +232,28 @@ function keyReleased() {
 ```
 
 ![Annie albers triangle pattern](anniealbers.jpeg)
+
+### Notes
+
+The pattern is made by using red and gray triangles that are drawn.
+To achieve it, I have to divide the screen into rectangles with a size relative to the width or height.
+
+When it is a portrait aspect ratio, the height is used to calculate the rectangles.
+When is is landscape aspect ratio, the width is used to calculate the rectangles.
+
+When the screen is divided into rectangles, we can draw two triangles inside it.
+
+The coordinates for the triangles can be:
+1. divided from top left to bottom right
+   - top left, top right, bottom right
+   - top left, bottom left, bottom right
+2. divided from top right to bottom left
+   - top left, top right, bottom left
+   - top right, bottom right, bottom left
+
+The decision, how the rectangle is divided, is based on a random number.
+The decision of the color of the triangle is random, however, for each rectangle, the triangles inside it, have to be opposing colors(red/gray)
+
+### Solution
+
+[p5js Annie Albers excercise](https://editor.p5js.org/stefanvoegelisrf/sketches/D27N77QKo)
