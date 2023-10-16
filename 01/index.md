@@ -1,5 +1,21 @@
 # 25.09.2023
 
+- [25.09.2023](#25092023)
+  - [Resources](#resources)
+  - [Excercise describe image](#excercise-describe-image)
+    - [Image](#image)
+    - [Description(prompt for ChatGPT)](#descriptionprompt-for-chatgpt)
+    - [Generated code](#generated-code)
+    - [Generated image](#generated-image)
+  - [Excercise basics](#excercise-basics)
+  - [Excercise recreate forms](#excercise-recreate-forms)
+    - [Form 1](#form-1)
+    - [Form 2](#form-2)
+  - [Tangram](#tangram)
+    - [Recreated tangram](#recreated-tangram)
+    - [Resulting image](#resulting-image)
+
+
 ## Resources
 
 - [Bauhaus primary forms](https://www.getty.edu/research/exhibitions_events/exhibitions/bauhaus/new_artist/form_color/form/)
