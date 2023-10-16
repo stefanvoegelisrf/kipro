@@ -15,6 +15,8 @@
 
 ## Resources
 
+- [Moiré effect](https://de.wikipedia.org/wiki/Moir%C3%A9)
+
 ## Moiré excercise
 
 Create a script that generates a [Moiré effect](https://de.wikipedia.org/wiki/Moir%C3%A9).
