@@ -14,6 +14,7 @@
 ## Resources
 
 - [p5js push and pop](https://p5js.org/reference/#/p5/push)
+- [Wikipedia - Truchet tiles](https://en.wikipedia.org/wiki/Truchet_tiles)
 
 ## Excercise 1
 
