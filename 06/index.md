@@ -11,6 +11,8 @@
       - [Face parts](#face-parts)
         - [Eyes](#eyes)
           - [Iris and pupil points](#iris-and-pupil-points)
+        - [Nose](#nose)
+        - [Mouth](#mouth)
 
 ## Resources
 
@@ -116,8 +118,11 @@ TODO: add more ideation
 ##### Eyes
 
 The eyes consist of three parts: Sclera, iris, pupil. There are more parts to eyes(brows, lashes, ...) but we'll keep it simple for now.
+
+![Anatomy of the eye](anatomy%20of%20eye.jpeg)
+
 To start simple, the iris and the pupil are **ellipses**. To calculate the points of the ellipses, **sin** and **cosin** can be used.
-The sclera is not an ellipse but we can also calculate the points using **sin** and **cosin**.
+The sclera is not an ellipse but we can also calculate the points using **sin** and **cosin**. It can be made of two arcs.
 
 ###### Iris and pupil points
 
@@ -149,3 +154,11 @@ function draw() {
   }
 }
 ```
+
+##### Nose
+
+![Surface landmarks of the nose](surface%20landmarks%20of%20nose.png)
+
+##### Mouth
+
+![Lip anatomy](lip%20anatomy.jpeg)
