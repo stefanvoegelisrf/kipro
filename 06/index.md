@@ -111,8 +111,6 @@ By choosing the cut-out, color and possibly typography, you determine important 
 I want to create random faces drawn with ellipses. The faces consist of 2 eyes, nose, mouth.
 The vertices for the parts of the face are a set of fixed values.
 
-TODO: add more ideation
-
 #### Face parts
 
 ##### Eyes
@@ -156,6 +154,10 @@ function draw() {
 ```
 
 ##### Nose
+
+To achieve a nose like form, I can construct it using lines and arcs.
+The upper parts(nasion,rhinion) can be achieved by drawing lines.
+To create the tip and the nosewinds, I can use arcs.
 
 ![Surface landmarks of the nose](surface%20landmarks%20of%20nose.png)
 
