@@ -5,6 +5,7 @@
   - [Spiderweb excercise](#spiderweb-excercise)
     - [Prompt](#prompt)
     - [Generated code](#generated-code)
+    - [Generated image](#generated-image)
   - [Postcard excercise](#postcard-excercise)
     - [Ideation](#ideation)
       - [Face parts](#face-parts)
@@ -89,6 +90,10 @@ function drawSpiderwebSection() {
 }
 
 ```
+
+### Generated image
+
+![Spiderweb](spiderweb.png)
 
 
 ## Postcard excercise
