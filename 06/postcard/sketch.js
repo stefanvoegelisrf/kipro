@@ -12,10 +12,11 @@ function setup() {
 }
 
 function draw() {
-    background(255)
+    background(255, 5)
     push();
     translate(width * 0.5 - eyeRadius * 2, height * 0.25);
     for (let eyePoint of pointsForEye) {
+        stroke(noise((millis() + 9999) * eyePoint.x * eyePoint.y * 0.0000005) * 255, 30)
         strokeWeight(noise((millis() + 9999) * eyePoint.x * eyePoint.y * 0.0000005) * 100)
         let randomOffsetX = (noise((millis() + 9999) * eyePoint.x * eyePoint.y * 0.0000001) - 0.5) * 70;
         let randomOffsetY = (noise((millis() + 9999) * eyePoint.x * eyePoint.y * 0.0000001) - 0.5) * 70;
@@ -25,6 +26,7 @@ function draw() {
     push();
     translate(width * 0.5 + eyeRadius * 2, height * 0.25);
     for (let eyePoint of pointsForEye) {
+        stroke(noise((millis() + 999999) * eyePoint.x * eyePoint.y * 0.0000005) * 255, 30)
         strokeWeight(noise((millis() + 999999) * eyePoint.x * eyePoint.y * 0.0000005) * 100)
         let randomOffsetX = (noise((millis() + 999999) * eyePoint.x * eyePoint.y * 0.0000001) - 0.5) * 70;
         let randomOffsetY = (noise((millis() + 999999) * eyePoint.x * eyePoint.y * 0.0000001) - 0.5) * 70;
