@@ -7,6 +7,15 @@ export default function sketch(p5) {
         eyes: {
             radius: initialEyeRadius,
             points: 50,
+            stroke: {
+                color: '#000000',
+                weight: 5,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
+            },
             color: '#000000',
             strokeWeight: 5,
             offset: initialEyeRadius * 1.5
@@ -45,9 +54,14 @@ export default function sketch(p5) {
         const eyeFolder = customizeSketchGui.addFolder('Eyes');
         eyeFolder.add(settings.eyes, 'radius', 0, 200);
         eyeFolder.add(settings.eyes, 'points', 0, 100).step(1);
-        eyeFolder.add(settings.eyes, 'strokeWeight', 0, 50);
         eyeFolder.add(settings.eyes, 'offset', 0, 300);
-        eyeFolder.addColor(settings.eyes, 'color');
+        const strokeFolder = eyeFolder.addFolder('Stroke');
+        strokeFolder.open(false);
+        strokeFolder.add(settings.eyes.stroke, 'weight', 0, 50);
+        strokeFolder.addColor(settings.eyes.stroke, 'color');
+        strokeFolder.add(settings.eyes.stroke, 'randomize');
+        strokeFolder.add(settings.eyes.stroke.random, 'min', 0, 50);
+        strokeFolder.add(settings.eyes.stroke.random, 'max', 0, 50);
         eyeFolder.open(false);
         const noseFolder = customizeSketchGui.addFolder('Nose');
         noseFolder.open(false);
@@ -87,20 +101,20 @@ export default function sketch(p5) {
         p5.background(255)
         // Left eye
         p5.push();
-        p5.stroke(settings.eyes.color);
-        p5.strokeWeight(settings.eyes.strokeWeight);
+        p5.stroke(settings.eyes.stroke.color);
         p5.translate(p5.width * 0.5 - settings.eyes.offset, p5.height * 0.25);
         for (let eyePoint of pointsForEye) {
+            p5.strokeWeight(settings.eyes.stroke.randomize ? p5.random(settings.eyes.stroke.random.min, settings.eyes.stroke.random.max) : settings.eyes.stroke.weight);
             p5.point(eyePoint.x, eyePoint.y);
         }
         p5.pop();
 
         // Right eye
         p5.push();
-        p5.stroke(settings.eyes.color);
-        p5.strokeWeight(settings.eyes.strokeWeight);
+        p5.stroke(settings.eyes.stroke.color);
         p5.translate(p5.width * 0.5 + settings.eyes.offset, p5.height * 0.25);
         for (let eyePoint of pointsForEye) {
+            p5.strokeWeight(settings.eyes.stroke.randomize ? p5.random(settings.eyes.stroke.random.min, settings.eyes.stroke.random.max) : settings.eyes.stroke.weight);
             p5.point(eyePoint.x, eyePoint.y);
         }
         p5.pop();
