@@ -1,12 +1,16 @@
 import { GUI } from './lil-gui.esm.min.js';
 export default function sketch(p5) {
     let initialEyeRadius = 80;
+    let initialPupilRadius = 10;
     let initialWingRadius = 40;
     let initialTipRadius = 60;
     let settings = {
-        eyes: {
+        righteye: {
+            startAngle: 0,
+            endAngle: 360,
             radius: initialEyeRadius,
             points: 50,
+            pointArray: [],
             stroke: {
                 color: '#000000',
                 weight: 5,
@@ -16,76 +20,192 @@ export default function sketch(p5) {
                     max: 50
                 }
             },
-            color: '#000000',
-            strokeWeight: 5,
-            offset: initialEyeRadius * 1.5
+            offset: {
+                x: initialEyeRadius * 1.5,
+                y: -100
+            }
         },
-        nose: {
-            wing: {
-                radius: initialWingRadius,
-                points: 10,
+        lefteye: {
+            startAngle: 0,
+            endAngle: 360,
+            radius: initialEyeRadius,
+            points: 50,
+            pointArray: [],
+            stroke: {
                 color: '#000000',
-                strokeWeight: 5,
-                offset: initialWingRadius * 2
+                weight: 5,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
             },
-            tip: {
-                radius: initialTipRadius,
-                points: 10,
+            offset: {
+                x: -initialEyeRadius * 1.5,
+                y: -100
+            }
+        },
+        rightpupil: {
+            startAngle: 0,
+            endAngle: 360,
+            radius: initialPupilRadius,
+            points: 10,
+            pointArray: [],
+            stroke: {
                 color: '#000000',
-                strokeWeight: 5,
-                offset: initialTipRadius * 0.5
+                weight: 15,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
+            },
+            offset: {
+                x: initialEyeRadius * 1.5,
+                y: -100
+            }
+        },
+        leftpupil: {
+            startAngle: 0,
+            endAngle: 360,
+            radius: initialPupilRadius,
+            points: 10,
+            pointArray: [],
+            stroke: {
+                color: '#000000',
+                weight: 15,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
+            },
+            offset: {
+                x: -initialEyeRadius * 1.5,
+                y: -100
+            }
+        },
+        nosewingleft: {
+            startAngle: 0,
+            endAngle: 150,
+            radius: initialWingRadius,
+            points: 10,
+            pointArray: [],
+            stroke: {
+                color: '#000000',
+                weight: 5,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
+            },
+            offset: {
+                x: initialWingRadius * 2,
+                y: 0
+            }
+        },
+        nosewingright: {
+            startAngle: 30,
+            endAngle: 180,
+            radius: initialWingRadius,
+            points: 10,
+            pointArray: [],
+            stroke: {
+                color: '#000000',
+                weight: 5,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
+            },
+            offset: {
+                x: -initialWingRadius * 2,
+                y: 0
+            }
+        },
+        nosetip: {
+            startAngle: 0,
+            endAngle: 180,
+            radius: initialTipRadius,
+            points: 10,
+            pointArray: [],
+            stroke: {
+                color: '#000000',
+                weight: 5,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
+            },
+            offset: {
+                x: 0,
+                y: initialTipRadius * 0.5
             }
         },
         mouth: {
+            startAngle: 45,
+            endAngle: 135,
             radius: 300,
             points: 40,
-            color: '#000000',
-            strokeWeight: 5,
-            offset: -100
-        }
+            pointArray: [],
+            stroke: {
+                color: '#000000',
+                weight: 5,
+                randomize: false,
+                random: {
+                    min: 0,
+                    max: 50
+                }
+            },
+            offset: {
+                x: 0,
+                y: -100
+            }
+        },
     }
-    let pointsForEye = [];
-    let pointsForLeftNoseWing = [];
-    let pointsForRightNoseWing = [];
-    let pointsForNoseTip = [];
-    let pointsForMouth = [];
+
     p5.setup = function () {
         let customizeSketchGui = new GUI();
-        const eyeFolder = customizeSketchGui.addFolder('Eyes');
-        eyeFolder.add(settings.eyes, 'radius', 0, 200);
-        eyeFolder.add(settings.eyes, 'points', 0, 100).step(1);
-        eyeFolder.add(settings.eyes, 'offset', 0, 300);
-        const strokeFolder = eyeFolder.addFolder('Stroke');
-        strokeFolder.open(false);
-        strokeFolder.add(settings.eyes.stroke, 'weight', 0, 50);
-        strokeFolder.addColor(settings.eyes.stroke, 'color');
-        strokeFolder.add(settings.eyes.stroke, 'randomize');
-        strokeFolder.add(settings.eyes.stroke.random, 'min', 0, 50);
-        strokeFolder.add(settings.eyes.stroke.random, 'max', 0, 50);
-        eyeFolder.open(false);
-        const noseFolder = customizeSketchGui.addFolder('Nose');
-        noseFolder.open(false);
-        const wingFolder = noseFolder.addFolder('Wing');
-        wingFolder.add(settings.nose.wing, 'radius', 0, 100);
-        wingFolder.add(settings.nose.wing, 'points', 0, 100).step(1);
-        wingFolder.add(settings.nose.wing, 'strokeWeight', 0, 50);
-        wingFolder.add(settings.nose.wing, 'offset', -100, 300);
-        wingFolder.addColor(settings.nose.wing, 'color');
-        wingFolder.open(false);
-        const tipFolder = noseFolder.addFolder('Tip');
-        tipFolder.add(settings.nose.tip, 'radius', 0, 100);
-        tipFolder.add(settings.nose.tip, 'points', 0, 100).step(1);
-        tipFolder.add(settings.nose.tip, 'strokeWeight', 0, 50);
-        tipFolder.add(settings.nose.tip, 'offset', -100, 200);
-        tipFolder.addColor(settings.nose.tip, 'color');
-        tipFolder.open(false)
-        const mouthFolder = customizeSketchGui.addFolder('Mouth');
-        mouthFolder.add(settings.mouth, 'radius', 0, 300);
-        mouthFolder.add(settings.mouth, 'points', 0, 100).step(1);
-        mouthFolder.add(settings.mouth, 'strokeWeight', 0, 50);
-        mouthFolder.add(settings.mouth, 'offset', -300, 300);
-        mouthFolder.addColor(settings.mouth, 'color');
-        mouthFolder.open(false);
+        let actions = {
+            savePreset() {
+                const preset = customizeSketchGui.save();
+                console.log();
+                let presetAsString = JSON.stringify(preset);
+                navigator.clipboard.writeText(presetAsString)
+            },
+            loadPreset() {
+                navigator.clipboard.readText().then(clipText => {
+                    let preset = JSON.parse(clipText);
+                    customizeSketchGui.load(preset);
+                });
+            }
+        }
+        for (let key in settings) {
+            let keyGui = customizeSketchGui.addFolder(key);
+            keyGui.open(false);
+            keyGui.add(settings[key], 'startAngle', 0, 360);
+            keyGui.add(settings[key], 'endAngle', 0, 360);
+            keyGui.add(settings[key], 'radius', 0, 300);
+            keyGui.add(settings[key], 'points', 0, 100).step(1);
+            const strokeGui = keyGui.addFolder('Stroke');
+            strokeGui.open(false);
+            strokeGui.addColor(settings[key].stroke, 'color');
+            strokeGui.add(settings[key].stroke, 'weight', 0, 20);
+            const randomGui = strokeGui.addFolder('Random');
+            randomGui.open(false);
+            randomGui.add(settings[key].stroke, 'randomize');
+            randomGui.add(settings[key].stroke.random, 'min', 0, 50);
+            randomGui.add(settings[key].stroke.random, 'max', 0, 50);
+            const offsetGui = keyGui.addFolder('Offset');
+            offsetGui.open(false);
+            offsetGui.add(settings[key].offset, 'x', -300, 300);
+            offsetGui.add(settings[key].offset, 'y', -300, 300);
+        }
+        customizeSketchGui.add(actions, 'savePreset').name('Save to clipboard');
+        customizeSketchGui.add(actions, 'loadPreset').name('Load from clipboard');
         customizeSketchGui.open(false);
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
@@ -93,71 +213,18 @@ export default function sketch(p5) {
     }
 
     p5.draw = function () {
-        pointsForEye = calculatePointsOfEllipse(settings.eyes.points, settings.eyes.radius, 0, 360);
-        pointsForRightNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 0, 150)
-        pointsForLeftNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 30, 180)
-        pointsForNoseTip = calculatePointsOfEllipse(settings.nose.tip.points, settings.nose.tip.radius, 0, 180)
-        pointsForMouth = calculatePointsOfEllipse(settings.mouth.points, settings.mouth.radius, 45, 135)
         p5.background(255)
-        // Left eye
-        p5.push();
-        p5.stroke(settings.eyes.stroke.color);
-        p5.translate(p5.width * 0.5 - settings.eyes.offset, p5.height * 0.25);
-        for (let eyePoint of pointsForEye) {
-            p5.strokeWeight(settings.eyes.stroke.randomize ? p5.random(settings.eyes.stroke.random.min, settings.eyes.stroke.random.max) : settings.eyes.stroke.weight);
-            p5.point(eyePoint.x, eyePoint.y);
+        for (let key in settings) {
+            settings[key].pointArray = calculatePointsOfEllipse(settings[key].points, settings[key].radius, settings[key].startAngle, settings[key].endAngle);
+            p5.push();
+            p5.stroke(settings[key].stroke.color);
+            p5.translate(p5.width * 0.5 + settings[key].offset.x, p5.height * 0.5 + settings[key].offset.y);
+            for (let point of settings[key].pointArray) {
+                p5.strokeWeight(settings[key].stroke.randomize ? p5.random(settings[key].stroke.random.min, settings[key].stroke.random.max) : settings[key].stroke.weight);
+                p5.point(point.x, point.y);
+            }
+            p5.pop();
         }
-        p5.pop();
-
-        // Right eye
-        p5.push();
-        p5.stroke(settings.eyes.stroke.color);
-        p5.translate(p5.width * 0.5 + settings.eyes.offset, p5.height * 0.25);
-        for (let eyePoint of pointsForEye) {
-            p5.strokeWeight(settings.eyes.stroke.randomize ? p5.random(settings.eyes.stroke.random.min, settings.eyes.stroke.random.max) : settings.eyes.stroke.weight);
-            p5.point(eyePoint.x, eyePoint.y);
-        }
-        p5.pop();
-
-        // Left nose wing
-        p5.push();
-        p5.stroke(settings.nose.wing.color)
-        p5.strokeWeight(settings.nose.wing.strokeWeight);
-        p5.translate(p5.width * 0.5 - settings.nose.wing.offset, p5.height * 0.5);
-        for (let leftNoseWingPoint of pointsForLeftNoseWing) {
-            p5.point(leftNoseWingPoint.x, leftNoseWingPoint.y);
-        }
-        p5.pop();
-
-        // Right nose wing
-        p5.push();
-        p5.stroke(settings.nose.wing.color);
-        p5.strokeWeight(settings.nose.wing.strokeWeight);
-        p5.translate(p5.width * 0.5 + settings.nose.wing.offset, p5.height * 0.5);
-        for (let rightNoseWingPoint of pointsForRightNoseWing) {
-            p5.point(rightNoseWingPoint.x, rightNoseWingPoint.y);
-        }
-        p5.pop();
-
-        // Nose tip
-        p5.push();
-        p5.stroke(settings.nose.tip.color)
-        p5.strokeWeight(settings.nose.tip.strokeWeight);
-        p5.translate(p5.width * 0.5, p5.height * 0.5 + settings.nose.tip.offset);
-        for (let noseTipPoint of pointsForNoseTip) {
-            p5.point(noseTipPoint.x, noseTipPoint.y);
-        }
-        p5.pop();
-
-        // Mouth
-        p5.push();
-        p5.stroke(settings.mouth.color);
-        p5.strokeWeight(settings.mouth.strokeWeight);
-        p5.translate(p5.width * 0.5, p5.height * 0.6 + settings.mouth.offset);
-        for (let mouthPoint of pointsForMouth) {
-            p5.point(mouthPoint.x, mouthPoint.y);
-        }
-        p5.pop();
     }
 
     p5.windowResized = function () {
@@ -168,8 +235,6 @@ export default function sketch(p5) {
     function calculatePointsOfEllipse(amountOfPoints, ellipseRadius, startAngle, endAngle) {
         let points = [];
         let angleIncrement = (endAngle - startAngle) / (amountOfPoints - 1);
-
-
         for (let i = 0; i < amountOfPoints; i++) {
             let currentAngle = startAngle + i * angleIncrement;
             points.push({
