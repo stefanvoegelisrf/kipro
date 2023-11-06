@@ -8,6 +8,7 @@ export default function sketch(p5) {
             radius: initialEyeRadius,
             points: 50,
             color: '#000000',
+            strokeWeight: 5,
             offset: initialEyeRadius * 1.5
         },
         nose: {
@@ -15,12 +16,14 @@ export default function sketch(p5) {
                 radius: initialWingRadius,
                 points: 10,
                 color: '#000000',
+                strokeWeight: 5,
                 offset: initialWingRadius * 2
             },
             tip: {
                 radius: initialTipRadius,
                 points: 10,
                 color: '#000000',
+                strokeWeight: 5,
                 offset: initialTipRadius * 0.5
             }
         },
@@ -28,6 +31,7 @@ export default function sketch(p5) {
             radius: 200,
             points: 40,
             color: '#000000',
+            strokeWeight: 5,
             offset: 0
         }
     }
@@ -41,28 +45,31 @@ export default function sketch(p5) {
         const eyeFolder = customizeSketchGui.addFolder('Eyes');
         eyeFolder.add(settings.eyes, 'radius', 0, 200);
         eyeFolder.add(settings.eyes, 'points', 0, 100);
+        eyeFolder.add(settings.eyes, 'strokeWeight', 0, 50);
         eyeFolder.add(settings.eyes, 'offset', 0, 300);
         eyeFolder.addColor(settings.eyes, 'color');
         const noseFolder = customizeSketchGui.addFolder('Nose');
         const wingFolder = noseFolder.addFolder('Wing');
         wingFolder.add(settings.nose.wing, 'radius', 0, 100);
         wingFolder.add(settings.nose.wing, 'points', 0, 100);
+        wingFolder.add(settings.nose.wing, 'strokeWeight', 0, 50);
         wingFolder.add(settings.nose.wing, 'offset', -100, 300);
         wingFolder.addColor(settings.nose.wing, 'color');
         const tipFolder = noseFolder.addFolder('Tip');
         tipFolder.add(settings.nose.tip, 'radius', 0, 100);
         tipFolder.add(settings.nose.tip, 'points', 0, 100);
+        tipFolder.add(settings.nose.tip, 'strokeWeight', 0, 50);
         tipFolder.add(settings.nose.tip, 'offset', -100, 200);
         tipFolder.addColor(settings.nose.tip, 'color');
         const mouthFolder = customizeSketchGui.addFolder('Mouth');
         mouthFolder.add(settings.mouth, 'radius', 0, 300);
         mouthFolder.add(settings.mouth, 'points', 0, 100);
+        mouthFolder.add(settings.mouth, 'strokeWeight', 0, 50);
         mouthFolder.add(settings.mouth, 'offset', -200, 300);
         mouthFolder.addColor(settings.mouth, 'color');
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
         p5.background(220);
-        p5.strokeWeight(5);
     }
 
     p5.draw = function () {
@@ -74,7 +81,8 @@ export default function sketch(p5) {
         p5.background(255)
         // Left eye
         p5.push();
-        p5.stroke(settings.eyes.color)
+        p5.stroke(settings.eyes.color);
+        p5.strokeWeight(settings.eyes.strokeWeight);
         p5.translate(p5.width * 0.5 - settings.eyes.offset, p5.height * 0.25);
         for (let eyePoint of pointsForEye) {
             p5.point(eyePoint.x, eyePoint.y);
@@ -83,7 +91,8 @@ export default function sketch(p5) {
 
         // Right eye
         p5.push();
-        p5.stroke(settings.eyes.color)
+        p5.stroke(settings.eyes.color);
+        p5.strokeWeight(settings.eyes.strokeWeight);
         p5.translate(p5.width * 0.5 + settings.eyes.offset, p5.height * 0.25);
         for (let eyePoint of pointsForEye) {
             p5.point(eyePoint.x, eyePoint.y);
@@ -93,6 +102,7 @@ export default function sketch(p5) {
         // Left nose wing
         p5.push();
         p5.stroke(settings.nose.wing.color)
+        p5.strokeWeight(settings.nose.wing.strokeWeight);
         p5.translate(p5.width * 0.5 - settings.nose.wing.offset, p5.height * 0.5);
         for (let leftNoseWingPoint of pointsForLeftNoseWing) {
             p5.point(leftNoseWingPoint.x, leftNoseWingPoint.y);
@@ -101,7 +111,8 @@ export default function sketch(p5) {
 
         // Right nose wing
         p5.push();
-        p5.stroke(settings.nose.wing.color)
+        p5.stroke(settings.nose.wing.color);
+        p5.strokeWeight(settings.nose.wing.strokeWeight);
         p5.translate(p5.width * 0.5 + settings.nose.wing.offset, p5.height * 0.5);
         for (let rightNoseWingPoint of pointsForRightNoseWing) {
             p5.point(rightNoseWingPoint.x, rightNoseWingPoint.y);
@@ -111,6 +122,7 @@ export default function sketch(p5) {
         // Nose tip
         p5.push();
         p5.stroke(settings.nose.tip.color)
+        p5.strokeWeight(settings.nose.tip.strokeWeight);
         p5.translate(p5.width * 0.5, p5.height * 0.5 + settings.nose.tip.offset);
         for (let noseTipPoint of pointsForNoseTip) {
             p5.point(noseTipPoint.x, noseTipPoint.y);
@@ -119,7 +131,8 @@ export default function sketch(p5) {
 
         // Mouth
         p5.push();
-        p5.stroke(settings.mouth.color)
+        p5.stroke(settings.mouth.color);
+        p5.strokeWeight(settings.mouth.strokeWeight);
         p5.translate(p5.width * 0.5, p5.height * 0.6 + settings.mouth.offset);
         for (let mouthPoint of pointsForMouth) {
             p5.point(mouthPoint.x, mouthPoint.y);
