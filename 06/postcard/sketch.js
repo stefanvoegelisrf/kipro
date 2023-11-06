@@ -1,14 +1,32 @@
 import { GUI } from './lil-gui.esm.min.js';
 export default function sketch(p5) {
+    let initialEyeRadius = 80;
+    let initialWingRadius = 40;
+    let initialTipRadius = 60;
     let settings = {
-        eyeRadius: 80,
-        eyePoints: 50,
-        noseWingRadius: 40,
-        noseWingPoints: 10,
-        noseTipRadius: 60,
-        noseTipPoints: 10,
-        mouthRadius: 200,
-        mouthPoints: 40,
+        eyes: {
+            radius: initialEyeRadius,
+            points: 50,
+            color: '#000000',
+            offset: initialEyeRadius * 1.5
+        },
+        nose: {
+            wing: {
+                radius: initialWingRadius,
+                points: 10,
+                offset: initialWingRadius * 2
+            },
+            tip: {
+                radius: initialTipRadius,
+                points: 10,
+                offset: initialTipRadius * 0.5
+            }
+        },
+        mouth: {
+            radius: 200,
+            points: 40,
+            offset: 0
+        }
     }
     let pointsForEye = [];
     let pointsForLeftNoseWing = [];
@@ -17,14 +35,24 @@ export default function sketch(p5) {
     let pointsForMouth = [];
     p5.setup = function () {
         let customizeSketchGui = new GUI();
-        customizeSketchGui.add(settings, 'eyeRadius', 0, 200);
-        customizeSketchGui.add(settings, 'eyePoints', 0, 100);
-        customizeSketchGui.add(settings, 'noseWingRadius', 0, 100);
-        customizeSketchGui.add(settings, 'noseWingPoints', 0, 100);
-        customizeSketchGui.add(settings, 'noseTipRadius', 0, 100);
-        customizeSketchGui.add(settings, 'noseTipPoints', 0, 100);
-        customizeSketchGui.add(settings, 'mouthRadius', 0, 300);
-        customizeSketchGui.add(settings, 'noseTipPoints', 0, 100);
+        const eyeFolder = customizeSketchGui.addFolder('Eyes');
+        eyeFolder.add(settings.eyes, 'radius', 0, 200);
+        eyeFolder.add(settings.eyes, 'points', 0, 100);
+        eyeFolder.add(settings.eyes, 'offset', 0, 300);
+        eyeFolder.addColor(settings.eyes, 'color');
+        const noseFolder = customizeSketchGui.addFolder('Nose');
+        const wingFolder = noseFolder.addFolder('Wing');
+        wingFolder.add(settings.nose.wing, 'radius', 0, 100);
+        wingFolder.add(settings.nose.wing, 'points', 0, 100);
+        wingFolder.add(settings.nose.wing, 'offset', -100, 300);
+        const tipFolder = noseFolder.addFolder('Tip');
+        tipFolder.add(settings.nose.tip, 'radius', 0, 100);
+        tipFolder.add(settings.nose.tip, 'points', 0, 100);
+        tipFolder.add(settings.nose.tip, 'offset', -100, 200);
+        const mouthFolder = customizeSketchGui.addFolder('Mouth');
+        mouthFolder.add(settings.mouth, 'radius', 0, 300);
+        mouthFolder.add(settings.mouth, 'points', 0, 100);
+        mouthFolder.add(settings.mouth, 'offset', -200, 300);
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
         p5.background(220);
@@ -32,15 +60,15 @@ export default function sketch(p5) {
     }
 
     p5.draw = function () {
-        pointsForEye = calculatePointsOfEllipse(settings.eyePoints, settings.eyeRadius, 0, 360);
-        pointsForLeftNoseWing = calculatePointsOfEllipse(settings.noseWingPoints, settings.noseWingRadius, 190, 370)
-        pointsForRightNoseWing = calculatePointsOfEllipse(settings.noseWingPoints, settings.noseWingRadius, -20, 160)
-        pointsForNoseTip = calculatePointsOfEllipse(settings.noseTipPoints, settings.noseTipRadius, -100, 80)
-        pointsForMouth = calculatePointsOfEllipse(settings.mouthPoints, settings.mouthRadius, -90, 90)
+        pointsForEye = calculatePointsOfEllipse(settings.eyes.points, settings.eyes.radius, 0, 360);
+        pointsForLeftNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 190, 370)
+        pointsForRightNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, -20, 160)
+        pointsForNoseTip = calculatePointsOfEllipse(settings.nose.tip.points, settings.nose.tip.radius, -100, 80)
+        pointsForMouth = calculatePointsOfEllipse(settings.mouth.points, settings.mouth.radius, -90, 90)
         p5.background(255)
         // Left eye
         p5.push();
-        p5.translate(p5.width * 0.5 - settings.eyeRadius * 1.5, p5.height * 0.25);
+        p5.translate(p5.width * 0.5 - settings.eyes.offset, p5.height * 0.25);
         for (let eyePoint of pointsForEye) {
             p5.point(eyePoint.x, eyePoint.y);
         }
@@ -48,7 +76,7 @@ export default function sketch(p5) {
 
         // Right eye
         p5.push();
-        p5.translate(p5.width * 0.5 + settings.eyeRadius * 1.5, p5.height * 0.25);
+        p5.translate(p5.width * 0.5 + settings.eyes.offset, p5.height * 0.25);
         for (let eyePoint of pointsForEye) {
             p5.point(eyePoint.x, eyePoint.y);
         }
@@ -56,7 +84,7 @@ export default function sketch(p5) {
 
         // Left nose wing
         p5.push();
-        p5.translate(p5.width * 0.5 - settings.noseWingRadius * 2, p5.height * 0.5);
+        p5.translate(p5.width * 0.5 - settings.nose.wing.offset, p5.height * 0.5);
         for (let leftNoseWingPoint of pointsForLeftNoseWing) {
             p5.point(leftNoseWingPoint.x, leftNoseWingPoint.y);
         }
@@ -64,7 +92,7 @@ export default function sketch(p5) {
 
         // Right nose wing
         p5.push();
-        p5.translate(p5.width * 0.5 + settings.noseWingRadius * 2, p5.height * 0.5);
+        p5.translate(p5.width * 0.5 + settings.nose.wing.offset, p5.height * 0.5);
         for (let rightNoseWingPoint of pointsForRightNoseWing) {
             p5.point(rightNoseWingPoint.x, rightNoseWingPoint.y);
         }
@@ -72,7 +100,7 @@ export default function sketch(p5) {
 
         // Nose tip
         p5.push();
-        p5.translate(p5.width * 0.5, p5.height * 0.5 + settings.noseTipRadius * 0.5);
+        p5.translate(p5.width * 0.5, p5.height * 0.5 + settings.nose.tip.offset);
         for (let noseTipPoint of pointsForNoseTip) {
             p5.point(noseTipPoint.x, noseTipPoint.y);
         }
@@ -80,7 +108,7 @@ export default function sketch(p5) {
 
         // Mouth
         p5.push();
-        p5.translate(p5.width * 0.5, p5.height * 0.6);
+        p5.translate(p5.width * 0.5, p5.height * 0.6+settings.mouth.offset);
         for (let mouthPoint of pointsForMouth) {
             p5.point(mouthPoint.x, mouthPoint.y);
         }
