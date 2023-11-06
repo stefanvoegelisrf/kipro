@@ -170,7 +170,9 @@ export default function sketch(p5) {
         background: {
             color: '#FFFFFF',
             randomize: false,
-        }
+        },
+        useLines: false,
+        loop: true,
     }
 
     const randomHexColor = () => {
@@ -218,7 +220,7 @@ export default function sketch(p5) {
             else if (typeof subsetting[settingsKey] === 'string') {
                 subsetting[settingsKey] = randomHexColor();
             }
-            else if (typeof settings[settingsKey] === 'boolean') {
+            else if (typeof subsetting[settingsKey] === 'boolean') {
                 subsetting[settingsKey] = p5.random(0, 1) > 0.5;
             }
         }
@@ -226,12 +228,6 @@ export default function sketch(p5) {
 
     p5.setup = function () {
         let customizeSketchGui = new GUI();
-        const backgroundGui = customizeSketchGui.addFolder('Background');
-        backgroundGui.open(false);
-        backgroundGui.addColor(settings.background, 'color');
-        const randomFolder = backgroundGui.addFolder('Random');
-        randomFolder.open(false);
-        randomFolder.add(settings.background, 'randomize');
         let actions = {
             savePreset() {
                 const preset = customizeSketchGui.save();
@@ -274,42 +270,60 @@ export default function sketch(p5) {
             randomizeMouth() {
                 randomizeSubsetting(settings.faceparts.mouth);
             },
-        }
+        };
+        customizeSketchGui.add(settings, 'useLines').name('Use lines to connect points');
+        customizeSketchGui.add(settings, 'loop').name('Loop sketch').onChange(function (value) {
+            if (value) {
+                p5.loop();
+            } else {
+                p5.noLoop();
+            }
+        });
+        const backgroundGui = customizeSketchGui.addFolder('Background');
+        backgroundGui.open(false);
+        backgroundGui.addColor(settings.background, 'color');
+        const backgroundRandomFolder = backgroundGui.addFolder('Random');
+        backgroundRandomFolder.open(false);
+        backgroundRandomFolder.add(settings.background, 'randomize');
+
+        const facepartsFolder = customizeSketchGui.addFolder('Face parts');
+        facepartsFolder.open(false);
         for (let key in settings.faceparts) {
-            let keyGui = customizeSketchGui.addFolder(key);
-            keyGui.open(false);
-            keyGui.add(settings.faceparts[key], 'startAngle', 0, 360);
-            keyGui.add(settings.faceparts[key], 'endAngle', 0, 360);
-            keyGui.add(settings.faceparts[key], 'radius', 0, 300);
-            keyGui.add(settings.faceparts[key], 'pointAmount', 0, 100).step(1);
-            const strokeGui = keyGui.addFolder('Stroke');
-            strokeGui.open(false);
-            strokeGui.addColor(settings.faceparts[key].stroke, 'color');
-            strokeGui.add(settings.faceparts[key].stroke, 'weight', 0, 20);
-            const randomGui = strokeGui.addFolder('Random');
-            randomGui.open(false);
-            randomGui.add(settings.faceparts[key].stroke, 'randomize');
-            randomGui.add(settings.faceparts[key].stroke.random, 'min', 0, 50);
-            randomGui.add(settings.faceparts[key].stroke.random, 'max', 0, 50);
-            const offsetGui = keyGui.addFolder('Offset');
+            let facepartKeyFolder = facepartsFolder.addFolder(key);
+            facepartKeyFolder.open(false);
+            facepartKeyFolder.add(settings.faceparts[key], 'startAngle', 0, 360);
+            facepartKeyFolder.add(settings.faceparts[key], 'endAngle', 0, 360);
+            facepartKeyFolder.add(settings.faceparts[key], 'radius', 0, 300);
+            facepartKeyFolder.add(settings.faceparts[key], 'pointAmount', 0, 100).step(1);
+            const strokeFolder = facepartKeyFolder.addFolder('Stroke');
+            strokeFolder.open(false);
+            strokeFolder.addColor(settings.faceparts[key].stroke, 'color');
+            strokeFolder.add(settings.faceparts[key].stroke, 'weight', 0, 20);
+            const strokeRandomFolder = strokeFolder.addFolder('Random');
+            strokeRandomFolder.open(false);
+            strokeRandomFolder.add(settings.faceparts[key].stroke, 'randomize');
+            strokeRandomFolder.add(settings.faceparts[key].stroke.random, 'min', 0, 50);
+            strokeRandomFolder.add(settings.faceparts[key].stroke.random, 'max', 0, 50);
+            const offsetGui = facepartKeyFolder.addFolder('Offset');
             offsetGui.open(false);
             offsetGui.add(settings.faceparts[key].offset, 'x', -300, 300);
             offsetGui.add(settings.faceparts[key].offset, 'y', -300, 300);
         }
         customizeSketchGui.add(actions, 'savePreset').name('Save to clipboard');
         customizeSketchGui.add(actions, 'loadPreset').name('Load from clipboard');
-        customizeSketchGui.add(actions, 'randomizeSettings').name('Randomize all settings');
-        const specificRandomizeFolder = customizeSketchGui.addFolder('Specific randomize');
-        specificRandomizeFolder.open(false);
-        specificRandomizeFolder.add(actions, 'randomizeLeftEye').name('Randomize left eye');
-        specificRandomizeFolder.add(actions, 'randomizeRightEye').name('Randomize right eye');
-        specificRandomizeFolder.add(actions, 'randomizeLeftPupil').name('Randomize left pupil');
-        specificRandomizeFolder.add(actions, 'randomizeRightPupil').name('Randomize right pupil');
-        specificRandomizeFolder.add(actions, 'randomizeNoseWingLeft').name('Randomize nose wing left');
-        specificRandomizeFolder.add(actions, 'randomizeNoseWingRight').name('Randomize nose wing right');
-        specificRandomizeFolder.add(actions, 'randomizeNoseTip').name('Randomize nose tip');
-        specificRandomizeFolder.add(actions, 'randomizeMouth').name('Randomize mouth');
+        const randomFolder = customizeSketchGui.addFolder('Random');
+        randomFolder.open(false);
+        randomFolder.add(actions, 'randomizeSettings').name('Randomize all settings');
+        randomFolder.add(actions, 'randomizeLeftEye').name('Randomize left eye');
+        randomFolder.add(actions, 'randomizeRightEye').name('Randomize right eye');
+        randomFolder.add(actions, 'randomizeLeftPupil').name('Randomize left pupil');
+        randomFolder.add(actions, 'randomizeRightPupil').name('Randomize right pupil');
+        randomFolder.add(actions, 'randomizeNoseWingLeft').name('Randomize nose wing left');
+        randomFolder.add(actions, 'randomizeNoseWingRight').name('Randomize nose wing right');
+        randomFolder.add(actions, 'randomizeNoseTip').name('Randomize nose tip');
+        randomFolder.add(actions, 'randomizeMouth').name('Randomize mouth');
         customizeSketchGui.open(false);
+
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
         p5.background(220);
@@ -322,9 +336,44 @@ export default function sketch(p5) {
             p5.push();
             p5.stroke(settings.faceparts[key].stroke.color);
             p5.translate(p5.width * 0.5 + settings.faceparts[key].offset.x, p5.height * 0.5 + settings.faceparts[key].offset.y);
-            for (let point of settings.faceparts[key].pointArray) {
-                p5.strokeWeight(settings.faceparts[key].stroke.randomize ? p5.random(settings.faceparts[key].stroke.random.min, settings.faceparts[key].stroke.random.max) : settings.faceparts[key].stroke.weight);
-                p5.point(point.x, point.y);
+            // Function to shuffle an array
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+                }
+            }
+
+            // Main drawing code
+            if (settings.useLines) {
+                // Shuffle the points array to create random pairs
+                let points = [...settings.faceparts[key].pointArray]; // Clone the array
+                shuffleArray(points);
+
+                // If the number of points is odd, remove the last point and store it
+                let lastPoint = null;
+                if (points.length % 2 !== 0) {
+                    lastPoint = points.pop();
+                }
+
+                // Draw lines between pairs of points
+                for (let i = 0; i < points.length; i += 2) {
+                    let point1 = points[i];
+                    let point2 = points[i + 1];
+                    p5.strokeWeight(settings.faceparts[key].stroke.randomize ? p5.random(settings.faceparts[key].stroke.random.min, settings.faceparts[key].stroke.random.max) : settings.faceparts[key].stroke.weight);
+                    p5.line(point1.x, point1.y, point2.x, point2.y);
+                }
+
+                // If there was an odd number of points, draw a point for the last one
+                if (lastPoint) {
+                    p5.point(lastPoint.x, lastPoint.y);
+                }
+            } else {
+                // Existing code to draw points
+                for (let point of settings.faceparts[key].pointArray) {
+                    p5.strokeWeight(settings.faceparts[key].stroke.randomize ? p5.random(settings.faceparts[key].stroke.random.min, settings.faceparts[key].stroke.random.max) : settings.faceparts[key].stroke.weight);
+                    p5.point(point.x, point.y);
+                }
             }
             p5.pop();
         }
