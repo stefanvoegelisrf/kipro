@@ -5,27 +5,26 @@ export default function sketch(p5) {
         eyePoints: 50,
         noseWingRadius: 40,
         noseWingPoints: 10,
-        noseTipPoints: 10,
         noseTipRadius: 60,
+        noseTipPoints: 10,
+        mouthRadius: 200,
         mouthPoints: 40,
-        mouthRadius: 200
     }
     let pointsForEye = [];
     let pointsForLeftNoseWing = [];
     let pointsForRightNoseWing = [];
     let pointsForNoseTip = [];
     let pointsForMouth = [];
-    let eyeRadius = 80;
-    let eyePoints = 50;
-    let noseWingRadius = 40
-    let noseWingPoints = 10
-    let noseTipPoints = 10;
-    let noseTipRadius = 60;
-    let mouthPoints = 40;
-    let mouthRadius = 200;
     p5.setup = function () {
         let customizeSketchGui = new GUI();
         customizeSketchGui.add(settings, 'eyeRadius', 0, 200);
+        customizeSketchGui.add(settings, 'eyePoints', 0, 100);
+        customizeSketchGui.add(settings, 'noseWingRadius', 0, 100);
+        customizeSketchGui.add(settings, 'noseWingPoints', 0, 100);
+        customizeSketchGui.add(settings, 'noseTipRadius', 0, 100);
+        customizeSketchGui.add(settings, 'noseTipPoints', 0, 100);
+        customizeSketchGui.add(settings, 'mouthRadius', 0, 300);
+        customizeSketchGui.add(settings, 'noseTipPoints', 0, 100);
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
         p5.background(220);
@@ -35,7 +34,7 @@ export default function sketch(p5) {
     p5.draw = function () {
         pointsForEye = calculatePointsOfEllipse(settings.eyePoints, settings.eyeRadius, 0, 360);
         pointsForLeftNoseWing = calculatePointsOfEllipse(settings.noseWingPoints, settings.noseWingRadius, 190, 370)
-        pointsForRightNoseWing = calculatePointsOfEllipse(settings.oseWingPoints, settings.noseWingRadius, -20, 160)
+        pointsForRightNoseWing = calculatePointsOfEllipse(settings.noseWingPoints, settings.noseWingRadius, -20, 160)
         pointsForNoseTip = calculatePointsOfEllipse(settings.noseTipPoints, settings.noseTipRadius, -100, 80)
         pointsForMouth = calculatePointsOfEllipse(settings.mouthPoints, settings.mouthRadius, -90, 90)
         p5.background(255)
