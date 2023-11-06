@@ -1,5 +1,12 @@
 # 06.11.2023
 
+- [06.11.2023](#06112023)
+  - [Excercise 1](#excercise-1)
+    - [Solution](#solution)
+  - [Excercise 2](#excercise-2)
+    - [Solution](#solution-1)
+
+
 ## Excercise 1
 
 Create a sketch where mouseX and mouseY or the current time is mapped to a different value range.
