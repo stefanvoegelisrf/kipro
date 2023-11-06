@@ -44,26 +44,26 @@ export default function sketch(p5) {
         let customizeSketchGui = new GUI();
         const eyeFolder = customizeSketchGui.addFolder('Eyes');
         eyeFolder.add(settings.eyes, 'radius', 0, 200);
-        eyeFolder.add(settings.eyes, 'points', 0, 100);
+        eyeFolder.add(settings.eyes, 'points', 0, 100).step(1);
         eyeFolder.add(settings.eyes, 'strokeWeight', 0, 50);
         eyeFolder.add(settings.eyes, 'offset', 0, 300);
         eyeFolder.addColor(settings.eyes, 'color');
         const noseFolder = customizeSketchGui.addFolder('Nose');
         const wingFolder = noseFolder.addFolder('Wing');
         wingFolder.add(settings.nose.wing, 'radius', 0, 100);
-        wingFolder.add(settings.nose.wing, 'points', 0, 100);
+        wingFolder.add(settings.nose.wing, 'points', 0, 100).step(1);
         wingFolder.add(settings.nose.wing, 'strokeWeight', 0, 50);
         wingFolder.add(settings.nose.wing, 'offset', -100, 300);
         wingFolder.addColor(settings.nose.wing, 'color');
         const tipFolder = noseFolder.addFolder('Tip');
         tipFolder.add(settings.nose.tip, 'radius', 0, 100);
-        tipFolder.add(settings.nose.tip, 'points', 0, 100);
+        tipFolder.add(settings.nose.tip, 'points', 0, 100).step(1);
         tipFolder.add(settings.nose.tip, 'strokeWeight', 0, 50);
         tipFolder.add(settings.nose.tip, 'offset', -100, 200);
         tipFolder.addColor(settings.nose.tip, 'color');
         const mouthFolder = customizeSketchGui.addFolder('Mouth');
         mouthFolder.add(settings.mouth, 'radius', 0, 300);
-        mouthFolder.add(settings.mouth, 'points', 0, 100);
+        mouthFolder.add(settings.mouth, 'points', 0, 100).step(1);
         mouthFolder.add(settings.mouth, 'strokeWeight', 0, 50);
         mouthFolder.add(settings.mouth, 'offset', -200, 300);
         mouthFolder.addColor(settings.mouth, 'color');
@@ -74,10 +74,10 @@ export default function sketch(p5) {
 
     p5.draw = function () {
         pointsForEye = calculatePointsOfEllipse(settings.eyes.points, settings.eyes.radius, 0, 360);
-        pointsForLeftNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 190, 370)
-        pointsForRightNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, -20, 160)
-        pointsForNoseTip = calculatePointsOfEllipse(settings.nose.tip.points, settings.nose.tip.radius, -100, 80)
-        pointsForMouth = calculatePointsOfEllipse(settings.mouth.points, settings.mouth.radius, -90, 90)
+        pointsForRightNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 0, 150)
+        pointsForLeftNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 30, 180)
+        pointsForNoseTip = calculatePointsOfEllipse(settings.nose.tip.points, settings.nose.tip.radius, 0, 180)
+        pointsForMouth = calculatePointsOfEllipse(settings.mouth.points, settings.mouth.radius, 0, 180)
         p5.background(255)
         // Left eye
         p5.push();
@@ -147,13 +147,15 @@ export default function sketch(p5) {
     // Calculate points for an ellipse based on the amount of points and the radius
     function calculatePointsOfEllipse(amountOfPoints, ellipseRadius, startAngle, endAngle) {
         let points = [];
-        let diameter = ellipseRadius * 2;
-        let circumference = diameter * p5.PI;
-        let circumferenceLengthPerPoint = circumference / amountOfPoints;
+        let angleIncrement = (endAngle - startAngle) / amountOfPoints;
+
+
         for (let i = 0; i < amountOfPoints; i++) {
-            let currentArc = circumferenceLengthPerPoint * (i + 1);
-            let currentAngle = p5.map(currentArc, 0, circumference, startAngle, endAngle);
-            points.push({ x: p5.sin(currentAngle) * ellipseRadius, y: p5.cos(currentAngle) * ellipseRadius });
+            let currentAngle = startAngle + i * angleIncrement;
+            points.push({
+                x: p5.cos(currentAngle) * ellipseRadius,
+                y: p5.sin(currentAngle) * ellipseRadius
+            });
         }
         return points;
     }
