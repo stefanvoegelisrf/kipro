@@ -67,6 +67,7 @@ export default function sketch(p5) {
         mouthFolder.add(settings.mouth, 'strokeWeight', 0, 50);
         mouthFolder.add(settings.mouth, 'offset', -200, 300);
         mouthFolder.addColor(settings.mouth, 'color');
+        customizeSketchGui.open(false);
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
         p5.background(220);
