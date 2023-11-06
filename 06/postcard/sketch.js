@@ -9,7 +9,7 @@ export default function sketch(p5) {
             startAngle: 0,
             endAngle: 360,
             radius: initialEyeRadius,
-            points: 50,
+            pointAmount: 50,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -29,7 +29,7 @@ export default function sketch(p5) {
             startAngle: 0,
             endAngle: 360,
             radius: initialEyeRadius,
-            points: 50,
+            pointAmount: 50,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -49,7 +49,7 @@ export default function sketch(p5) {
             startAngle: 0,
             endAngle: 360,
             radius: initialPupilRadius,
-            points: 10,
+            pointAmount: 10,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -69,7 +69,7 @@ export default function sketch(p5) {
             startAngle: 0,
             endAngle: 360,
             radius: initialPupilRadius,
-            points: 10,
+            pointAmount: 10,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -89,7 +89,7 @@ export default function sketch(p5) {
             startAngle: 0,
             endAngle: 150,
             radius: initialWingRadius,
-            points: 10,
+            pointAmount: 10,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -109,7 +109,7 @@ export default function sketch(p5) {
             startAngle: 30,
             endAngle: 180,
             radius: initialWingRadius,
-            points: 10,
+            pointAmount: 10,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -129,7 +129,7 @@ export default function sketch(p5) {
             startAngle: 0,
             endAngle: 180,
             radius: initialTipRadius,
-            points: 10,
+            pointAmount: 10,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -149,7 +149,7 @@ export default function sketch(p5) {
             startAngle: 45,
             endAngle: 135,
             radius: 300,
-            points: 40,
+            pointAmount: 40,
             pointArray: [],
             stroke: {
                 color: '#000000',
@@ -166,6 +166,52 @@ export default function sketch(p5) {
             }
         },
     }
+    const randomizeSubsetting=(settings)=>{
+        for(let settingsKey in settings){
+            if(typeof settings[settingsKey] === 'object'){
+                randomizeSubsetting(settings[settingsKey]);
+            }
+            else if(typeof settings[settingsKey] === 'number'){
+                let lowercaseSettingsKey=settingsKey.toLowerCase();
+                // Check if settingsKey ends with amount
+                if(lowercaseSettingsKey.endsWith('amount')){
+                    settings[settingsKey] = p5.random(0, 100);
+                    continue;
+                }
+                // Check if settingsKey ends with radius
+                if(lowercaseSettingsKey.endsWith('radius')){
+                    settings[settingsKey] = p5.random(0, 300);
+                    continue;
+                }
+                // Check if settingsKey ends with weight
+                if(lowercaseSettingsKey.endsWith('weight')){
+                    settings[settingsKey] = p5.random(0, 20);
+                    continue;
+                }
+                // Check if settingsKey ends with angle
+                if(lowercaseSettingsKey.endsWith('angle')){
+                    settings[settingsKey] = p5.random(0, 360);
+                    continue;
+                }
+                // Check if settingsKey ends with x
+                if(lowercaseSettingsKey.endsWith('x')){
+                    settings[settingsKey] = p5.random(-300, 300);
+                    continue;
+                }
+                // Check if settingsKey ends with y
+                if(lowercaseSettingsKey.endsWith('y')){
+                    settings[settingsKey] = p5.random(-300, 300);
+                    continue;
+                }
+            }
+            else if(typeof settings[settingsKey] === 'string'){
+                settings[settingsKey] = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
+            }
+            else if(typeof settings[settingsKey] === 'boolean'){
+                settings[settingsKey] = p5.random(0, 1) > 0.5;
+            }
+        }
+    }
 
     p5.setup = function () {
         let customizeSketchGui = new GUI();
@@ -181,6 +227,11 @@ export default function sketch(p5) {
                     let preset = JSON.parse(clipText);
                     customizeSketchGui.load(preset);
                 });
+            },
+            randomizeSettings(){
+                for (let key in settings) {
+                    randomizeSubsetting(settings[key]);
+                }
             }
         }
         for (let key in settings) {
@@ -189,7 +240,7 @@ export default function sketch(p5) {
             keyGui.add(settings[key], 'startAngle', 0, 360);
             keyGui.add(settings[key], 'endAngle', 0, 360);
             keyGui.add(settings[key], 'radius', 0, 300);
-            keyGui.add(settings[key], 'points', 0, 100).step(1);
+            keyGui.add(settings[key], 'pointAmount', 0, 100).step(1);
             const strokeGui = keyGui.addFolder('Stroke');
             strokeGui.open(false);
             strokeGui.addColor(settings[key].stroke, 'color');
@@ -206,6 +257,8 @@ export default function sketch(p5) {
         }
         customizeSketchGui.add(actions, 'savePreset').name('Save to clipboard');
         customizeSketchGui.add(actions, 'loadPreset').name('Load from clipboard');
+        customizeSketchGui.add(actions, 'randomizeSettings').name('Randomize all settings');
+        customizeSketchGui.addFolder('Specific randomize');
         customizeSketchGui.open(false);
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
@@ -215,7 +268,7 @@ export default function sketch(p5) {
     p5.draw = function () {
         p5.background(255)
         for (let key in settings) {
-            settings[key].pointArray = calculatePointsOfEllipse(settings[key].points, settings[key].radius, settings[key].startAngle, settings[key].endAngle);
+            settings[key].pointArray = calculatePointsOfEllipse(settings[key].pointAmount, settings[key].radius, settings[key].startAngle, settings[key].endAngle);
             p5.push();
             p5.stroke(settings[key].stroke.color);
             p5.translate(p5.width * 0.5 + settings[key].offset.x, p5.height * 0.5 + settings[key].offset.y);
