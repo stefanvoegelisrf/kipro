@@ -148,7 +148,7 @@ export default function sketch(p5) {
     // Calculate points for an ellipse based on the amount of points and the radius
     function calculatePointsOfEllipse(amountOfPoints, ellipseRadius, startAngle, endAngle) {
         let points = [];
-        let angleIncrement = (endAngle - startAngle) / amountOfPoints;
+        let angleIncrement = (endAngle - startAngle) / (amountOfPoints - 1);
 
 
         for (let i = 0; i < amountOfPoints; i++) {
