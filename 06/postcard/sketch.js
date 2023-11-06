@@ -249,7 +249,31 @@ export default function sketch(p5) {
                 for (let key in settings.faceparts) {
                     randomizeSubsetting(settings.faceparts[key]);
                 }
-            }
+            },
+            randomizeLeftEye() {
+                randomizeSubsetting(settings.faceparts.lefteye);
+            },
+            randomizeRightEye() {
+                randomizeSubsetting(settings.faceparts.righteye);
+            },
+            randomizeLeftPupil() {
+                randomizeSubsetting(settings.faceparts.leftpupil);
+            },
+            randomizeRightPupil() {
+                randomizeSubsetting(settings.faceparts.rightpupil);
+            },
+            randomizeNoseWingLeft() {
+                randomizeSubsetting(settings.faceparts.nosewingleft);
+            },
+            randomizeNoseWingRight() {
+                randomizeSubsetting(settings.faceparts.nosewingright);
+            },
+            randomizeNoseTip() {
+                randomizeSubsetting(settings.faceparts.nosetip);
+            },
+            randomizeMouth() {
+                randomizeSubsetting(settings.faceparts.mouth);
+            },
         }
         for (let key in settings.faceparts) {
             let keyGui = customizeSketchGui.addFolder(key);
@@ -275,7 +299,16 @@ export default function sketch(p5) {
         customizeSketchGui.add(actions, 'savePreset').name('Save to clipboard');
         customizeSketchGui.add(actions, 'loadPreset').name('Load from clipboard');
         customizeSketchGui.add(actions, 'randomizeSettings').name('Randomize all settings');
-        customizeSketchGui.addFolder('Specific randomize');
+        const specificRandomizeFolder = customizeSketchGui.addFolder('Specific randomize');
+        specificRandomizeFolder.open(false);
+        specificRandomizeFolder.add(actions, 'randomizeLeftEye').name('Randomize left eye');
+        specificRandomizeFolder.add(actions, 'randomizeRightEye').name('Randomize right eye');
+        specificRandomizeFolder.add(actions, 'randomizeLeftPupil').name('Randomize left pupil');
+        specificRandomizeFolder.add(actions, 'randomizeRightPupil').name('Randomize right pupil');
+        specificRandomizeFolder.add(actions, 'randomizeNoseWingLeft').name('Randomize nose wing left');
+        specificRandomizeFolder.add(actions, 'randomizeNoseWingRight').name('Randomize nose wing right');
+        specificRandomizeFolder.add(actions, 'randomizeNoseTip').name('Randomize nose tip');
+        specificRandomizeFolder.add(actions, 'randomizeMouth').name('Randomize mouth');
         customizeSketchGui.open(false);
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
