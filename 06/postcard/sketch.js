@@ -28,11 +28,11 @@ export default function sketch(p5) {
             }
         },
         mouth: {
-            radius: 200,
+            radius: 300,
             points: 40,
             color: '#000000',
             strokeWeight: 5,
-            offset: 0
+            offset: -100
         }
     }
     let pointsForEye = [];
@@ -48,25 +48,30 @@ export default function sketch(p5) {
         eyeFolder.add(settings.eyes, 'strokeWeight', 0, 50);
         eyeFolder.add(settings.eyes, 'offset', 0, 300);
         eyeFolder.addColor(settings.eyes, 'color');
+        eyeFolder.open(false);
         const noseFolder = customizeSketchGui.addFolder('Nose');
+        noseFolder.open(false);
         const wingFolder = noseFolder.addFolder('Wing');
         wingFolder.add(settings.nose.wing, 'radius', 0, 100);
         wingFolder.add(settings.nose.wing, 'points', 0, 100).step(1);
         wingFolder.add(settings.nose.wing, 'strokeWeight', 0, 50);
         wingFolder.add(settings.nose.wing, 'offset', -100, 300);
         wingFolder.addColor(settings.nose.wing, 'color');
+        wingFolder.open(false);
         const tipFolder = noseFolder.addFolder('Tip');
         tipFolder.add(settings.nose.tip, 'radius', 0, 100);
         tipFolder.add(settings.nose.tip, 'points', 0, 100).step(1);
         tipFolder.add(settings.nose.tip, 'strokeWeight', 0, 50);
         tipFolder.add(settings.nose.tip, 'offset', -100, 200);
         tipFolder.addColor(settings.nose.tip, 'color');
+        tipFolder.open(false)
         const mouthFolder = customizeSketchGui.addFolder('Mouth');
         mouthFolder.add(settings.mouth, 'radius', 0, 300);
         mouthFolder.add(settings.mouth, 'points', 0, 100).step(1);
         mouthFolder.add(settings.mouth, 'strokeWeight', 0, 50);
-        mouthFolder.add(settings.mouth, 'offset', -200, 300);
+        mouthFolder.add(settings.mouth, 'offset', -300, 300);
         mouthFolder.addColor(settings.mouth, 'color');
+        mouthFolder.open(false);
         customizeSketchGui.open(false);
         p5.angleMode(p5.DEGREES);
         p5.createCanvas(p5.windowWidth, p5.windowHeight);
@@ -78,7 +83,7 @@ export default function sketch(p5) {
         pointsForRightNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 0, 150)
         pointsForLeftNoseWing = calculatePointsOfEllipse(settings.nose.wing.points, settings.nose.wing.radius, 30, 180)
         pointsForNoseTip = calculatePointsOfEllipse(settings.nose.tip.points, settings.nose.tip.radius, 0, 180)
-        pointsForMouth = calculatePointsOfEllipse(settings.mouth.points, settings.mouth.radius, 0, 180)
+        pointsForMouth = calculatePointsOfEllipse(settings.mouth.points, settings.mouth.radius, 45, 135)
         p5.background(255)
         // Left eye
         p5.push();
