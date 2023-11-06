@@ -8,7 +8,7 @@ let eyePoints = 50;
 let noseWingRadius = 40
 let noseWingPoints = 10
 let noseTipPoints = 10;
-let noseTipRadius = 30;
+let noseTipRadius = 60;
 let mouthPoints = 40;
 let mouthRadius = 200;
 let eyeEllipseSizeMin = 10;
@@ -46,7 +46,7 @@ function draw() {
 
     // Left nose wing
     push();
-    translate(width * 0.5 - noseWingRadius, height * 0.5);
+    translate(width * 0.5 - noseWingRadius * 2, height * 0.5);
     for (let leftNoseWingPoint of pointsForLeftNoseWing) {
         point(leftNoseWingPoint.x, leftNoseWingPoint.y);
     }
@@ -54,7 +54,7 @@ function draw() {
 
     // Right nose wing
     push();
-    translate(width * 0.5 + noseWingRadius, height * 0.5);
+    translate(width * 0.5 + noseWingRadius * 2, height * 0.5);
     for (let rightNoseWingPoint of pointsForRightNoseWing) {
         point(rightNoseWingPoint.x, rightNoseWingPoint.y);
     }
@@ -62,7 +62,7 @@ function draw() {
 
     // Nose tip
     push();
-    translate(width * 0.5, height * 0.5 + noseTipRadius);
+    translate(width * 0.5, height * 0.5 + noseTipRadius * 0.5);
     for (let noseTipPoint of pointsForNoseTip) {
         point(noseTipPoint.x, noseTipPoint.y);
     }
