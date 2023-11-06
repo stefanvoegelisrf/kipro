@@ -5,6 +5,7 @@
     - [Solution](#solution)
   - [Excercise 2](#excercise-2)
     - [Solution](#solution-1)
+  - [Humism watch experiment](#humism-watch-experiment)
 
 
 ## Excercise 1
@@ -23,3 +24,7 @@ Create a sketch to move an array of points.
 ### Solution
 
 [p5js editor  - Arrays motion excercise](https://editor.p5js.org/stefanvoegelisrf/sketches/rbVPkl26S)
+
+## Humism watch experiment
+
+[p5js editor - Humism watch](https://editor.p5js.org/stefanvoegelisrf/sketches/RdGb571vd)
