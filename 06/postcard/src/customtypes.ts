@@ -6,8 +6,16 @@ export type BackgroundSettings = {
 }
 
 export type RandomSettings = {
+    randomize: boolean,
     min: number,
     max: number
+}
+
+export type NoiseSettings = {
+    useNoise: boolean;
+    amount: number;
+    speed: number;
+    offset: number;
 }
 
 export type Coordinates = {
@@ -18,8 +26,8 @@ export type Coordinates = {
 export type StrokeSettings = {
     color: string,
     weight: number,
-    randomize: boolean,
-    random: RandomSettings
+    random: RandomSettings,
+    noise: NoiseSettings
 }
 
 export type FacePart = {
