@@ -1,0 +1,179 @@
+{
+    "faceparts": [
+        {
+            "name": "righteye",
+            "startAngle": 0,
+            "endAngle": 360,
+            "radius": 80,
+            "pointAmount": 50,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 5,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": 120,
+                "y": -100
+            }
+        },
+        {
+            "name": "lefteye",
+            "startAngle": 0,
+            "endAngle": 360,
+            "radius": 80,
+            "pointAmount": 50,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 5,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": -120,
+                "y": -100
+            }
+        },
+        {
+            "name": "rightpupil",
+            "startAngle": 0,
+            "endAngle": 360,
+            "radius": 10,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 15,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": 120,
+                "y": -100
+            }
+        },
+        {
+            "name": "leftpupil",
+            "startAngle": 0,
+            "endAngle": 360,
+            "radius": 10,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 15,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": -120,
+                "y": -100
+            }
+        },
+        {
+            "name": "nosewingleft",
+            "startAngle": 0,
+            "endAngle": 150,
+            "radius": 40,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 5,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": 80,
+                "y": 0
+            }
+        },
+        {
+            "name": "nosewingright",
+            "startAngle": 30,
+            "endAngle": 180,
+            "radius": 40,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 5,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": -80,
+                "y": 0
+            }
+        },
+        {
+            "name": "nosetip",
+            "startAngle": 0,
+            "endAngle": 180,
+            "radius": 60,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 5,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": 0,
+                "y": 30
+            }
+        },
+        {
+            "name": "mouth",
+            "startAngle": 45,
+            "endAngle": 135,
+            "radius": 300,
+            "pointAmount": 40,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 5,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": 0,
+                "y": -100
+            }
+        }
+    ],
+    "background": {
+        "enabled": true,
+        "color": "#FFFFFF",
+        "randomize": false
+    },
+    "useLines": false,
+    "loop": true
+}

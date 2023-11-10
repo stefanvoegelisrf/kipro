@@ -1,0 +1,23 @@
+{
+  "name": "postcard",
+  "version": "1.0.0",
+  "description": "This sketch has been designed to create a customizable face using the calculation of points of an ellipse.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lil-gui": "^0.19.1",
+    "p5": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/p5": "^1.7.3",
+    "typescript": "^5.2.2",
+    "vite": "^4.5.0"
+  }
+}
