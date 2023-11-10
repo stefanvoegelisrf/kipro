@@ -59,11 +59,11 @@ const sketch = (sketch: p5) => {
                     randomizeFacePart(settings.faceparts[key]);
                 }
             },
-            randomizeLeftEye() {
-                randomizeFacePart(settings.faceparts.find(f => f.name === 'lefteye')!);
+            randomizeLeftIris() {
+                randomizeFacePart(settings.faceparts.find(f => f.name === 'leftiris')!);
             },
-            randomizeRightEye() {
-                randomizeFacePart(settings.faceparts.find(f => f.name === 'righteye')!);
+            randomizeRightIris() {
+                randomizeFacePart(settings.faceparts.find(f => f.name === 'rightiris')!);
             },
             randomizeLeftPupil() {
                 randomizeFacePart(settings.faceparts.find(f => f.name === 'leftpupil')!);
@@ -132,8 +132,8 @@ const sketch = (sketch: p5) => {
         const randomFolder = customizeSketchGui.addFolder('Random');
         randomFolder.open(false);
         randomFolder.add(actions, 'randomizeSettings').name('Randomize all settings');
-        randomFolder.add(actions, 'randomizeLeftEye').name('Randomize left eye');
-        randomFolder.add(actions, 'randomizeRightEye').name('Randomize right eye');
+        randomFolder.add(actions, 'randomizeLeftIris').name('Randomize left iris');
+        randomFolder.add(actions, 'randomizeRightIris').name('Randomize right iris');
         randomFolder.add(actions, 'randomizeLeftPupil').name('Randomize left pupil');
         randomFolder.add(actions, 'randomizeRightPupil').name('Randomize right pupil');
         randomFolder.add(actions, 'randomizeNoseWingLeft').name('Randomize nose wing left');

@@ -1,11 +1,11 @@
 {
     "faceparts": [
         {
-            "name": "righteye",
+            "name": "rightiris",
             "startAngle": 0,
             "endAngle": 360,
-            "radius": 80,
-            "pointAmount": 50,
+            "radius": 40,
+            "pointAmount": 30,
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
@@ -22,11 +22,11 @@
             }
         },
         {
-            "name": "lefteye",
+            "name": "leftiris",
             "startAngle": 0,
             "endAngle": 360,
-            "radius": 80,
-            "pointAmount": 50,
+            "radius": 40,
+            "pointAmount": 30,
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
@@ -82,6 +82,87 @@
             "offset": {
                 "x": -120,
                 "y": -100
+            }
+        },
+        {
+            "name": "rightsclerabottom",
+            "startAngle": 50,
+            "endAngle": 130,
+            "radius": 140,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 10,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": 120,
+                "y": -200
+            }
+        },{
+            "name": "rightscleratop",
+            "startAngle": 230,
+            "endAngle": 310,
+            "radius": 140,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 10,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": 120,
+                "y": 0
+            }
+        },{
+            "name": "leftsclerabottom",
+            "startAngle": 50,
+            "endAngle": 130,
+            "radius": 140,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 10,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": -120,
+                "y": -200
+            }
+        },{
+            "name": "leftscleratop",
+            "startAngle": 230,
+            "endAngle": 310,
+            "radius": 140,
+            "pointAmount": 10,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "weight": 10,
+                "randomize": false,
+                "random": {
+                    "min": 0,
+                    "max": 50
+                }
+            },
+            "offset": {
+                "x": -120,
+                "y": 0
             }
         },
         {
