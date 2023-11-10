@@ -4,7 +4,7 @@ import p5 from 'p5';
 import * as settingsTemplate from './settings.json';
 
 const sketch = (sketch: p5) => {
-    let settings: FaceSettings = settingsTemplate;
+    let settings: FaceSettings = {...settingsTemplate};
     const randomHexColor = () => {
         return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
     }
