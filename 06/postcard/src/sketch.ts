@@ -4,10 +4,19 @@ import p5 from 'p5';
 import * as settingsTemplate from './settings.json';
 
 const sketch = (sketch: p5) => {
-    let settings: FaceSettings = {...settingsTemplate};
+    let settings: FaceSettings = { ...settingsTemplate };
     const randomHexColor = () => {
         return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
     }
+
+    const hexToRgb = (hex: string) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+
+        return { r, g, b };
+    }
+
     const randomizeFacePart = (facePart: FacePart) => {
         const angleMin = 0;
         const angleMax = 360;
@@ -83,9 +92,13 @@ const sketch = (sketch: p5) => {
                 sketch.noLoop();
             }
         });
+        customizeSketchGui.add(settings, 'frameRate', 1, 60).step(1).name('Framerate').onChange(function (value: number) {
+            sketch.frameRate(value);
+        });
         const backgroundFolder = customizeSketchGui.addFolder('Background');
         backgroundFolder.open(false);
         backgroundFolder.addColor(settings.background, 'color');
+        backgroundFolder.add(settings.background, 'transparency', 0, 255).step(1)
         backgroundFolder.add(settings.background, 'enabled');
         const backgroundRandomFolder = backgroundFolder.addFolder('Random');
         backgroundRandomFolder.open(false);
@@ -136,7 +149,8 @@ const sketch = (sketch: p5) => {
 
     sketch.draw = function () {
         if (settings.background.enabled) {
-            sketch.background(settings.background.randomize ? randomHexColor() : settings.background.color)
+            let bgColor = hexToRgb(settings.background.randomize ? randomHexColor() : settings.background.color);
+            sketch.background(bgColor.r, bgColor.g, bgColor.b, settings.background.transparency);
         }
         for (let key in settings.faceparts) {
             settings.faceparts[key].pointArray = calculatePointsOfEllipse(settings.faceparts[key].pointAmount, settings.faceparts[key].radius, settings.faceparts[key].startAngle, settings.faceparts[key].endAngle);

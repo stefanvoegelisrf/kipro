@@ -1,6 +1,7 @@
 export type BackgroundSettings = {
     enabled: boolean,
     color: string,
+    transparency: number,
     randomize: boolean
 }
 
@@ -36,5 +37,6 @@ export type FaceSettings = {
     faceparts: FacePart[];
     background: BackgroundSettings,
     useLines: boolean,
-    loop: boolean
+    loop: boolean,
+    frameRate: number
 };

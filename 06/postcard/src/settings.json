@@ -172,8 +172,10 @@
     "background": {
         "enabled": true,
         "color": "#FFFFFF",
+        "transparency": 255,
         "randomize": false
     },
+    "frameRate": 10,
     "useLines": false,
     "loop": true
 }
