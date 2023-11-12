@@ -1,6 +1,6 @@
 {
-    "face":{
-        "pointAmount": 100
+    "face": {
+        "pointAmount": 200
     },
     "faceparts": [
         {
@@ -12,7 +12,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 70,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -53,7 +53,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 70,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -94,7 +94,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 70,
                 "weight": 15,
                 "random": {
                     "randomize": false,
@@ -135,7 +135,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 70,
                 "weight": 15,
                 "random": {
                     "randomize": false,
@@ -176,7 +176,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 30,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -202,8 +202,8 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
+                    "amount": 300,
+                    "speed": 0.0001,
                     "offset": 6463
                 }
             }
@@ -212,12 +212,12 @@
             "name": "rightscleratop",
             "startAngle": 230,
             "endAngle": 310,
-            "radius": 140,
+            "radius": 250,
             "pointAmount": 25,
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 30,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -226,7 +226,7 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 30,
+                    "amount": 100,
                     "speed": 0.001,
                     "offset": 4765
                 }
@@ -243,8 +243,8 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
+                    "amount": 200,
+                    "speed": 0.0001,
                     "offset": 4765
                 }
             }
@@ -258,7 +258,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 30,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -284,8 +284,8 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
+                    "amount": 300,
+                    "speed": 0.0001,
                     "offset": 312
                 }
             }
@@ -294,12 +294,12 @@
             "name": "leftscleratop",
             "startAngle": 230,
             "endAngle": 310,
-            "radius": 140,
+            "radius": 250,
             "pointAmount": 25,
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 30,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -308,7 +308,7 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 30,
+                    "amount": 100,
                     "speed": 0.001,
                     "offset": 1299
                 }
@@ -325,8 +325,8 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
+                    "amount": 200,
+                    "speed": 0.0001,
                     "offset": 1299
                 }
             }
@@ -336,11 +336,11 @@
             "startAngle": 0,
             "endAngle": 100,
             "radius": 40,
-            "pointAmount": 20,
+            "pointAmount": 10,
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 30,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -349,7 +349,7 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 60,
+                    "amount": 50,
                     "speed": 0.001,
                     "offset": 8888
                 }
@@ -366,8 +366,8 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
+                    "amount": 300,
+                    "speed": 0.0001,
                     "offset": 8888
                 }
             }
@@ -377,11 +377,11 @@
             "startAngle": 80,
             "endAngle": 180,
             "radius": 40,
-            "pointAmount": 20,
+            "pointAmount": 10,
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
+                "transparency": 30,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -390,7 +390,7 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 60,
+                    "amount": 50,
                     "speed": 0.001,
                     "offset": 3442
                 }
@@ -407,64 +407,23 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
+                    "amount": 300,
+                    "speed": 0.0001,
                     "offset": 3442
                 }
             }
         },
         {
             "name": "nosetip",
-            "startAngle": 0,
-            "endAngle": 180,
-            "radius": 60,
-            "pointAmount": 35,
-            "pointArray": [],
-            "stroke": {
-                "color": "#000000",
-                "transparency": 130,
-                "weight": 7,
-                "random": {
-                    "randomize": false,
-                    "min": 0,
-                    "max": 50
-                },
-                "noise": {
-                    "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
-                    "offset": 2976
-                }
-            },
-            "offset": {
-                "coordinates": {
-                    "x": 0,
-                    "y": 40
-                },
-                "random": {
-                    "randomize": false,
-                    "min": -50,
-                    "max": 50
-                },
-                "noise": {
-                    "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
-                    "offset": 2976
-                }
-            }
-        },
-        {
-            "name": "mouth",
             "startAngle": 45,
             "endAngle": 135,
-            "radius": 300,
-            "pointAmount": 40,
+            "radius": 60,
+            "pointAmount": 20,
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 130,
-                "weight": 15,
+                "transparency": 30,
+                "weight": 7,
                 "random": {
                     "randomize": false,
                     "min": 0,
@@ -474,13 +433,13 @@
                     "useNoise": true,
                     "amount": 100,
                     "speed": 0.001,
-                    "offset": 9999
+                    "offset": 2976
                 }
             },
             "offset": {
                 "coordinates": {
                     "x": 0,
-                    "y": -100
+                    "y": 20
                 },
                 "random": {
                     "randomize": false,
@@ -489,8 +448,49 @@
                 },
                 "noise": {
                     "useNoise": true,
-                    "amount": 50,
-                    "speed": 0.001,
+                    "amount": 300,
+                    "speed": 0.0001,
+                    "offset": 2976
+                }
+            }
+        },
+        {
+            "name": "mouth",
+            "startAngle": 45,
+            "endAngle": 135,
+            "radius": 500,
+            "pointAmount": 30,
+            "pointArray": [],
+            "stroke": {
+                "color": "#000000",
+                "transparency": 30,
+                "weight": 15,
+                "random": {
+                    "randomize": false,
+                    "min": 0,
+                    "max": 50
+                },
+                "noise": {
+                    "useNoise": true,
+                    "amount": 200,
+                    "speed": 0.0001,
+                    "offset": 9999
+                }
+            },
+            "offset": {
+                "coordinates": {
+                    "x": 0,
+                    "y": -200
+                },
+                "random": {
+                    "randomize": false,
+                    "min": 0,
+                    "max": 50
+                },
+                "noise": {
+                    "useNoise": true,
+                    "amount": 200,
+                    "speed": 0.0001,
                     "offset": 9999
                 }
             }
@@ -498,7 +498,7 @@
     ],
     "background": {
         "enabled": true,
-        "color": "#FFFFFF",
+        "color": "#000000",
         "transparency": 10,
         "randomize": false
     },

@@ -185,7 +185,7 @@ const sketch = (sketch: p5) => {
 
         sketch.angleMode(sketch.DEGREES);
         sketch.createCanvas(sketch.windowWidth, sketch.windowHeight);
-        sketch.background(220);
+        sketch.background(settings.background.color);
     }
 
     sketch.draw = function () {
@@ -198,10 +198,10 @@ const sketch = (sketch: p5) => {
         for (let i = 0; i < settings.face.pointAmount; i++) {
             let sizeSpeed = 0.0001;
             let positionSpeed = 0.0001;
-            let colorSpeed= 0.0001;
+            let colorSpeed = 0.0001;
             let size = sketch.noise(i * 0.1 + sketch.millis() * sizeSpeed) * 300;
-            let x = (sketch.noise(i + sketch.millis() * positionSpeed) - 0.5) * 1000;
-            let y = (sketch.noise(i * 10 + sketch.millis() * positionSpeed) - 0.5) * 1000;
+            let x = (sketch.noise(i + sketch.millis() * positionSpeed) - 0.5) * sketch.width * 0.8;
+            let y = (sketch.noise(i * 10 + sketch.millis() * positionSpeed) - 0.5) * sketch.width * 0.8;
             let r = sketch.noise(i * 20 + sketch.millis() * colorSpeed) * 255;
             // let g = sketch.noise(i * 30 + sketch.millis() * colorSpeed) * 255;
             let g = 0;
@@ -215,7 +215,12 @@ const sketch = (sketch: p5) => {
         for (let key in settings.faceparts) {
             settings.faceparts[key].pointArray = calculatePointsOfEllipse(settings.faceparts[key].pointAmount, settings.faceparts[key].radius, settings.faceparts[key].startAngle, settings.faceparts[key].endAngle);
             sketch.push();
-            let strokeColor = hexToRgb(settings.faceparts[key].stroke.color);
+            // let strokeColor = hexToRgb(settings.faceparts[key].stroke.color);
+            let strokeColor = {
+                r: sketch.noise(sketch.millis() * 0.0001) * 255,
+                g: sketch.noise(sketch.millis() * 0.0002) * 100,
+                b: 0
+            }
             sketch.stroke(strokeColor.r, strokeColor.g, strokeColor.b, settings.faceparts[key].stroke.transparency);
             sketch.translate(sketch.width * 0.5 + settings.faceparts[key].offset.coordinates.x, sketch.height * 0.5 + settings.faceparts[key].offset.coordinates.y);
             // Function to shuffle an array
@@ -326,6 +331,8 @@ const sketch = (sketch: p5) => {
     }
 
     function setOffset(sketch: p5, offset: Coordinates, randomize: boolean, min: number, max: number, useNoise: boolean, amount: number, speed: number, noiseOffset: number, x: number, y: number) {
+        x += 2;
+        y += 2;
         let translateOffset = {
             x: 0,
             y: 0
