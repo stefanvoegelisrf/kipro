@@ -202,10 +202,9 @@ const sketch = (sketch: p5) => {
             let size = sketch.noise(i * 0.1 + sketch.millis() * sizeSpeed) * 300;
             let x = (sketch.noise(i + sketch.millis() * positionSpeed) - 0.5) * sketch.width * 0.8;
             let y = (sketch.noise(i * 10 + sketch.millis() * positionSpeed) - 0.5) * sketch.width * 0.8;
-            let r = sketch.noise(i * 20 + sketch.millis() * colorSpeed) * 255;
-            // let g = sketch.noise(i * 30 + sketch.millis() * colorSpeed) * 255;
-            let g = 0;
-            let b = sketch.noise(i * 40 + sketch.millis() * colorSpeed) * 255;
+            let r = sketch.noise(i * 20 + sketch.millis() * colorSpeed) * 150;
+            let g = sketch.noise(i * 30 + sketch.millis() * colorSpeed) * 0;
+            let b = sketch.noise(i * 40 + sketch.millis() * colorSpeed) * 150;
             let a = sketch.noise(i * 50 + sketch.millis() * colorSpeed) * 50;
             sketch.fill(r, g, b, a);
             sketch.noStroke()
@@ -215,13 +214,8 @@ const sketch = (sketch: p5) => {
         for (let key in settings.faceparts) {
             settings.faceparts[key].pointArray = calculatePointsOfEllipse(settings.faceparts[key].pointAmount, settings.faceparts[key].radius, settings.faceparts[key].startAngle, settings.faceparts[key].endAngle);
             sketch.push();
-            // let strokeColor = hexToRgb(settings.faceparts[key].stroke.color);
-            let strokeColor = {
-                r: sketch.noise(sketch.millis() * 0.0001) * 255,
-                g: sketch.noise(sketch.millis() * 0.0002) * 100,
-                b: 0
-            }
-            sketch.stroke(strokeColor.r, strokeColor.g, strokeColor.b, settings.faceparts[key].stroke.transparency);
+
+
             sketch.translate(sketch.width * 0.5 + settings.faceparts[key].offset.coordinates.x, sketch.height * 0.5 + settings.faceparts[key].offset.coordinates.y);
             // Function to shuffle an array
             function shuffleArray(array: Coordinates[]) {
@@ -249,6 +243,8 @@ const sketch = (sketch: p5) => {
                 for (let i = 0; i < points.length; i += 2) {
                     let point1 = points[i];
                     let point2 = points[i + 1];
+                    // let strokeColor = hexToRgb(settings.faceparts[key].stroke.color);
+                    setStrokeColor(point1.x, point1.y, settings.faceparts[key].stroke.transparency);
                     setStrokeWeight(
                         sketch,
                         settings.faceparts[key].stroke.weight,
@@ -283,6 +279,8 @@ const sketch = (sketch: p5) => {
             } else {
                 // Existing code to draw points
                 for (let point of settings.faceparts[key].pointArray) {
+                    // let strokeColor = hexToRgb(settings.faceparts[key].stroke.color);
+                    setStrokeColor(point.x, point.y, settings.faceparts[key].stroke.transparency);
                     setStrokeWeight(
                         sketch,
                         settings.faceparts[key].stroke.weight,
@@ -328,6 +326,17 @@ const sketch = (sketch: p5) => {
             weight = sketch.random(min, max);
         }
         sketch.strokeWeight(weight);
+    }
+
+    function setStrokeColor(x: number, y: number, transparency: number) {
+        x += 2;
+        y += 2;
+        let strokeColor = {
+            r: sketch.noise(x * 10, sketch.millis() * 0.0001) * 255,
+            g: sketch.noise(y * 20, sketch.millis() * 0.0002) * 150,
+            b: sketch.noise(x * y, sketch.millis() * 0.0003) * 255
+        }
+        sketch.stroke(strokeColor.r, strokeColor.g, strokeColor.b, transparency);
     }
 
     function setOffset(sketch: p5, offset: Coordinates, randomize: boolean, min: number, max: number, useNoise: boolean, amount: number, speed: number, noiseOffset: number, x: number, y: number) {

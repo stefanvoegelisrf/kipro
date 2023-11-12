@@ -12,7 +12,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 70,
+                "transparency": 150,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -53,7 +53,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 70,
+                "transparency": 150,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -94,7 +94,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 70,
+                "transparency": 150,
                 "weight": 15,
                 "random": {
                     "randomize": false,
@@ -135,7 +135,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 70,
+                "transparency": 150,
                 "weight": 15,
                 "random": {
                     "randomize": false,
@@ -176,7 +176,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -217,7 +217,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -258,7 +258,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -299,7 +299,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 10,
                 "random": {
                     "randomize": false,
@@ -340,7 +340,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -381,7 +381,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 5,
                 "random": {
                     "randomize": false,
@@ -422,7 +422,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 7,
                 "random": {
                     "randomize": false,
@@ -463,7 +463,7 @@
             "pointArray": [],
             "stroke": {
                 "color": "#000000",
-                "transparency": 30,
+                "transparency": 100,
                 "weight": 15,
                 "random": {
                     "randomize": false,
