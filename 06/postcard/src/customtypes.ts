@@ -23,11 +23,20 @@ export type Coordinates = {
     y: number
 }
 
-export type StrokeSettings = {
-    color: string,
-    weight: number,
-    random: RandomSettings,
-    noise: NoiseSettings
+export interface OffsetSettings extends IAmRandomizable {
+    coordinates: Coordinates;
+}
+
+
+export interface IAmRandomizable {
+    random: RandomSettings;
+    noise: NoiseSettings;
+}
+
+export interface StrokeSettings extends IAmRandomizable {
+    color: string;
+    transparency: number;
+    weight: number;
 }
 
 export type FacePart = {
@@ -38,10 +47,13 @@ export type FacePart = {
     pointAmount: number,
     pointArray: Coordinates[],
     stroke: StrokeSettings
-    offset: Coordinates
+    offset: OffsetSettings
 }
 
 export type FaceSettings = {
+    face: {
+        pointAmount: number
+    }
     faceparts: FacePart[];
     background: BackgroundSettings,
     useLines: boolean,

@@ -29,6 +29,7 @@ const sketch = (sketch: p5) => {
         if (useNoise) randomizeStrokeWeight = false;
         facePart.stroke = {
             color: randomHexColor(),
+            transparency: sketch.random(0, 255),
             weight: sketch.random(0, 20),
             random: {
                 randomize: randomizeStrokeWeight,
@@ -43,8 +44,21 @@ const sketch = (sketch: p5) => {
             }
         };
         facePart.offset = {
-            x: sketch.random(-300, 300),
-            y: sketch.random(-300, 300)
+            coordinates: {
+                x: sketch.random(-300, 300),
+                y: sketch.random(-300, 300)
+            },
+            random: {
+                randomize: sketch.random(0, 1) > 0.5,
+                min: 0,
+                max: 50
+            },
+            noise: {
+                useNoise: sketch.random(0, 1) > 0.5,
+                amount: sketch.random(0, 100),
+                speed: sketch.random(0.0001, 0.1),
+                offset: sketch.random(0, 9999)
+            }
         }
     }
 
@@ -139,8 +153,20 @@ const sketch = (sketch: p5) => {
             strokeNoiseFolder.add(settings.faceparts[key].stroke.noise, 'offset', 0, 9999);
             const offsetGui = facepartKeyFolder.addFolder('Offset');
             offsetGui.open(false);
-            offsetGui.add(settings.faceparts[key].offset, 'x', -300, 300);
-            offsetGui.add(settings.faceparts[key].offset, 'y', -300, 300);
+            offsetGui.add(settings.faceparts[key].offset.coordinates, 'x', -300, 300);
+            offsetGui.add(settings.faceparts[key].offset.coordinates, 'y', -300, 300);
+            const offsetRandomFolder = offsetGui.addFolder('Random');
+            offsetRandomFolder.open(false);
+            offsetRandomFolder.add(settings.faceparts[key].offset.random, 'randomize').listen().onChange((value: boolean) => { if (settings.faceparts[key].offset.noise.useNoise) { settings.faceparts[key].offset.noise.useNoise = !value } });;
+            offsetRandomFolder.add(settings.faceparts[key].offset.random, 'min', 0, 50);
+            offsetRandomFolder.add(settings.faceparts[key].offset.random, 'max', 0, 50);
+            const offsetNoiseFolder = offsetGui.addFolder('Noise');
+            offsetNoiseFolder.open(false);
+            offsetNoiseFolder.add(settings.faceparts[key].offset.noise, 'useNoise').listen().onChange((value: boolean) => { if (settings.faceparts[key].offset.random.randomize) { settings.faceparts[key].offset.random.randomize = !value } });
+            offsetNoiseFolder.add(settings.faceparts[key].offset.noise, 'amount', 0, 100);
+            offsetNoiseFolder.add(settings.faceparts[key].offset.noise, 'speed', 0.00001, 0.1);
+            offsetNoiseFolder.add(settings.faceparts[key].offset.noise, 'offset', 0, 9999);
+
         }
         customizeSketchGui.add(actions, 'savePreset').name('Save to clipboard');
         customizeSketchGui.add(actions, 'loadPreset').name('Load from clipboard');
@@ -167,11 +193,31 @@ const sketch = (sketch: p5) => {
             let bgColor = hexToRgb(settings.background.randomize ? randomHexColor() : settings.background.color);
             sketch.background(bgColor.r, bgColor.g, bgColor.b, settings.background.transparency);
         }
+        sketch.push();
+        sketch.translate(sketch.width * 0.5, sketch.height * 0.5);
+        for (let i = 0; i < settings.face.pointAmount; i++) {
+            let sizeSpeed = 0.0001;
+            let positionSpeed = 0.0001;
+            let colorSpeed= 0.0001;
+            let size = sketch.noise(i * 0.1 + sketch.millis() * sizeSpeed) * 300;
+            let x = (sketch.noise(i + sketch.millis() * positionSpeed) - 0.5) * 1000;
+            let y = (sketch.noise(i * 10 + sketch.millis() * positionSpeed) - 0.5) * 1000;
+            let r = sketch.noise(i * 20 + sketch.millis() * colorSpeed) * 255;
+            // let g = sketch.noise(i * 30 + sketch.millis() * colorSpeed) * 255;
+            let g = 0;
+            let b = sketch.noise(i * 40 + sketch.millis() * colorSpeed) * 255;
+            let a = sketch.noise(i * 50 + sketch.millis() * colorSpeed) * 50;
+            sketch.fill(r, g, b, a);
+            sketch.noStroke()
+            sketch.ellipse(x, y, size, size);
+        }
+        sketch.pop();
         for (let key in settings.faceparts) {
             settings.faceparts[key].pointArray = calculatePointsOfEllipse(settings.faceparts[key].pointAmount, settings.faceparts[key].radius, settings.faceparts[key].startAngle, settings.faceparts[key].endAngle);
             sketch.push();
-            sketch.stroke(settings.faceparts[key].stroke.color);
-            sketch.translate(sketch.width * 0.5 + settings.faceparts[key].offset.x, sketch.height * 0.5 + settings.faceparts[key].offset.y);
+            let strokeColor = hexToRgb(settings.faceparts[key].stroke.color);
+            sketch.stroke(strokeColor.r, strokeColor.g, strokeColor.b, settings.faceparts[key].stroke.transparency);
+            sketch.translate(sketch.width * 0.5 + settings.faceparts[key].offset.coordinates.x, sketch.height * 0.5 + settings.faceparts[key].offset.coordinates.y);
             // Function to shuffle an array
             function shuffleArray(array: Coordinates[]) {
                 for (let i = array.length - 1; i > 0; i--) {
@@ -209,6 +255,19 @@ const sketch = (sketch: p5) => {
                         settings.faceparts[key].stroke.noise.speed,
                         settings.faceparts[key].stroke.noise.offset
                     );
+                    setOffset(
+                        sketch,
+                        settings.faceparts[key].offset.coordinates,
+                        settings.faceparts[key].offset.random.randomize,
+                        settings.faceparts[key].offset.random.min,
+                        settings.faceparts[key].offset.random.max,
+                        settings.faceparts[key].offset.noise.useNoise,
+                        settings.faceparts[key].offset.noise.amount,
+                        settings.faceparts[key].offset.noise.speed,
+                        settings.faceparts[key].offset.noise.offset,
+                        point1.x,
+                        point1.y
+                    );
                     sketch.line(point1.x, point1.y, point2.x, point2.y);
                 }
 
@@ -230,7 +289,22 @@ const sketch = (sketch: p5) => {
                         settings.faceparts[key].stroke.noise.speed,
                         settings.faceparts[key].stroke.noise.offset + (point.x * point.y)
                     );
+                    sketch.push();
+                    setOffset(
+                        sketch,
+                        settings.faceparts[key].offset.coordinates,
+                        settings.faceparts[key].offset.random.randomize,
+                        settings.faceparts[key].offset.random.min,
+                        settings.faceparts[key].offset.random.max,
+                        settings.faceparts[key].offset.noise.useNoise,
+                        settings.faceparts[key].offset.noise.amount,
+                        settings.faceparts[key].offset.noise.speed,
+                        settings.faceparts[key].offset.noise.offset,
+                        point.x,
+                        point.y
+                    );
                     sketch.point(point.x, point.y);
+                    sketch.pop();
                 }
             }
             sketch.pop();
@@ -241,14 +315,35 @@ const sketch = (sketch: p5) => {
         sketch.resizeCanvas(sketch.windowWidth, sketch.windowHeight);
     }
 
-    function setStrokeWeight(sketch: p5, weight: number, randomize: boolean, min: number, max: number, useNoise: boolean, amount: number, speed: number, offset: number) {
+    function setStrokeWeight(sketch: p5, weight: number, randomize: boolean, min: number, max: number, useNoise: boolean, amount: number, speed: number, noiseOffset: number) {
         if (useNoise) {
-            weight = sketch.noise((weight + sketch.millis() + offset) * speed) * amount;
+            weight = sketch.noise((weight + sketch.millis() + noiseOffset) * speed) * amount;
         }
         else if (randomize) {
             weight = sketch.random(min, max);
         }
         sketch.strokeWeight(weight);
+    }
+
+    function setOffset(sketch: p5, offset: Coordinates, randomize: boolean, min: number, max: number, useNoise: boolean, amount: number, speed: number, noiseOffset: number, x: number, y: number) {
+        let translateOffset = {
+            x: 0,
+            y: 0
+        }
+        if (useNoise) {
+            translateOffset = {
+                x: (sketch.noise((noiseOffset * 10 + sketch.millis() + (x * y * 0.5)) * speed) - 0.5) * amount,
+                y: (sketch.noise((noiseOffset + sketch.millis() + (x * y * 0.5)) * speed) - 0.5) * amount
+            }
+
+        }
+        else if (randomize) {
+            translateOffset = {
+                x: offset.x + sketch.random(min, max),
+                y: offset.y + sketch.random(min, max)
+            }
+        }
+        sketch.translate(translateOffset.x, translateOffset.y);
     }
 
     // Calculate points for an ellipse based on the amount of points and the radius
