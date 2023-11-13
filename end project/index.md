@@ -1,5 +1,17 @@
 # End project
 
+- [End project](#end-project)
+  - [Resources](#resources)
+  - [Requirements](#requirements)
+    - [Presentation](#presentation)
+    - [Documentation](#documentation)
+  - [Variant 1 - Clock](#variant-1---clock)
+    - [Inspiration](#inspiration)
+  - [Variant 2 - Taking data for a walk](#variant-2---taking-data-for-a-walk)
+    - [Resources](#resources-1)
+      - [APIs](#apis)
+
+
 ## Resources
 
 - [Briefing end project](Briefing%20Kickstart%20Prog%202023.pdf)
@@ -7,12 +19,53 @@
 
 ## Requirements
 
-### Variant 1 - Clock
+Create a project for one of the two variants.
+
+### Presentation
+
+Create a short presentation showing off the project idea.
+
+- Concept
+- Moodboard
+- Inspiration
+- First prototypes
+
+Date: 18.12.2023
+Duration: 5 min presentation + 5 min discussion
+
+### Documentation
+
+The project is best uploaded to Ilias as a zip file with the following folder structure:
+
+```
+Project/
+- Project files, code, etc.
+- The project should be executable without special knowledge.
+
+Documentation/
+- Short documentation (.pdf) (see project documentation output for study program
+(must)) -> https://exorciser.ch/_media/di/three/stuemtec/
+di_projektdokumentation_v05_interaktiv.pdf
+- Presentation (.pdf) (submission after presentation)
+
+Pictures/
+- Screenshots, etc. (.jpg, .png, etc) (resolution see project documentation)
+
+Videos/
+Videos (.mp4) (codec see project documentation)
+```
+
+Additional info images: 2-3 screenshots, video screencast max. 60-90 sec.
+The submission must be properly structured and labeled.
+
+- Create a short video clip or an animated gif that shows the clock or the data project in action (e.g. special events at full hour or other special features that you would not be able to see immediately if you only opened the sketch at a convenient time) and also save the clip in Ilias (mp4, dimensions: 1920x1080px)
+
+## Variant 1 - Clock
 
 Try to develop a new graphical concept for the representation of time. In doing so, you should question our common interpretation of "how we represent time". You are completely free to work with graphic elements, such as colors shapes or transparency.
 Video, sound, typography, stories, 3D, everything is allowed. There are no restrictions. Nevertheless, in most cases you will use the function hour(), minute(), second(). You can also use millis(), day() and month() if you wish (but this is not a requirement)
 
-#### Inspiration
+### Inspiration
 
 - [Wikipedia - History of timekeeping devices](https://en.wikipedia.org/wiki/History_of_timekeeping_devices)
 - [Cabinet Magazine - A MINOR HISTORY OF TIME WITHOUT CLOCKS](https://www.cabinetmagazine.org/issues/29/foer.php)
@@ -24,10 +77,16 @@ Video, sound, typography, stories, 3D, everything is allowed. There are no restr
 - [Instagram - Humism](https://www.instagram.com/humism/)
 - [Vendian - Mitchell N Charity - Dot Clock](http://www.vendian.org/envelope/dir2/day_of_dots/)
 
-### Variant 2 - Taking data for a walk
+## Variant 2 - Taking data for a walk
 
 Data is everywhere. It influences the way we read and write the world. Weather forecasts determine whether we plan a trip at the weekend or not. How can we interact with complex data in a playful way? Is it the task of the designer to make data more comprehensible or to create ambiguity? A data set is the starting point for you to deal with questions of narrative and the translation of data. Through the usage of an accessible web API or existing data, you develop a project that visualizes a specific aspect of a data set.
 Applicable APIs: Weather, climate, Twitter, airplanes, ...
+
+### Resources
+
+- [GitHub - Max Frischknecht - Visualizign cultural heritage](https://github.com/baselcodes/BCD2023/tree/main/visualizing-cultural-heritage)
+- [Critical Media Lab](https://criticalmedialab.ch/)
+- [UNIBAS - Participatory Knowledge Practices in Analogue and Digital Image Archives](https://dbis.dmi.unibas.ch/research/projects/pia/)
 
 #### APIs
 
