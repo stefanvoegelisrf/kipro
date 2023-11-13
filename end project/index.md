@@ -97,3 +97,4 @@ Applicable APIs: Weather, climate, Twitter, airplanes, ...
   - [Public APIs - Open government APIs Taiwan](https://publicapis.io/open-government-taiwan-api)
 - [data.gouv.fr - France public APIs](https://www.data.gouv.fr/fr/)
   - [Public APIs - Open government APIs France](https://publicapis.io/open-government-france-api)
+- [Participatory Archive](https://participatory-archives.ch/s/explore)
