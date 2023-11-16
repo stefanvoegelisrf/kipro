@@ -9,6 +9,9 @@
   - [Excercise 3](#excercise-3)
     - [Sketch](#sketch-2)
     - [Screenshot](#screenshot-2)
+  - [Excercise 4](#excercise-4)
+    - [Sketch](#sketch-3)
+    - [Screenshots](#screenshots)
 
 ## Excercise 1
 
@@ -47,3 +50,19 @@
 ### Screenshot
 
 ![Line art with noise position](line%20art%20with%20noise%20position.png)
+
+## Excercise 4
+
+- create a sketch that uses linear and sin/cos function where objects/lines change in size or transparency changes with sin/cos
+
+### Sketch
+
+> See: [Sketch](https://editor.p5js.org/stefanvoegelisrf/sketches/-2fYBgSLF)
+
+### Screenshots
+
+![Sin cos noise circle 1](sin%20cos%20noise%20circle.png)
+![Sin cos noise circle 2](sin%20cos%20noise%20circle%202.png)
+![Sin cos noise circle 3](sin%20cos%20noise%20circle%203.png)
+![Sin cos noise circle 4](sin%20cos%20noise%20circle%204.png)
+![Sin cos noise circle 5](sin%20cos%20noise%20circle%205.png)
