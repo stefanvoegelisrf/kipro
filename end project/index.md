@@ -10,6 +10,7 @@
   - [Variant 2 - Taking data for a walk](#variant-2---taking-data-for-a-walk)
     - [Resources](#resources-1)
       - [APIs](#apis)
+    - [BehiG](#behig)
 
 
 ## Resources
@@ -106,3 +107,14 @@ Applicable APIs: Weather, climate, Twitter, airplanes, ...
   - [GitHub - ](https://github.com/openZH/covid_19)
 - [Google Developer](https://developers.google.com/maps?hl=de)
 - [N2YO - Satellite API](https://www.n2yo.com/api/)
+- [opentransportdata.swiss - Strassenverkehr](https://opentransportdata.swiss/de/strassenverkehr/)
+- [opentransportdata.swiss - Bestandsaufnahme BehiG](https://opentransportdata.swiss/de/dataset/prm_data)
+  - [övinfo.ch - Barrierefreier Zugang](https://www.xn--v-info-vxa.ch/de/datenmanagement/barrierefreier-zugang/erfassung)
+
+### BehiG
+
+#### Developer Setup
+
+- Create account on [opentransportdata.swiss - Registration](https://opentransportdata.swiss/de/register)
+- Create API key on [opentransportdata.swiss - Dev Dashboard](https://opentransportdata.swiss/de/dev-dashboard/)
+- Set API key using `Authorization` header
