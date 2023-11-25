@@ -11,6 +11,8 @@
     - [Resources](#resources-1)
       - [APIs](#apis)
     - [BehiG](#behig)
+    - [Lomepal stage design inspired clock](#lomepal-stage-design-inspired-clock)
+      - [Inspired by](#inspired-by)
 
 
 ## Resources
@@ -119,8 +121,25 @@ Applicable APIs: Weather, climate, Twitter, airplanes, ...
 
 ### BehiG
 
+> See: [Sketch](data%20vis%20behig/dist/)
+
 #### Developer Setup
 
 - Create account on [opentransportdata.swiss - Registration](https://opentransportdata.swiss/de/register)
 - Create API key on [opentransportdata.swiss - Dev Dashboard](https://opentransportdata.swiss/de/dev-dashboard/)
 - Set API key using `Authorization` header
+
+
+### Lomepal stage design inspired clock
+
+> See: [Sketch](clock%20lomepal%20stage%20design/dist)
+
+#### Inspired by
+
+![Stage layout lomepal concert](clock%20lomepal%20stage%20design/IMG_6142.jpeg)
+
+I went to a concert of the french artist Lomepal. The stage design was very flexible and allowed different layouts which were changed throughout the concert.
+I did not memorize the whole stage layout, but some parts of the lighting inspired me to create a watch.
+There were 3 hanging lighting construction with lights of individual lengths. They were moveable and were used in different rotations and heights.
+Attached to the construction were elongated lights in different lengths as visible above.
+As there were three constructions, this led me to recreate these lights and use them to display time.
