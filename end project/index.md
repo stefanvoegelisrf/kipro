@@ -104,12 +104,18 @@ Applicable APIs: Weather, climate, Twitter, airplanes, ...
 - [Geo admin APIs](https://api.geo.admin.ch/)
   - [Documentation](https://www.geo.admin.ch/de/programmierschnittstelle-api)
 - [Opendata Canton ZH](https://www.zh.ch/de/politik-staat/opendata.html)
-  - [GitHub - ](https://github.com/openZH/covid_19)
+  - [GitHub - Canton ZH Covid 19](https://github.com/openZH/covid_19)
 - [Google Developer](https://developers.google.com/maps?hl=de)
 - [N2YO - Satellite API](https://www.n2yo.com/api/)
 - [opentransportdata.swiss - Strassenverkehr](https://opentransportdata.swiss/de/strassenverkehr/)
 - [opentransportdata.swiss - Bestandsaufnahme BehiG](https://opentransportdata.swiss/de/dataset/prm_data)
   - [övinfo.ch - Barrierefreier Zugang](https://www.xn--v-info-vxa.ch/de/datenmanagement/barrierefreier-zugang/erfassung)
+  - [opentransportdata.swiss - Verkehrspunktelemente](https://opentransportdata.swiss/de/dataset/didok/resource/28ef7f3d-e793-49c7-a5fe-d22ff63e952b)
+  - [opentransportdata.swiss - Verkehrspunktelemente API URL](https://opentransportdata.swiss/de/api/1/util/snippet/api_info.html?resource_id=28ef7f3d-e793-49c7-a5fe-d22ff63e952b)
+  - [opentransportdata.swiss - Zugänglichkeit von Haltekanten](https://opentransportdata.swiss/de/dataset/prm_data/resource/5940d7e5-7456-4f02-bb24-f25506036b48)
+  - [opentransportdata.swiss - Zugänglichkeit von Haltekanten API URL](https://opentransportdata.swiss/de/api/1/util/snippet/api_info.html?resource_id=5940d7e5-7456-4f02-bb24-f25506036b48)
+- [opentransportdata.swiss - API cookbook](https://opentransportdata.swiss/de/cookbook/)
+  - [opentransportdata.swiss - API usage](https://opentransportdata.swiss/de/cookbook/verwendung-der-api/)
 
 ### BehiG
 
