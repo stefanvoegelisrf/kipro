@@ -176,6 +176,7 @@ let settings = {
 const sketch = (sketch: p5) => {
     sketch.setup = function () {
         let customizeSketchGui = new GUI();
+        customizeSketchGui.open(false);
         customizeSketchGui.addColor(settings, 'glowColor');
         const lightingRigLeftGui = customizeSketchGui.addFolder('Lighting Rig Left');
         lightingRigLeftGui.add(settings.lightingRigs.left, 'x', -1000, 1000, 10);
