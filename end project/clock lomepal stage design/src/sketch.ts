@@ -170,13 +170,13 @@ let settings = {
             rotation: 180
         }
     },
-    tubeLightGlowColor: "#ff0000"
+    glowColor: "#ff0000"
 }
 
 const sketch = (sketch: p5) => {
     sketch.setup = function () {
         let customizeSketchGui = new GUI();
-        customizeSketchGui.addColor(settings, 'tubeLightGlowColor');
+        customizeSketchGui.addColor(settings, 'glowColor');
         const lightingRigLeftGui = customizeSketchGui.addFolder('Lighting Rig Left');
         lightingRigLeftGui.add(settings.lightingRigs.left, 'x', -1000, 1000, 10);
         lightingRigLeftGui.add(settings.lightingRigs.left, 'y', -1000, 1000, 10);
@@ -204,7 +204,7 @@ const sketch = (sketch: p5) => {
         sketch.scale(settings.lightingRigs.left.scale);
         sketch.translate(settings.lightingRigs.left.x, settings.lightingRigs.left.y)
         sketch.rotate(settings.lightingRigs.left.rotation);
-        drawLightingRig(sketch, settings.tubeLightGlowColor);
+        drawLightingRig(sketch, settings.glowColor);
         sketch.pop();
 
         // draw lighting rig in the middle
@@ -212,7 +212,7 @@ const sketch = (sketch: p5) => {
         sketch.scale(settings.lightingRigs.middle.scale);
         sketch.translate(settings.lightingRigs.middle.x, settings.lightingRigs.middle.y)
         sketch.rotate(settings.lightingRigs.middle.rotation);
-        drawLightingRig(sketch, settings.tubeLightGlowColor);
+        drawLightingRig(sketch, settings.glowColor);
         sketch.pop()
 
         // draw lighting rig on the right
@@ -220,7 +220,7 @@ const sketch = (sketch: p5) => {
         sketch.scale(settings.lightingRigs.right.scale);
         sketch.translate(settings.lightingRigs.right.x, settings.lightingRigs.right.y)
         sketch.rotate(settings.lightingRigs.right.rotation);
-        drawLightingRig(sketch, settings.tubeLightGlowColor);
+        drawLightingRig(sketch, settings.glowColor);
         sketch.pop();
     }
 
