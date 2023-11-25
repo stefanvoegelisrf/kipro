@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "This sketch has been designed to create a customizable face using the calculation of points of an ellipse.",
   "main": "sketch.ts",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
