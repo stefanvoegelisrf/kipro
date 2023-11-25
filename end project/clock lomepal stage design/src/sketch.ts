@@ -90,24 +90,46 @@ const drawLightingRig = (sketch: p5) => {
     let cornerRadius = 5;
     let tubeLightGlowColor = { r: 255, g: 0, b: 0 };
     // draw vertical light tubes
-    let lightTubes = [
+    let verticalLightTubes = [
         // left side
         new LightTube(rectangleStart, rectangleStart, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
         new LightTube(rectangleStart, rectangleWidth * 0.3, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
         // left middle
-        new LightTube(-rectangleWidth * 0.25, rectangleStart + 100, tubeWidth, rectangleWidth * 0.6, tubeLightGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, -rectangleWidth * 0.1, tubeWidth, rectangleWidth * 0.5, tubeLightGlowColor, cornerRadius),
         new LightTube(-rectangleWidth * 0.25, -rectangleStart, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
         // middle
         new LightTube(0, rectangleStart, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
         new LightTube(0, 0, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
         new LightTube(0, -rectangleStart + 50, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
         // right middle
-        new LightTube(rectangleWidth * 0.25, 0 + 100, tubeWidth, rectangleWidth * 0.8, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleWidth * 0.25, -rectangleStart * 0.6, tubeWidth, rectangleWidth * 0.5, tubeLightGlowColor, cornerRadius),
         // right side
-        new LightTube(-rectangleStart, rectangleStart + 100, tubeWidth, rectangleWidth * 0.75, tubeLightGlowColor, cornerRadius),
+        new LightTube(-rectangleStart, -rectangleStart * 0.3, tubeWidth, rectangleWidth * 0.55, tubeLightGlowColor, cornerRadius),
 
     ];
-    lightTubes.forEach((lightTube) => {
+    verticalLightTubes.forEach((lightTube) => {
+        drawLightTube(sketch, lightTube.x, lightTube.y, lightTube.width, lightTube.height, lightTube.glowColor, lightTube.cornerRadius);
+    });
+    // draw horizontal light tubes
+    sketch.rotate(90)
+    let horizontalLightTubes = [
+        // top
+        new LightTube(rectangleStart, rectangleStart, tubeWidth, rectangleWidth * 0.7, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleStart, -rectangleStart * 0.5, tubeWidth, rectangleWidth * 0.2, tubeLightGlowColor, cornerRadius),
+        // top middle
+        new LightTube(-rectangleWidth * 0.25, -rectangleWidth * 0.3, tubeWidth, rectangleWidth * 0.9, tubeLightGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, rectangleWidth * 0.5, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
+        // middle
+        new LightTube(0, rectangleStart * 0.5, tubeWidth, rectangleWidth * 0.35, tubeLightGlowColor, cornerRadius),
+        new LightTube(0, -rectangleStart * 1.1, tubeWidth, rectangleWidth * 0.35, tubeLightGlowColor, cornerRadius),
+        // bottom middle
+        new LightTube(rectangleWidth * 0.25, -rectangleStart * 0.2, tubeWidth, rectangleWidth * 0.5, tubeLightGlowColor, cornerRadius),
+        // bottom
+        new LightTube(-rectangleStart, rectangleStart, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
+        new LightTube(-rectangleStart, 0, tubeWidth, rectangleWidth * 0.25, tubeLightGlowColor, cornerRadius),
+        new LightTube(-rectangleStart, -rectangleStart, tubeWidth, rectangleWidth * 0.25, tubeLightGlowColor, cornerRadius),
+    ];
+    horizontalLightTubes.forEach((lightTube) => {
         drawLightTube(sketch, lightTube.x, lightTube.y, lightTube.width, lightTube.height, lightTube.glowColor, lightTube.cornerRadius);
     });
     sketch.pop();
