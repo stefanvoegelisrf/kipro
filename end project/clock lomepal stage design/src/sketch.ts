@@ -112,6 +112,8 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
         new LightTube(0, -rectangleStart + 50, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
         // right middle
         new LightTube(rectangleWidth * 0.25, -rectangleStart * 0.6, tubeWidth, rectangleWidth * 0.5, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleWidth * 0.25, rectangleStart * 0.5, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleWidth * 0.25, rectangleStart * 1.3, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
         // right side
         new LightTube(-rectangleStart, -rectangleStart * 0.3, tubeWidth, rectangleWidth * 0.55, tubeLightGlowColor, cornerRadius),
 
@@ -123,10 +125,11 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
     sketch.rotate(90)
     let horizontalLightTubes = [
         // top
-        new LightTube(rectangleStart, rectangleStart, tubeWidth, rectangleWidth * 0.7, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleStart, rectangleStart * 0.8, tubeWidth, rectangleWidth * 0.6, tubeLightGlowColor, cornerRadius),
         new LightTube(rectangleStart, -rectangleStart * 0.5, tubeWidth, rectangleWidth * 0.2, tubeLightGlowColor, cornerRadius),
         // top middle
-        new LightTube(-rectangleWidth * 0.25, -rectangleWidth * 0.3, tubeWidth, rectangleWidth * 0.9, tubeLightGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, 0, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, rectangleStart, tubeWidth, rectangleWidth * 0.35, tubeLightGlowColor, cornerRadius),
         new LightTube(-rectangleWidth * 0.25, rectangleWidth * 0.5, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
         // middle
         new LightTube(0, rectangleStart * 0.5, tubeWidth, rectangleWidth * 0.35, tubeLightGlowColor, cornerRadius),
