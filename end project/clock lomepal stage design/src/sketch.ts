@@ -170,10 +170,31 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 0;
         setBlendMode("BURN", settings);
+    },
+    surpriseMe() {
+        settings.rotationEnabled = Math.random() > 0.5;
+        settings.sinOffsetEnabled = Math.random() > 0.5;
+        settings.sinOffsetMultiplier = Math.random() * 300;
+        settings.clock.fake = false;
+        settings.clock.speedUp = Math.random() > 0.5;
+        settings.clock.timeFactor = Math.random() * 10000;
+        settings.clock.displayInBackground = Math.random() > 0.5;
+        settings.clock.time.hours.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+        settings.clock.time.minutes.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+        settings.clock.time.seconds.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+        settings.lightingRigs.left.scale = Math.random() * 2;
+        settings.lightingRigs.middle.scale = Math.random() * 2;
+        settings.lightingRigs.right.scale = Math.random() * 2;
+        settings.lightingRigs.left.x = (Math.random() - 0.5) * 500;
+        settings.lightingRigs.middle.x = (Math.random() - 0.5) * 500;
+        settings.lightingRigs.right.x = (Math.random() - 0.5) * 500;
+        settings.backgroundSettings.enabled = Math.random() > 0.5;
+        settings.backgroundSettings.alpha = Math.random() * 255;
+        settings.backgroundSettings.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
     }
 }
 
-const sketch = (sketch: p5) => {
+const clockSketch = (sketch: p5) => {
     sketch.preload = () => {
         // Load the font
         rubikMonoOne = sketch.loadFont('assets/fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf');
@@ -281,23 +302,25 @@ const configureGui = () => {
     presetsGui.add(actions, 'calmWithText').name('I want to read the time');
     presetsGui.add(actions, 'stageSettingMoody').name("I'm in the mood for flowers");
     presetsGui.add(actions, 'pauseTheTime').name("Stuck in time");
+    presetsGui.add(actions, 'surpriseMe').name("Surprise me");
 
-    const settingsGuid = customizeSketchGui.addFolder('Settings');
-    settingsGuid.add(settings, 'sinOffsetEnabled').name("Enable lighting rig offset based on sin").listen();
-    settingsGuid.add(settings, 'sinOffsetMultiplier', 0, 300, 1).min(0).max(300).step(1).name("Multiply sin value by").listen();
-    settingsGuid.add(settings, 'rotationEnabled').name("Enable rotation").listen();
-    settingsGuid.add(settings, 'blendMode', blendModeOptions).name("Blend mode").onChange((value: blendModes) => {
+    const settingsGui = customizeSketchGui.addFolder('Settings');
+    settingsGui.open(false);
+    settingsGui.add(settings, 'sinOffsetEnabled').name("Enable lighting rig offset based on sin").listen();
+    settingsGui.add(settings, 'sinOffsetMultiplier', 0, 300, 1).min(0).max(300).step(1).name("Multiply sin value by").listen();
+    settingsGui.add(settings, 'rotationEnabled').name("Enable rotation").listen();
+    settingsGui.add(settings, 'blendMode', blendModeOptions).name("Blend mode").onChange((value: blendModes) => {
         setBlendMode(value, settings);
     });
-    settingsGuid.add(settings, 'flashInterval').min(0).max(60).step(1).name("Flash interval in seconds").listen();
+    settingsGui.add(settings, 'flashInterval').min(0).max(60).step(1).name("Flash interval in seconds").listen();
 
-    const backgroundGui = settingsGuid.addFolder('Background');
+    const backgroundGui = settingsGui.addFolder('Background');
     backgroundGui.open(false);
     backgroundGui.add(settings.backgroundSettings, 'enabled').listen();
     backgroundGui.addColor(settings.backgroundSettings, 'color').listen();
     backgroundGui.add(settings.backgroundSettings, 'alpha', 0, 255, 1).listen();
 
-    const clockGui = settingsGuid.addFolder('Clock')
+    const clockGui = settingsGui.addFolder('Clock')
     clockGui.open(false);
     clockGui.add(settings.clock, 'speedUp').name("Speed up time").listen();
     clockGui.add(settings.clock, 'timeFactor', 1, 10000, 1).name("Speed up by factor").listen();
@@ -313,21 +336,21 @@ const configureGui = () => {
     timePartsGui.add(settings.clock.time, 'milliseconds', 0, 1000, 1).listen();
     timePartsGui.add(settings.clock, 'displayInBackground').name("Display clock in background").listen();
 
-    const lightingRigLeftGui = settingsGuid.addFolder('Lighting Rig Left');
+    const lightingRigLeftGui = settingsGui.addFolder('Lighting Rig Left');
     lightingRigLeftGui.open(false);
     lightingRigLeftGui.add(settings.lightingRigs.left, 'x', -1000, 1000, 10).listen();
     lightingRigLeftGui.add(settings.lightingRigs.left, 'y', -1000, 1000, 10).listen();
     lightingRigLeftGui.add(settings.lightingRigs.left, 'rotation', 0, 360, 10).listen();
     lightingRigLeftGui.add(settings.lightingRigs.left, 'scale', 0, 1, 0.01).listen();
 
-    const lightingRigMiddleGui = settingsGuid.addFolder('Lighting Rig Middle');
+    const lightingRigMiddleGui = settingsGui.addFolder('Lighting Rig Middle');
     lightingRigMiddleGui.open(false);
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'x', -1000, 1000, 10).listen();
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'y', -1000, 1000, 10).listen();
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'rotation', 0, 360, 10).listen();
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'scale', 0, 1, 0.01).listen();
 
-    const lightingRigRightGui = settingsGuid.addFolder('Lighting Rig Right');
+    const lightingRigRightGui = settingsGui.addFolder('Lighting Rig Right');
     lightingRigRightGui.open(false);
     lightingRigRightGui.add(settings.lightingRigs.right, 'x', -1000, 1000, 10).listen();
     lightingRigRightGui.add(settings.lightingRigs.right, 'y', -1000, 1000, 10).listen();
@@ -335,4 +358,4 @@ const configureGui = () => {
     lightingRigRightGui.add(settings.lightingRigs.right, 'scale', 0, 1, 0.01).listen();
 }
 
-new p5(sketch);
+new p5(clockSketch);
