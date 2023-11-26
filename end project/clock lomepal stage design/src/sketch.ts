@@ -1,7 +1,8 @@
 import GUI from 'lil-gui';
-import p5 from 'p5';
+import p5, { BLEND_MODE } from 'p5';
 import { LightTube } from './lighttube';
 import { FlashingLight } from './flashinglight';
+import { ISettings, blendModes } from './settings';
 
 const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Date) => {
     let rectangleWidth = 400;
@@ -128,7 +129,7 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Da
     sketch.pop();
 }
 
-let settings = {
+let settings: ISettings = {
     lightingRigs: {
         left: {
             scale: 1,
@@ -163,12 +164,16 @@ let settings = {
     },
     glowColor: "#ff0000",
     sinOffsetEnabled: false,
-    rotationEnabled: false
+    rotationEnabled: false,
+    blendMode: "BLEND"
 }
 let lights: FlashingLight[] = [];
 let normalTime = new Date();
 let fastTime = new Date(normalTime);
 let rubikMonoOne: p5.Font;
+const setBlendMode = (blendMode: blendModes) => {
+    settings.blendMode = blendMode;
+}
 
 
 const addLight = (sketch: p5, offset: number) => {
@@ -194,8 +199,7 @@ const actions = {
     hypnotize() {
         settings.rotationEnabled = true;
         settings.sinOffsetEnabled = true;
-        settings.clock.speedUp = true;
-        settings.clock.timeFactor = 1;
+        settings.clock.speedUp = false;
         settings.clock.displayInBackground = false;
         settings.lightingRigs.left.scale = 2;
         settings.lightingRigs.middle.scale = 2;
@@ -204,7 +208,7 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 0;
     },
-    default() {
+    calmWithText() {
         settings.rotationEnabled = false;
         settings.sinOffsetEnabled = false;
         settings.clock.speedUp = false;
@@ -218,22 +222,78 @@ const actions = {
         settings.lightingRigs.right.x = 600;
     }
 }
+const blendModeOptions: blendModes[] = [
+    "BLEND",
+    "ADD",
+    "DARKEST",
+    "LIGHTEST",
+    "DIFFERENCE",
+    "EXCLUSION",
+    "MULTIPLY",
+    "SCREEN",
+    "REPLACE",
+    "OVERLAY",
+    "HARD_LIGHT",
+    "SOFT_LIGHT",
+    "DODGE",
+    "BURN",
+    "SUBTRACT"
+];
+const applyBlendMode = (sketch: p5, blendMode: blendModes) => {
+    switch (blendMode) {
+        case "BLEND":
+            sketch.blendMode(sketch.BLEND);
+            break;
+        case "ADD":
+            sketch.blendMode(sketch.ADD);
+            break;
+        case "DARKEST":
+            sketch.blendMode(sketch.DARKEST);
+            break;
+        case "LIGHTEST":
+            sketch.blendMode(sketch.LIGHTEST);
+            break;
+        case "DIFFERENCE":
+            sketch.blendMode(sketch.DIFFERENCE);
+            break;
+        case "EXCLUSION":
+            sketch.blendMode(sketch.EXCLUSION);
+            break;
+        case "MULTIPLY":
+            sketch.blendMode(sketch.MULTIPLY);
+            break;
+        case "SCREEN":
+            sketch.blendMode(sketch.SCREEN);
+            break;
+        case "REPLACE":
+            sketch.blendMode(sketch.REPLACE);
+            break;
+        case "OVERLAY":
+            sketch.blendMode(sketch.OVERLAY);
+            break;
+        default:
+            sketch.blendMode(sketch.BLEND);
+            break;
+    }
+}
 const sketch = (sketch: p5) => {
     sketch.preload = () => {
         // Load the font
         rubikMonoOne = sketch.loadFont('assets/fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf');
     };
     sketch.setup = function () {
-        sketch.blendMode(sketch.ADD);
         let customizeSketchGui = new GUI();
         customizeSketchGui.open(false);
         customizeSketchGui.addColor(settings, 'glowColor').listen();
         customizeSketchGui.add(settings, 'sinOffsetEnabled').listen();
         customizeSketchGui.add(settings, 'rotationEnabled').listen();
+        customizeSketchGui.add(settings, 'blendMode', blendModeOptions).onChange((value: blendModes) => {
+            setBlendMode(value);
+        });
         const presetsGui = customizeSketchGui.addFolder('Presets');
         presetsGui.add(actions, 'haveFun').name('have fun');
         presetsGui.add(actions, 'hypnotize').name('Hypnotize');
-        presetsGui.add(actions, 'default').name('Default');
+        presetsGui.add(actions, 'calmWithText').name('Calm with text');
         const clockGui = customizeSketchGui.addFolder('Clock')
         clockGui.add(settings.clock, 'speedUp').listen();
         clockGui.add(settings.clock, 'timeFactor', 1, 1000, 1).listen();
@@ -264,6 +324,7 @@ const sketch = (sketch: p5) => {
     }
 
     sketch.draw = function () {
+        applyBlendMode(sketch, settings.blendMode);
         sketch.background(0);
         sketch.translate(sketch.width / 2, sketch.height / 2);
 
@@ -326,6 +387,7 @@ const sketch = (sketch: p5) => {
         sketch.push();
         sketch.scale(settings.lightingRigs.left.scale);
         sketch.translate(settings.lightingRigs.left.x + sinOffset, settings.lightingRigs.left.y)
+        sketch.rotate(settings.lightingRigs.right.rotation + minutesAngle);
         drawLightingRig(sketch, settings.glowColor, currentDate);
         sketch.pop();
 
