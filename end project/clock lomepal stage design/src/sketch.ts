@@ -107,7 +107,6 @@ const actions = {
         settings.sinOffsetEnabled = true;
         settings.sinOffsetMultiplier = 60;
         settings.clock.speedUp = false;
-        settings.clock.timeFactor = 10;
         settings.clock.displayInBackground = true;
         settings.lightingRigs.left.scale = 1;
         settings.lightingRigs.middle.scale = 1;
@@ -116,6 +115,24 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 400;
         settings.backgroundSettings.enabled = true;
+        setBlendMode("BLEND", settings);
+    },
+    stageSettingMoody() {
+        settings.rotationEnabled = true;
+        settings.sinOffsetEnabled = true;
+        settings.sinOffsetMultiplier = 30;
+        settings.clock.speedUp = false;
+        settings.clock.displayInBackground = false;
+        settings.clock.time.hours.glowColor = "#ffbe0b"
+        settings.clock.time.minutes.glowColor = "#fb5607"
+        settings.clock.time.seconds.glowColor = "#ff006e"
+        settings.lightingRigs.left.scale = 1.5;
+        settings.lightingRigs.middle.scale = 1.5;
+        settings.lightingRigs.right.scale = 1.5;
+        settings.lightingRigs.left.x = -400;
+        settings.lightingRigs.middle.x = 0;
+        settings.lightingRigs.right.x = 400;
+        settings.backgroundSettings.enabled = true
         setBlendMode("BLEND", settings);
     }
 }
@@ -237,6 +254,7 @@ const configureGui = () => {
     presetsGui.add(actions, 'haveFun').name('Speed me up');
     presetsGui.add(actions, 'hypnotize').name('Hypnotize me slowly');
     presetsGui.add(actions, 'calmWithText').name('I want to read the time');
+    presetsGui.add(actions, 'stageSettingMoody').name('Moody');
 
     const clockGui = customizeSketchGui.addFolder('Clock')
     clockGui.open(false);
