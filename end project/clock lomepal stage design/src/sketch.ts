@@ -18,6 +18,36 @@ class LightTube {
     public cornerRadius: number;
 }
 
+class FlashingLight {
+    public x: number;
+    public y: number;
+    public size: number;
+    public brightness: number;
+    constructor(x: number, y: number, size: number) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.brightness = 255;
+    }
+
+    // Method to update the light
+    update() {
+        this.brightness -= 255 / 30;
+        if (this.brightness < 0) {
+            this.brightness = 0;
+        }
+    }
+
+    // Method to display the light
+    display(sketch: p5) {
+        sketch.push();
+        sketch.noStroke();
+        sketch.fill(255, 255, 255, this.brightness);
+        sketch.circle(this.x, this.y, this.size);
+        sketch.pop()
+    }
+}
+
 const hexToRgb = (hex: string) => {
     //convert hex to rgb
     let r = parseInt(hex.slice(1, 3), 16);
@@ -152,25 +182,33 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
 let settings = {
     lightingRigs: {
         left: {
-            scale: 0.5,
+            scale: 0.8,
             x: -700,
             y: -300,
             rotation: 0
         },
         middle: {
-            scale: 0.5,
+            scale: 0.8,
             x: 0,
             y: 200,
             rotation: 270
         },
         right: {
-            scale: 0.5,
+            scale: 0.8,
             x: 700,
             y: -100,
             rotation: 180
         }
     },
     glowColor: "#ff0000"
+}
+let lights: FlashingLight[] = [];
+
+const addLight = (sketch: p5, offset: number) => {
+    let size = sketch.random(50, 150);
+    let x = (sketch.noise(sketch.millis() * 0.001 + offset) - 0.5) * sketch.width * 2 - size;
+    let y = (sketch.noise(sketch.millis() * 0.001 + offset + 9999) - 0.5) * sketch.height * 2 - size;
+    lights.push(new FlashingLight(x, y, size));
 }
 
 const sketch = (sketch: p5) => {
@@ -193,6 +231,7 @@ const sketch = (sketch: p5) => {
         lightingRigRightGui.add(settings.lightingRigs.right, 'y', -1000, 1000, 10);
         lightingRigRightGui.add(settings.lightingRigs.right, 'rotation', 0, 360, 10);
         lightingRigRightGui.add(settings.lightingRigs.right, 'scale', 0, 1, 0.01);
+        sketch.frameRate(60);
         sketch.angleMode(sketch.DEGREES);
         sketch.createCanvas(sketch.windowWidth, sketch.windowHeight);
     }
@@ -200,6 +239,15 @@ const sketch = (sketch: p5) => {
     sketch.draw = function () {
         sketch.background(0);
         sketch.translate(sketch.width / 2, sketch.height / 2);
+
+        // Update and display each light
+        for (let i = lights.length - 1; i >= 0; i--) {
+            lights[i].update();
+            lights[i].display(sketch);
+            if (lights[i].brightness <= 0) {
+                lights.splice(i, 1);
+            }
+        }
         // draw lighting rig on the left
         sketch.push();
         sketch.scale(settings.lightingRigs.left.scale);
@@ -223,6 +271,16 @@ const sketch = (sketch: p5) => {
         sketch.rotate(settings.lightingRigs.right.rotation);
         drawLightingRig(sketch, settings.glowColor);
         sketch.pop();
+
+
+        if (sketch.frameCount % 10 == 0) {
+            addLight(sketch, 1);
+            addLight(sketch, 2);
+            addLight(sketch, 3);
+            addLight(sketch, 4);
+            addLight(sketch, 5);
+            addLight(sketch, 6);
+        }
     }
 
     sketch.windowResized = function () {
