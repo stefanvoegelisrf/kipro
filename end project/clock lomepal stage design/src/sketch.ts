@@ -4,8 +4,6 @@ import { LightTube } from './lighttube';
 import { FlashingLight } from './flashinglight';
 
 const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Date) => {
-    // draw dark grey lighting brackets
-    // lighting brackets are square and divided into 4 sections
     let rectangleWidth = 400;
     let rectangleStart = -rectangleWidth * 0.5;
     sketch.push();
@@ -141,13 +139,13 @@ let settings = {
             scale: 0.8,
             x: 0,
             y: 0,
-            rotation: 180
+            rotation: 0
         },
         right: {
             scale: 0.8,
             x: 600,
             y: 0,
-            rotation: 90
+            rotation: 0
         }
     },
     clock: {
@@ -182,7 +180,7 @@ const sketch = (sketch: p5) => {
         customizeSketchGui.addColor(settings, 'glowColor');
         const clockGui = customizeSketchGui.addFolder('Clock')
         clockGui.add(settings.clock, 'speedUp');
-        clockGui.add(settings.clock, 'timeFactor', 1, 100, 1);
+        clockGui.add(settings.clock, 'timeFactor', 1, 1000, 1);
         clockGui.add(settings.clock, 'fake');
         clockGui.add(settings.clock.time, 'hours', 0, 24, 1);
         clockGui.add(settings.clock.time, 'minutes', 0, 60, 1);
@@ -228,11 +226,9 @@ const sketch = (sketch: p5) => {
         // }
 
         if (settings.clock.speedUp) {
-            // If speedUp is true, advance time faster
             fastTime.setTime(normalTime.getTime() + (sketch.millis() * settings.clock.timeFactor));
         } else {
-            // If speedUp is false, use normal time
-            normalTime = new Date(); // Update the normal time
+            normalTime = new Date();
         }
         let currentDate = settings.clock.speedUp ? fastTime : normalTime;
         if (settings.clock.fake) {
@@ -243,19 +239,22 @@ const sketch = (sketch: p5) => {
         }
         if (settings.clock.displayInBackground) {
             sketch.push();
-            sketch.textSize(100);
+            sketch.textSize(200);
             sketch.fill(255);
             sketch.textAlign(sketch.CENTER, sketch.CENTER);
             sketch.text(currentDate.toLocaleTimeString(), 0, 0)
             sketch.pop();
         }
-        let minutesAngle = 0;
-        let hoursWithMinutes = currentDate.getHours() + currentDate.getMinutes() / 60;
+        let minutes = currentDate.getMinutes();
+        let minutesWithMilliseconds = minutes + currentDate.getMilliseconds() / 1000;
+        let minutesAngle = sketch.map(minutes, 0, 59, 0, 360);
+        let hoursWithMinutes = currentDate.getHours() + minutesWithMilliseconds / 60;
         let hoursAngle = sketch.map(hoursWithMinutes, 0, 24, 0, 360);
 
         let sinOffsetMultiplier = 60;
-        // let sinOffset = (sketch.sin(sketch.millis() * 0.01) * sinOffsetMultiplier);
-        let sinOffset = 0;
+        let sinOffset = (sketch.sin(sketch.millis() * 0.01) * sinOffsetMultiplier);
+        // let sinOffset = 0;
+
         // draw lighting rig on the left
         sketch.push();
         sketch.scale(settings.lightingRigs.left.scale);
