@@ -266,7 +266,8 @@ const sketch = (sketch: p5) => {
         let hoursWithMinutes = currentDate.getHours() + currentDate.getMinutes() / 60;
         let hoursAngle = sketch.map(hoursWithMinutes, 0, 24, 0, 360);
 
-        let sinOffset = (sketch.sin(sketch.millis() * 0.01) * 60);
+        let sinOffsetMultiplier = 60;
+        let sinOffset = (sketch.sin(sketch.millis() * 0.01) * sinOffsetMultiplier);
         // draw lighting rig on the left
         sketch.push();
         sketch.scale(settings.lightingRigs.left.scale);
@@ -278,7 +279,7 @@ const sketch = (sketch: p5) => {
         // draw lighting rig in the middle
         sketch.push();
         sketch.scale(settings.lightingRigs.middle.scale);
-        sketch.translate(settings.lightingRigs.middle.x, settings.lightingRigs.middle.y + sinOffset - 100)
+        sketch.translate(settings.lightingRigs.middle.x, settings.lightingRigs.middle.y - sketch.map(sinOffset, -sinOffsetMultiplier, sinOffsetMultiplier, 100, 200))
         sketch.rotate(settings.lightingRigs.middle.rotation + hoursAngle);
         drawLightingRig(sketch, settings.glowColor);
         sketch.pop()
