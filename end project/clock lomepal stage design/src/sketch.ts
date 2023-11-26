@@ -8,7 +8,7 @@ let settings: ISettings = {
     lightingRigs: {
         left: {
             scale: 1,
-            x: -600,
+            x: -400,
             y: 0,
             rotation: 0
         },
@@ -20,7 +20,7 @@ let settings: ISettings = {
         },
         right: {
             scale: 1,
-            x: 600,
+            x: 400,
             y: 0,
             rotation: 0
         }
@@ -32,15 +32,15 @@ let settings: ISettings = {
         time: {
             hours: {
                 value: 0,
-                glowColor: "#FF00FF"
+                glowColor: "#0A00B8"
             },
             minutes: {
                 value: 0,
-                glowColor: "#0000FF"
+                glowColor: "#7209B8"
             },
             seconds: {
                 value: 0,
-                glowColor: "#00FF00"
+                glowColor: "#B8128C"
             },
             milliseconds: 0
         },
@@ -49,11 +49,11 @@ let settings: ISettings = {
     backgroundSettings: {
         enabled: true,
         color: "#000000",
-        alpha: 255
+        alpha: 100
     },
-    sinOffsetEnabled: false,
+    sinOffsetEnabled: true,
     sinOffsetMultiplier: 60,
-    rotationEnabled: false,
+    rotationEnabled: true,
     blendMode: "BLEND"
 }
 const drawLightingRig = (sketch: p5, currentDate: Date) => {
@@ -90,9 +90,9 @@ const actions = {
         settings.clock.speedUp = true;
         settings.clock.timeFactor = 10;
         settings.clock.displayInBackground = false;
-        settings.clock.time.hours.glowColor = "#1F382A";
-        settings.clock.time.minutes.glowColor = "#09B855";
-        settings.clock.time.seconds.glowColor = "#7209B8";
+        settings.clock.time.hours.glowColor = "#0A00B8";
+        settings.clock.time.minutes.glowColor = "#7209B8";
+        settings.clock.time.seconds.glowColor = "#B8128C";
         settings.lightingRigs.left.scale = 2;
         settings.lightingRigs.middle.scale = 2;
         settings.lightingRigs.right.scale = 2;
@@ -103,17 +103,18 @@ const actions = {
         setBlendMode("SUBTRACT", settings);
     },
     calmWithText() {
-        settings.rotationEnabled = false;
-        settings.sinOffsetEnabled = false;
+        settings.rotationEnabled = true;
+        settings.sinOffsetEnabled = true;
+        settings.sinOffsetMultiplier = 60;
         settings.clock.speedUp = false;
         settings.clock.timeFactor = 10;
         settings.clock.displayInBackground = true;
         settings.lightingRigs.left.scale = 1;
         settings.lightingRigs.middle.scale = 1;
         settings.lightingRigs.right.scale = 1;
-        settings.lightingRigs.left.x = -600;
+        settings.lightingRigs.left.x = -400;
         settings.lightingRigs.middle.x = 0;
-        settings.lightingRigs.right.x = 600;
+        settings.lightingRigs.right.x = 400;
         settings.backgroundSettings.enabled = true;
         setBlendMode("BLEND", settings);
     }
@@ -226,10 +227,11 @@ const configureGui = () => {
         setBlendMode(value, settings);
     });
 
-    const backgreoundGui = customizeSketchGui.addFolder('Background');
-    backgreoundGui.add(settings.backgroundSettings, 'enabled').listen();
-    backgreoundGui.addColor(settings.backgroundSettings, 'color').listen();
-    backgreoundGui.add(settings.backgroundSettings, 'alpha', 0, 255, 1).listen();
+    const backgroundGui = customizeSketchGui.addFolder('Background');
+    backgroundGui.open(false);
+    backgroundGui.add(settings.backgroundSettings, 'enabled').listen();
+    backgroundGui.addColor(settings.backgroundSettings, 'color').listen();
+    backgroundGui.add(settings.backgroundSettings, 'alpha', 0, 255, 1).listen();
 
     const presetsGui = customizeSketchGui.addFolder('Presets');
     presetsGui.add(actions, 'haveFun').name('Speed me up');
@@ -237,6 +239,7 @@ const configureGui = () => {
     presetsGui.add(actions, 'calmWithText').name('I want to read the time');
 
     const clockGui = customizeSketchGui.addFolder('Clock')
+    clockGui.open(false);
     clockGui.add(settings.clock, 'speedUp').listen();
     clockGui.add(settings.clock, 'timeFactor', 1, 10000, 1).listen();
 
@@ -252,18 +255,21 @@ const configureGui = () => {
     timePartsGui.add(settings.clock, 'displayInBackground').listen();
 
     const lightingRigLeftGui = customizeSketchGui.addFolder('Lighting Rig Left');
+    lightingRigLeftGui.open(false);
     lightingRigLeftGui.add(settings.lightingRigs.left, 'x', -1000, 1000, 10).listen();
     lightingRigLeftGui.add(settings.lightingRigs.left, 'y', -1000, 1000, 10).listen();
     lightingRigLeftGui.add(settings.lightingRigs.left, 'rotation', 0, 360, 10).listen();
     lightingRigLeftGui.add(settings.lightingRigs.left, 'scale', 0, 1, 0.01).listen();
 
     const lightingRigMiddleGui = customizeSketchGui.addFolder('Lighting Rig Middle');
+    lightingRigMiddleGui.open(false);
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'x', -1000, 1000, 10).listen();
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'y', -1000, 1000, 10).listen();
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'rotation', 0, 360, 10).listen();
     lightingRigMiddleGui.add(settings.lightingRigs.middle, 'scale', 0, 1, 0.01).listen();
 
     const lightingRigRightGui = customizeSketchGui.addFolder('Lighting Rig Right');
+    lightingRigRightGui.open(false);
     lightingRigRightGui.add(settings.lightingRigs.right, 'x', -1000, 1000, 10).listen();
     lightingRigRightGui.add(settings.lightingRigs.right, 'y', -1000, 1000, 10).listen();
     lightingRigRightGui.add(settings.lightingRigs.right, 'rotation', 0, 360, 10).listen();
