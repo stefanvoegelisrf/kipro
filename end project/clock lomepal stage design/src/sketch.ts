@@ -190,19 +190,19 @@ let settings = {
         left: {
             scale: 0.8,
             x: -700,
-            y: -100,
+            y: 0,
             rotation: 0
         },
         middle: {
             scale: 0.8,
             x: 0,
-            y: 100,
+            y: 0,
             rotation: 180
         },
         right: {
             scale: 0.8,
             x: 700,
-            y: -100,
+            y: 0,
             rotation: 90
         }
     },
@@ -279,7 +279,7 @@ const sketch = (sketch: p5) => {
         // draw lighting rig in the middle
         sketch.push();
         sketch.scale(settings.lightingRigs.middle.scale);
-        sketch.translate(settings.lightingRigs.middle.x, settings.lightingRigs.middle.y - sketch.map(sinOffset, -sinOffsetMultiplier, sinOffsetMultiplier, 100, 200))
+        sketch.translate(settings.lightingRigs.middle.x, settings.lightingRigs.middle.y - sinOffset)
         sketch.rotate(settings.lightingRigs.middle.rotation + hoursAngle);
         drawLightingRig(sketch, settings.glowColor);
         sketch.pop()
