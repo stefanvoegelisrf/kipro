@@ -7,10 +7,15 @@ export interface ISettings {
         right: ILightingRigSettings
     },
     clock: IClockSettings,
-    glowColor: string,
     sinOffsetEnabled: boolean,
+    sinOffsetMultiplier: number,
     rotationEnabled: boolean,
-    blendMode: blendModes
+    blendMode: blendModes,
+    backgroundSettings: {
+        enabled: boolean,
+        color: string,
+        alpha: number
+    },
 }
 
 export type blendModes = "BLEND" | "ADD" | "DARKEST" | "LIGHTEST" | "DIFFERENCE" | "EXCLUSION" | "MULTIPLY" | "SCREEN" | "REPLACE" | "OVERLAY" | "HARD_LIGHT" | "SOFT_LIGHT" | "DODGE" | "BURN" | "SUBTRACT";

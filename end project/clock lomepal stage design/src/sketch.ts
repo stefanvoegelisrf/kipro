@@ -2,7 +2,7 @@ import GUI from 'lil-gui';
 import p5 from 'p5';
 import { ISettings, blendModes } from './settings';
 import { LightingRig } from './lightingrig';
-import { applyBlendMode, blendModeOptions, setBlendMode } from './utils';
+import { applyBlendMode, blendModeOptions, hexToRgb, setBlendMode } from './utils';
 
 let settings: ISettings = {
     lightingRigs: {
@@ -46,8 +46,13 @@ let settings: ISettings = {
         },
         displayInBackground: true
     },
-    glowColor: "#ff0000",
+    backgroundSettings: {
+        enabled: true,
+        color: "#000000",
+        alpha: 255
+    },
     sinOffsetEnabled: false,
+    sinOffsetMultiplier: 60,
     rotationEnabled: false,
     blendMode: "BLEND"
 }
@@ -65,26 +70,37 @@ const actions = {
         settings.rotationEnabled = true;
         settings.sinOffsetEnabled = true;
         settings.clock.speedUp = true;
-        settings.clock.timeFactor = 1000;
+        settings.clock.timeFactor = 250;
         settings.clock.displayInBackground = false;
+        settings.clock.time.hours.glowColor = "#fe218b";
+        settings.clock.time.minutes.glowColor = "#fed700";
+        settings.clock.time.seconds.glowColor = "#21b0fe";
         settings.lightingRigs.left.scale = 2;
         settings.lightingRigs.middle.scale = 2;
         settings.lightingRigs.right.scale = 2;
         settings.lightingRigs.left.x = 0;
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 0;
+        settings.backgroundSettings.enabled = false;
+        setBlendMode("SUBTRACT", settings);
     },
     hypnotize() {
         settings.rotationEnabled = true;
         settings.sinOffsetEnabled = true;
-        settings.clock.speedUp = false;
+        settings.clock.speedUp = true;
+        settings.clock.timeFactor = 10;
         settings.clock.displayInBackground = false;
+        settings.clock.time.hours.glowColor = "#1F382A";
+        settings.clock.time.minutes.glowColor = "#09B855";
+        settings.clock.time.seconds.glowColor = "#7209B8";
         settings.lightingRigs.left.scale = 2;
         settings.lightingRigs.middle.scale = 2;
         settings.lightingRigs.right.scale = 2;
         settings.lightingRigs.left.x = 0;
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 0;
+        settings.backgroundSettings.alpha = 100;
+        setBlendMode("SUBTRACT", settings);
     },
     calmWithText() {
         settings.rotationEnabled = false;
@@ -98,6 +114,8 @@ const actions = {
         settings.lightingRigs.left.x = -600;
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 600;
+        settings.backgroundSettings.enabled = true;
+        setBlendMode("BLEND", settings);
     }
 }
 
@@ -115,7 +133,10 @@ const sketch = (sketch: p5) => {
 
     sketch.draw = function () {
         applyBlendMode(sketch, settings.blendMode);
-        sketch.background(0);
+        if (settings.backgroundSettings.enabled) {
+            let backgroundRgb = hexToRgb(settings.backgroundSettings.color);
+            sketch.background(backgroundRgb.r, backgroundRgb.g, backgroundRgb.b, settings.backgroundSettings.alpha);
+        }
         sketch.translate(sketch.width / 2, sketch.height / 2);
         let currentDate = getDateBasedOnSettings(sketch);
         if (settings.clock.displayInBackground) {
@@ -134,8 +155,7 @@ const sketch = (sketch: p5) => {
             minutesAngle = 0;
         }
 
-        let sinOffsetMultiplier = 60;
-        let sinOffset = (sketch.sin(sketch.millis() * 0.01) * sinOffsetMultiplier);
+        let sinOffset = (sketch.sin(sketch.millis() * 0.01) * settings.sinOffsetMultiplier);
         if (!settings.sinOffsetEnabled) {
             sinOffset = 0;
         }
@@ -199,17 +219,22 @@ const getDateBasedOnSettings = (sketch: p5) => {
 const configureGui = () => {
     let customizeSketchGui = new GUI();
     customizeSketchGui.open(false);
-    customizeSketchGui.addColor(settings, 'glowColor').listen();
     customizeSketchGui.add(settings, 'sinOffsetEnabled').listen();
+    customizeSketchGui.add(settings, 'sinOffsetMultiplier', 0, 300, 1).listen();
     customizeSketchGui.add(settings, 'rotationEnabled').listen();
     customizeSketchGui.add(settings, 'blendMode', blendModeOptions).onChange((value: blendModes) => {
         setBlendMode(value, settings);
     });
 
+    const backgreoundGui = customizeSketchGui.addFolder('Background');
+    backgreoundGui.add(settings.backgroundSettings, 'enabled').listen();
+    backgreoundGui.addColor(settings.backgroundSettings, 'color').listen();
+    backgreoundGui.add(settings.backgroundSettings, 'alpha', 0, 255, 1).listen();
+
     const presetsGui = customizeSketchGui.addFolder('Presets');
-    presetsGui.add(actions, 'haveFun').name('have fun');
-    presetsGui.add(actions, 'hypnotize').name('Hypnotize');
-    presetsGui.add(actions, 'calmWithText').name('Calm with text');
+    presetsGui.add(actions, 'haveFun').name('Speed me up');
+    presetsGui.add(actions, 'hypnotize').name('Hypnotize me slowly');
+    presetsGui.add(actions, 'calmWithText').name('I want to read the time');
 
     const clockGui = customizeSketchGui.addFolder('Clock')
     clockGui.add(settings.clock, 'speedUp').listen();
