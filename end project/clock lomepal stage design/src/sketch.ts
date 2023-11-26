@@ -129,8 +129,7 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
     let cornerRadius = 5;
 
     let currentDate = new Date();
-    let milliseconds = currentDate.getMilliseconds() / 1000;
-    let seconds = currentDate.getSeconds() + milliseconds;
+    let seconds = currentDate.getSeconds();
     let minutes = currentDate.getMinutes();
     let hours = currentDate.getHours();
     let thirdWidth = sketch.map(seconds, 0, 59, 20, rectangleWidth * 0.3);
@@ -290,9 +289,6 @@ const sketch = (sketch: p5) => {
         sketch.rotate(settings.lightingRigs.right.rotation - minutesAngle);
         drawLightingRig(sketch, settings.glowColor);
         sketch.pop();
-
-
-
     }
 
     sketch.windowResized = function () {
