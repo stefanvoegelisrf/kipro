@@ -89,6 +89,7 @@ const actions = {
     hypnotize() {
         settings.rotationEnabled = true;
         settings.sinOffsetEnabled = true;
+        settings.clock.fake = false;
         settings.clock.speedUp = true;
         settings.clock.timeFactor = 10;
         settings.clock.displayInBackground = false;
@@ -109,8 +110,12 @@ const actions = {
         settings.rotationEnabled = true;
         settings.sinOffsetEnabled = true;
         settings.sinOffsetMultiplier = 60;
+        settings.clock.fake = false;
         settings.clock.speedUp = false;
         settings.clock.displayInBackground = true;
+        settings.clock.time.hours.glowColor= "#0A00B8";
+        settings.clock.time.minutes.glowColor = "#7209B8";
+        settings.clock.time.seconds.glowColor = "#B8128C";
         settings.lightingRigs.left.scale = 1;
         settings.lightingRigs.middle.scale = 1;
         settings.lightingRigs.right.scale = 1;
@@ -125,6 +130,7 @@ const actions = {
         settings.rotationEnabled = true;
         settings.sinOffsetEnabled = true;
         settings.sinOffsetMultiplier = 30;
+        settings.clock.fake = false;
         settings.clock.speedUp = false;
         settings.clock.displayInBackground = false;
         settings.clock.time.hours.glowColor = "#ffbe0b"
@@ -139,6 +145,29 @@ const actions = {
         settings.backgroundSettings.enabled = true
         settings.flashInterval = 30;
         setBlendMode("BLEND", settings);
+    },
+    pauseTheTime() {
+        settings.rotationEnabled = true;
+        settings.sinOffsetEnabled = true;
+        settings.sinOffsetMultiplier = 100;
+        settings.clock.fake = true;
+        settings.clock.time.hours.value = 12;
+        settings.clock.time.minutes.value = 35;
+        settings.clock.time.seconds.value = 10;
+        settings.clock.speedUp = false;
+        settings.clock.displayInBackground = false;
+        settings.clock.time.hours.glowColor = "#8C0F0F"
+        settings.clock.time.minutes.glowColor = "#F20707"
+        settings.clock.time.seconds.glowColor = "#F25C5C"
+        settings.backgroundSettings.enabled = true;
+        settings.backgroundSettings.alpha = 30;
+        settings.lightingRigs.left.scale = 1.5;
+        settings.lightingRigs.middle.scale = 1.5;
+        settings.lightingRigs.right.scale = 1.5;
+        settings.lightingRigs.left.x = 0;
+        settings.lightingRigs.middle.x = 0;
+        settings.lightingRigs.right.x = 0;
+        setBlendMode("BURN", settings);
     }
 }
 
@@ -262,6 +291,7 @@ const configureGui = () => {
     presetsGui.add(actions, 'hypnotize').name('Hypnotize me slowly');
     presetsGui.add(actions, 'calmWithText').name('I want to read the time');
     presetsGui.add(actions, 'stageSettingMoody').name("I'm in the mood for flowers");
+    presetsGui.add(actions, 'pauseTheTime').name("Stuck in time");
 
     const clockGui = customizeSketchGui.addFolder('Clock')
     clockGui.open(false);
