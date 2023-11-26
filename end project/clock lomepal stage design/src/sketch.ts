@@ -58,6 +58,9 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Da
     let amplitudeThirdWidth = (thirdWidthBaseline - (thirdWidthBaseline * 0.5)) / 2;
     let quarterWidthBaseline = rectangleWidth * 0.25;
     let amplitudeQuarterWidth = (quarterWidthBaseline - (quarterWidthBaseline * 0.5)) / 2;
+    let amplitudeTwoThirdWidth = (thirdWidthBaseline * 2 - (thirdWidthBaseline * 0.25)) / 2;
+    let oneTenthWidthBaseline = rectangleWidth * 0.1;
+    let amplitudeOneTenthWidth = (oneTenthWidthBaseline - (oneTenthWidthBaseline * 0.5)) / 2;
 
     let milliseconds = currentDate.getMilliseconds();
     let seconds = currentDate.getSeconds();
@@ -70,28 +73,36 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Da
     let minutesAngle = sketch.map(minutesWithSeconds, 0, 59, 0, 360);
     let halfWidthAlternatingBasedOnMinutes = halwidthBaseLine - amplitudeHalfWidth * sketch.cos(minutesAngle);
     let quarterWidthAlternatingBasedOnMinutes = quarterWidthBaseline - amplitudeQuarterWidth * sketch.cos(minutesAngle);
-
+    let oneTenthWidthAlternatingBasedOnMinutes = oneTenthWidthBaseline - amplitudeOneTenthWidth * sketch.cos(minutesAngle);
 
     let hours = currentDate.getHours();
-    let tubeLightWithChangingValueGlowColor = "#00FFFF";
+    let hoursWithMinutes = hours + minutesWithSeconds / 60;
+    let hoursAngle = sketch.map(hoursWithMinutes, 0, 24, 0, 360);
+    let twoThirdWidthAlternatingBasedOnHours = thirdWidthBaseline * 1.6 - amplitudeTwoThirdWidth * sketch.cos(hoursAngle);
+    let quarterWidthAlternatingBasedOnHours = quarterWidthBaseline - amplitudeQuarterWidth * sketch.cos(hoursAngle);
+    let oneThirdWidthAlternatingBasedOnHours = thirdWidthBaseline - amplitudeThirdWidth * sketch.cos(hoursAngle);
+
+    let tubeLightWithChangingSecondsValueGlowColor = "#00FFFF";
+    let tubeLightWithChangingMinutesValueGlowColor = "#00FF00";
+    let tubeLightWithChangingHoursValueGlowColor = "#FF00FF";
     // draw vertical light tubes
     let verticalLightTubes = [
         // left side
-        new LightTube(rectangleStart, rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingValueGlowColor, cornerRadius),
-        new LightTube(rectangleStart, rectangleWidth * 0.3, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleStart, rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
+        new LightTube(rectangleStart, rectangleWidth * 0.25, tubeWidth, oneThirdWidthAlternatingBasedOnHours, tubeLightWithChangingHoursValueGlowColor, cornerRadius),
         // left middle
-        new LightTube(-rectangleWidth * 0.25, -rectangleWidth * 0.1, tubeWidth, halfWidthAlternatingBasedOnMinutes, tubeLightWithChangingValueGlowColor, cornerRadius),
-        new LightTube(-rectangleWidth * 0.25, -rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingValueGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, -rectangleWidth * 0.125, tubeWidth, halfWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, -rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
         // middle
         new LightTube(0, rectangleStart, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
         new LightTube(0, 0, tubeWidth, rectangleWidth * 0.3, tubeLightGlowColor, cornerRadius),
-        new LightTube(0, -rectangleStart + 50, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
+        new LightTube(0, -rectangleStart + 50, tubeWidth, oneTenthWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
         // right middle
-        new LightTube(rectangleWidth * 0.25, -rectangleStart * 0.6, tubeWidth, rectangleWidth * 0.5, tubeLightGlowColor, cornerRadius),
-        new LightTube(rectangleWidth * 0.25, rectangleStart * 0.5, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingValueGlowColor, cornerRadius),
+        new LightTube(rectangleWidth * 0.25, -rectangleStart * 0.6, tubeWidth, quarterWidthAlternatingBasedOnHours, tubeLightWithChangingHoursValueGlowColor, cornerRadius),
+        new LightTube(rectangleWidth * 0.25, rectangleStart * 0.5, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
         new LightTube(rectangleWidth * 0.25, rectangleStart * 1.3, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
         // right side
-        new LightTube(-rectangleStart, -rectangleStart * 0.3, tubeWidth, halfWidthAlternatingBasedOnMinutes, tubeLightWithChangingValueGlowColor, cornerRadius),
+        new LightTube(-rectangleStart, -rectangleStart * 0.3, tubeWidth, halfWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
 
     ];
     verticalLightTubes.forEach((lightTube) => {
@@ -104,20 +115,20 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Da
     sketch.rotate(90)
     let horizontalLightTubes = [
         // top
-        new LightTube(rectangleStart, rectangleStart * 0.8, tubeWidth, rectangleWidth * 0.6, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleStart, rectangleStart * 0.8, tubeWidth, twoThirdWidthAlternatingBasedOnHours, tubeLightWithChangingHoursValueGlowColor, cornerRadius),
         new LightTube(rectangleStart, -rectangleStart * 0.5, tubeWidth, rectangleWidth * 0.2, tubeLightGlowColor, cornerRadius),
         // top middle
-        new LightTube(-rectangleWidth * 0.25, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, tubeLightWithChangingValueGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
         new LightTube(-rectangleWidth * 0.25, rectangleStart, tubeWidth, rectangleWidth * 0.35, tubeLightGlowColor, cornerRadius),
-        new LightTube(-rectangleWidth * 0.25, rectangleWidth * 0.5, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingValueGlowColor, cornerRadius),
+        new LightTube(-rectangleWidth * 0.25, rectangleWidth * 0.5, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
         // middle
         new LightTube(0, rectangleStart * 0.5, tubeWidth, rectangleWidth * 0.35, tubeLightGlowColor, cornerRadius),
         new LightTube(0, -rectangleStart * 1.1, tubeWidth, rectangleWidth * 0.35, tubeLightGlowColor, cornerRadius),
         // bottom middle
         new LightTube(rectangleWidth * 0.25, -rectangleStart * 0.2, tubeWidth, rectangleWidth * 0.5, tubeLightGlowColor, cornerRadius),
         // bottom
-        new LightTube(-rectangleStart, rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingValueGlowColor, cornerRadius),
-        new LightTube(-rectangleStart, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, tubeLightWithChangingValueGlowColor, cornerRadius),
+        new LightTube(-rectangleStart, rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
+        new LightTube(-rectangleStart, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
         new LightTube(-rectangleStart, -rectangleStart, tubeWidth, rectangleWidth * 0.25, tubeLightGlowColor, cornerRadius),
     ];
     horizontalLightTubes.forEach((lightTube) => {
@@ -167,7 +178,6 @@ let settings: ISettings = {
     rotationEnabled: false,
     blendMode: "BLEND"
 }
-let lights: FlashingLight[] = [];
 let normalTime = new Date();
 let fastTime = new Date(normalTime);
 let rubikMonoOne: p5.Font;
@@ -175,13 +185,6 @@ const setBlendMode = (blendMode: blendModes) => {
     settings.blendMode = blendMode;
 }
 
-
-const addLight = (sketch: p5, offset: number) => {
-    let size = sketch.random(50, 150);
-    let x = (sketch.noise(sketch.millis() * 0.1 + offset) - 0.5) * sketch.width * 2 - size;
-    let y = (sketch.noise(sketch.millis() * 0.1 + offset + 2) - 0.5) * sketch.height * 2 - size;
-    lights.push(new FlashingLight(x, y, size));
-}
 const actions = {
     haveFun() {
         settings.rotationEnabled = true;
@@ -296,7 +299,7 @@ const sketch = (sketch: p5) => {
         presetsGui.add(actions, 'calmWithText').name('Calm with text');
         const clockGui = customizeSketchGui.addFolder('Clock')
         clockGui.add(settings.clock, 'speedUp').listen();
-        clockGui.add(settings.clock, 'timeFactor', 1, 1000, 1).listen();
+        clockGui.add(settings.clock, 'timeFactor', 1, 10000, 1).listen();
         clockGui.add(settings.clock, 'fake').listen();
         clockGui.add(settings.clock.time, 'hours', 0, 24, 1).listen();
         clockGui.add(settings.clock.time, 'minutes', 0, 60, 1).listen();
@@ -327,21 +330,6 @@ const sketch = (sketch: p5) => {
         applyBlendMode(sketch, settings.blendMode);
         sketch.background(0);
         sketch.translate(sketch.width / 2, sketch.height / 2);
-
-        // Update and display each light
-        // for (let i = lights.length - 1; i >= 0; i--) {
-        //     lights[i].update();
-        //     lights[i].display(sketch);
-        //     if (lights[i].brightness <= 0) {
-        //         lights.splice(i, 1);
-        //     }
-        // }
-        // if (sketch.frameCount % 30 == 0) {
-        //     for (let i = 0; i < 30; i++) {
-        //         addLight(sketch, i);
-        //     }
-        // }
-
         if (settings.clock.speedUp) {
             fastTime.setTime(normalTime.getTime() + (sketch.millis() * settings.clock.timeFactor));
         } else {
