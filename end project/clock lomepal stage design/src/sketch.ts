@@ -62,7 +62,7 @@ const drawLightTube = (sketch: p5, x: number, y: number, width: number, height: 
     sketch.rectMode(sketch.CENTER);
     sketch.rect(x, y, width, height, cornerRadius);
 
-    let glowMaxRadius = 50; // Max radius of the glow
+    let glowMaxRadius = 100; // Max radius of the glow
     let glowBorder = glowMaxRadius * 0.5; // Border of the glow
     let steps = glowMaxRadius * 0.5; // Number of steps for the glow effect
     let maxAlpha = 100; // Max alpha value of the glow
