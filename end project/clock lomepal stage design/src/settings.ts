@@ -6,6 +6,7 @@ export interface ISettings {
         middle: ILightingRigSettings,
         right: ILightingRigSettings
     },
+    flashInterval: number,
     clock: IClockSettings,
     sinOffsetEnabled: boolean,
     sinOffsetMultiplier: number,

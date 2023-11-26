@@ -108,7 +108,7 @@ export class LightingRig {
 
         ];
         verticalLightTubes.forEach((lightTube) => {
-            if (seconds === 0) {
+            if (seconds % settings.flashInterval === 0) {
                 lightTube.startFlashing();
             }
             lightTube.display(sketch);
@@ -134,7 +134,7 @@ export class LightingRig {
             new LightTube(-this.rectangleStart, -this.rectangleStart, tubeWidth, oneThirdWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
         ];
         horizontalLightTubes.forEach((lightTube) => {
-            if (seconds === 0) {
+            if (seconds % settings.flashInterval === 0) {
                 lightTube.startFlashing();
             }
             lightTube.display(sketch);

@@ -51,6 +51,7 @@ let settings: ISettings = {
         color: "#000000",
         alpha: 100
     },
+    flashInterval: 60,
     sinOffsetEnabled: true,
     sinOffsetMultiplier: 60,
     rotationEnabled: true,
@@ -82,6 +83,7 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 0;
         settings.backgroundSettings.enabled = false;
+        settings.flashInterval = 20;
         setBlendMode("SUBTRACT", settings);
     },
     hypnotize() {
@@ -100,6 +102,7 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 0;
         settings.backgroundSettings.alpha = 100;
+        settings.flashInterval = 10;
         setBlendMode("SUBTRACT", settings);
     },
     calmWithText() {
@@ -115,6 +118,7 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 400;
         settings.backgroundSettings.enabled = true;
+        settings.flashInterval = 60;
         setBlendMode("BLEND", settings);
     },
     stageSettingMoody() {
@@ -133,6 +137,7 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 400;
         settings.backgroundSettings.enabled = true
+        settings.flashInterval = 30;
         setBlendMode("BLEND", settings);
     }
 }
@@ -243,6 +248,7 @@ const configureGui = () => {
     customizeSketchGui.add(settings, 'blendMode', blendModeOptions).onChange((value: blendModes) => {
         setBlendMode(value, settings);
     });
+    customizeSketchGui.add(settings, 'flashInterval', 0, 60, 1).listen();
 
     const backgroundGui = customizeSketchGui.addFolder('Background');
     backgroundGui.open(false);
