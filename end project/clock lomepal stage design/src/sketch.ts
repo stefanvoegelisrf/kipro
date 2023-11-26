@@ -70,6 +70,7 @@ const actions = {
     haveFun() {
         settings.rotationEnabled = true;
         settings.sinOffsetEnabled = true;
+        settings.sinOffsetMultiplier = 80;
         settings.clock.speedUp = true;
         settings.clock.timeFactor = 250;
         settings.clock.displayInBackground = false;
