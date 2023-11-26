@@ -261,7 +261,7 @@ const configureGui = () => {
     presetsGui.add(actions, 'haveFun').name('Speed me up');
     presetsGui.add(actions, 'hypnotize').name('Hypnotize me slowly');
     presetsGui.add(actions, 'calmWithText').name('I want to read the time');
-    presetsGui.add(actions, 'stageSettingMoody').name('Moody');
+    presetsGui.add(actions, 'stageSettingMoody').name("I'm in the mood for flowers");
 
     const clockGui = customizeSketchGui.addFolder('Clock')
     clockGui.open(false);
