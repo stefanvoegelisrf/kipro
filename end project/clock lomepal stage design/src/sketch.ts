@@ -152,6 +152,8 @@ let settings = {
     },
     clock: {
         fake: false,
+        speedUp: false,
+        timeFactor: 10,
         time: {
             hours: 0,
             minutes: 0,
@@ -162,6 +164,8 @@ let settings = {
     glowColor: "#ff0000"
 }
 let lights: FlashingLight[] = [];
+let normalTime = new Date();
+let fastTime = new Date(normalTime);
 
 const addLight = (sketch: p5, offset: number) => {
     let size = sketch.random(50, 150);
@@ -176,6 +180,8 @@ const sketch = (sketch: p5) => {
         customizeSketchGui.open(false);
         customizeSketchGui.addColor(settings, 'glowColor');
         const clockGui = customizeSketchGui.addFolder('Clock')
+        clockGui.add(settings.clock, 'speedUp');
+        clockGui.add(settings.clock, 'timeFactor', 1, 100, 1);
         clockGui.add(settings.clock, 'fake');
         clockGui.add(settings.clock.time, 'hours', 0, 24, 1);
         clockGui.add(settings.clock.time, 'minutes', 0, 60, 1);
@@ -219,7 +225,14 @@ const sketch = (sketch: p5) => {
         //     }
         // }
 
-        let currentDate = new Date();
+        if (settings.clock.speedUp) {
+            // If speedUp is true, advance time faster
+            fastTime.setTime(normalTime.getTime() + (sketch.millis() * settings.clock.timeFactor));
+        } else {
+            // If speedUp is false, use normal time
+            normalTime = new Date(); // Update the normal time
+        }
+        let currentDate = settings.clock.speedUp ? fastTime : normalTime;
         if (settings.clock.fake) {
             currentDate.setHours(settings.clock.time.hours);
             currentDate.setMinutes(settings.clock.time.minutes);
