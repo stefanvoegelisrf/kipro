@@ -197,13 +197,13 @@ let settings = {
             scale: 0.8,
             x: 0,
             y: 100,
-            rotation: 270
+            rotation: 180
         },
         right: {
             scale: 0.8,
             x: 700,
             y: -100,
-            rotation: 180
+            rotation: 90
         }
     },
     glowColor: "#ff0000"
