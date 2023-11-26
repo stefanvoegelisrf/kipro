@@ -55,7 +55,9 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
 
     let currentDate = new Date();
     let milliseconds = currentDate.getMilliseconds();
-    let seconds = currentDate.getSeconds() + milliseconds / 1000;
+    let seconds = currentDate.getSeconds();
+    let secondsWithMilliseconds = currentDate.getSeconds() + milliseconds / 1000;
+
     let minutes = currentDate.getMinutes();
     let hours = currentDate.getHours();
 
@@ -63,7 +65,7 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
 
     // Calculate the amplitude (half the range between baseline and minValue)
     let amplitudeThirdWidth = (thirdWidthBaseline - 20) / 2;
-    let secondsAngle = sketch.map(seconds, 0, 59, 0, 360);
+    let secondsAngle = sketch.map(secondsWithMilliseconds, 0, 59, 0, 360);
     // Calculate the value
     let thirdWidth = thirdWidthBaseline - amplitudeThirdWidth * sketch.cos(secondsAngle);
     let halfWidth = sketch.map(minutes, 0, 59, 20, rectangleWidth * 0.5);
@@ -89,6 +91,9 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
 
     ];
     verticalLightTubes.forEach((lightTube) => {
+        if (seconds === 0) {
+            lightTube.startFlashing();
+        }
         lightTube.display(sketch);
     });
     // draw horizontal light tubes
@@ -112,11 +117,12 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string) => {
         new LightTube(-rectangleStart, -rectangleStart, tubeWidth, rectangleWidth * 0.25, tubeLightGlowColor, cornerRadius),
     ];
     horizontalLightTubes.forEach((lightTube) => {
+        if (seconds === 0) {
+            lightTube.startFlashing();
+        }
         lightTube.display(sketch);
     });
     sketch.pop();
-
-    // place lights on brackets
 }
 
 let settings = {
