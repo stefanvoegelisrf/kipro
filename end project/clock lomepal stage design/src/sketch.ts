@@ -1,7 +1,6 @@
 import GUI from 'lil-gui';
-import p5, { BLEND_MODE } from 'p5';
+import p5 from 'p5';
 import { LightTube } from './lighttube';
-import { FlashingLight } from './flashinglight';
 import { ISettings, blendModes } from './settings';
 
 const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Date) => {
@@ -82,9 +81,9 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Da
     let quarterWidthAlternatingBasedOnHours = quarterWidthBaseline - amplitudeQuarterWidth * sketch.cos(hoursAngle);
     let oneThirdWidthAlternatingBasedOnHours = thirdWidthBaseline - amplitudeThirdWidth * sketch.cos(hoursAngle);
 
-    let tubeLightWithChangingSecondsValueGlowColor = "#00FFFF";
-    let tubeLightWithChangingMinutesValueGlowColor = "#00FF00";
-    let tubeLightWithChangingHoursValueGlowColor = "#FF00FF";
+    let tubeLightWithChangingSecondsValueGlowColor = settings.clock.time.seconds.glowColor;
+    let tubeLightWithChangingMinutesValueGlowColor = settings.clock.time.minutes.glowColor;
+    let tubeLightWithChangingHoursValueGlowColor = settings.clock.time.hours.glowColor;
     // draw vertical light tubes
     let verticalLightTubes = [
         // left side
@@ -100,7 +99,7 @@ const drawLightingRig = (sketch: p5, tubeLightGlowColor: string, currentDate: Da
         // right middle
         new LightTube(rectangleWidth * 0.25, -rectangleStart * 0.6, tubeWidth, quarterWidthAlternatingBasedOnHours, tubeLightWithChangingHoursValueGlowColor, cornerRadius),
         new LightTube(rectangleWidth * 0.25, rectangleStart * 0.5, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
-        new LightTube(rectangleWidth * 0.25, rectangleStart * 1.3, tubeWidth, rectangleWidth * 0.15, tubeLightGlowColor, cornerRadius),
+        new LightTube(rectangleWidth * 0.25, rectangleStart * 1.3, tubeWidth, oneTenthWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
         // right side
         new LightTube(-rectangleStart, -rectangleStart * 0.3, tubeWidth, halfWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
 
@@ -166,9 +165,18 @@ let settings: ISettings = {
         speedUp: false,
         timeFactor: 10,
         time: {
-            hours: 0,
-            minutes: 0,
-            seconds: 0,
+            hours: {
+                value: 0,
+                glowColor: "#FF00FF"
+            },
+            minutes: {
+                value: 0,
+                glowColor: "#0000FF"
+            },
+            seconds: {
+                value: 0,
+                glowColor: "#00FF00"
+            },
             milliseconds: 0
         },
         displayInBackground: true
@@ -183,6 +191,61 @@ let fastTime = new Date(normalTime);
 let rubikMonoOne: p5.Font;
 const setBlendMode = (blendMode: blendModes) => {
     settings.blendMode = blendMode;
+}
+const blendModeOptions: blendModes[] = [
+    "BLEND",
+    "ADD",
+    "DARKEST",
+    "LIGHTEST",
+    "DIFFERENCE",
+    "EXCLUSION",
+    "MULTIPLY",
+    "SCREEN",
+    "REPLACE",
+    "OVERLAY",
+    "HARD_LIGHT",
+    "SOFT_LIGHT",
+    "DODGE",
+    "BURN",
+    "SUBTRACT"
+];
+
+const applyBlendMode = (sketch: p5, blendMode: blendModes) => {
+    switch (blendMode) {
+        case "BLEND":
+            sketch.blendMode(sketch.BLEND);
+            break;
+        case "ADD":
+            sketch.blendMode(sketch.ADD);
+            break;
+        case "DARKEST":
+            sketch.blendMode(sketch.DARKEST);
+            break;
+        case "LIGHTEST":
+            sketch.blendMode(sketch.LIGHTEST);
+            break;
+        case "DIFFERENCE":
+            sketch.blendMode(sketch.DIFFERENCE);
+            break;
+        case "EXCLUSION":
+            sketch.blendMode(sketch.EXCLUSION);
+            break;
+        case "MULTIPLY":
+            sketch.blendMode(sketch.MULTIPLY);
+            break;
+        case "SCREEN":
+            sketch.blendMode(sketch.SCREEN);
+            break;
+        case "REPLACE":
+            sketch.blendMode(sketch.REPLACE);
+            break;
+        case "OVERLAY":
+            sketch.blendMode(sketch.OVERLAY);
+            break;
+        default:
+            sketch.blendMode(sketch.BLEND);
+            break;
+    }
 }
 
 const actions = {
@@ -225,102 +288,14 @@ const actions = {
         settings.lightingRigs.right.x = 600;
     }
 }
-const blendModeOptions: blendModes[] = [
-    "BLEND",
-    "ADD",
-    "DARKEST",
-    "LIGHTEST",
-    "DIFFERENCE",
-    "EXCLUSION",
-    "MULTIPLY",
-    "SCREEN",
-    "REPLACE",
-    "OVERLAY",
-    "HARD_LIGHT",
-    "SOFT_LIGHT",
-    "DODGE",
-    "BURN",
-    "SUBTRACT"
-];
-const applyBlendMode = (sketch: p5, blendMode: blendModes) => {
-    switch (blendMode) {
-        case "BLEND":
-            sketch.blendMode(sketch.BLEND);
-            break;
-        case "ADD":
-            sketch.blendMode(sketch.ADD);
-            break;
-        case "DARKEST":
-            sketch.blendMode(sketch.DARKEST);
-            break;
-        case "LIGHTEST":
-            sketch.blendMode(sketch.LIGHTEST);
-            break;
-        case "DIFFERENCE":
-            sketch.blendMode(sketch.DIFFERENCE);
-            break;
-        case "EXCLUSION":
-            sketch.blendMode(sketch.EXCLUSION);
-            break;
-        case "MULTIPLY":
-            sketch.blendMode(sketch.MULTIPLY);
-            break;
-        case "SCREEN":
-            sketch.blendMode(sketch.SCREEN);
-            break;
-        case "REPLACE":
-            sketch.blendMode(sketch.REPLACE);
-            break;
-        case "OVERLAY":
-            sketch.blendMode(sketch.OVERLAY);
-            break;
-        default:
-            sketch.blendMode(sketch.BLEND);
-            break;
-    }
-}
+
 const sketch = (sketch: p5) => {
     sketch.preload = () => {
         // Load the font
         rubikMonoOne = sketch.loadFont('assets/fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf');
     };
     sketch.setup = function () {
-        let customizeSketchGui = new GUI();
-        customizeSketchGui.open(false);
-        customizeSketchGui.addColor(settings, 'glowColor').listen();
-        customizeSketchGui.add(settings, 'sinOffsetEnabled').listen();
-        customizeSketchGui.add(settings, 'rotationEnabled').listen();
-        customizeSketchGui.add(settings, 'blendMode', blendModeOptions).onChange((value: blendModes) => {
-            setBlendMode(value);
-        });
-        const presetsGui = customizeSketchGui.addFolder('Presets');
-        presetsGui.add(actions, 'haveFun').name('have fun');
-        presetsGui.add(actions, 'hypnotize').name('Hypnotize');
-        presetsGui.add(actions, 'calmWithText').name('Calm with text');
-        const clockGui = customizeSketchGui.addFolder('Clock')
-        clockGui.add(settings.clock, 'speedUp').listen();
-        clockGui.add(settings.clock, 'timeFactor', 1, 10000, 1).listen();
-        clockGui.add(settings.clock, 'fake').listen();
-        clockGui.add(settings.clock.time, 'hours', 0, 24, 1).listen();
-        clockGui.add(settings.clock.time, 'minutes', 0, 60, 1).listen();
-        clockGui.add(settings.clock.time, 'seconds', 0, 60, 1).listen();
-        clockGui.add(settings.clock.time, 'milliseconds', 0, 1000, 1).listen();
-        clockGui.add(settings.clock, 'displayInBackground');
-        const lightingRigLeftGui = customizeSketchGui.addFolder('Lighting Rig Left');
-        lightingRigLeftGui.add(settings.lightingRigs.left, 'x', -1000, 1000, 10).listen();
-        lightingRigLeftGui.add(settings.lightingRigs.left, 'y', -1000, 1000, 10).listen();
-        lightingRigLeftGui.add(settings.lightingRigs.left, 'rotation', 0, 360, 10).listen();
-        lightingRigLeftGui.add(settings.lightingRigs.left, 'scale', 0, 1, 0.01).listen();
-        const lightingRigMiddleGui = customizeSketchGui.addFolder('Lighting Rig Middle');
-        lightingRigMiddleGui.add(settings.lightingRigs.middle, 'x', -1000, 1000, 10).listen();
-        lightingRigMiddleGui.add(settings.lightingRigs.middle, 'y', -1000, 1000, 10).listen();
-        lightingRigMiddleGui.add(settings.lightingRigs.middle, 'rotation', 0, 360, 10).listen();
-        lightingRigMiddleGui.add(settings.lightingRigs.middle, 'scale', 0, 1, 0.01).listen();
-        const lightingRigRightGui = customizeSketchGui.addFolder('Lighting Rig Right');
-        lightingRigRightGui.add(settings.lightingRigs.right, 'x', -1000, 1000, 10).listen();
-        lightingRigRightGui.add(settings.lightingRigs.right, 'y', -1000, 1000, 10).listen();
-        lightingRigRightGui.add(settings.lightingRigs.right, 'rotation', 0, 360, 10).listen();
-        lightingRigRightGui.add(settings.lightingRigs.right, 'scale', 0, 1, 0.01).listen();
+        configureGui();
         sketch.frameRate(60);
         sketch.angleMode(sketch.DEGREES);
         sketch.createCanvas(sketch.windowWidth, sketch.windowHeight);
@@ -330,26 +305,9 @@ const sketch = (sketch: p5) => {
         applyBlendMode(sketch, settings.blendMode);
         sketch.background(0);
         sketch.translate(sketch.width / 2, sketch.height / 2);
-        if (settings.clock.speedUp) {
-            fastTime.setTime(normalTime.getTime() + (sketch.millis() * settings.clock.timeFactor));
-        } else {
-            normalTime = new Date();
-        }
-        let currentDate = settings.clock.speedUp ? fastTime : normalTime;
-        if (settings.clock.fake) {
-            currentDate.setHours(settings.clock.time.hours);
-            currentDate.setMinutes(settings.clock.time.minutes);
-            currentDate.setSeconds(settings.clock.time.seconds);
-            currentDate.setMilliseconds(settings.clock.time.milliseconds);
-        }
+        let currentDate = getDateBasedOnSettings(sketch);
         if (settings.clock.displayInBackground) {
-            sketch.push();
-            sketch.textSize(200);
-            sketch.fill(255);
-            sketch.textFont(rubikMonoOne);
-            sketch.textAlign(sketch.CENTER, sketch.CENTER);
-            sketch.text(currentDate.toLocaleTimeString(), 0, 0)
-            sketch.pop();
+            drawBackgroundClock(sketch, currentDate);
         }
         let minutes = currentDate.getMinutes();
         let seconds = currentDate.getSeconds();
@@ -369,7 +327,6 @@ const sketch = (sketch: p5) => {
         if (!settings.sinOffsetEnabled) {
             sinOffset = 0;
         }
-        // let sinOffset = 0;
 
         // draw lighting rig on the left
         sketch.push();
@@ -400,5 +357,80 @@ const sketch = (sketch: p5) => {
         sketch.resizeCanvas(sketch.windowWidth, sketch.windowHeight);
     }
 };
+
+const drawBackgroundClock = (sketch: p5, currentDate: Date) => {
+    sketch.push();
+    sketch.textSize(200);
+    sketch.fill(255);
+    sketch.textFont(rubikMonoOne);
+    sketch.textAlign(sketch.CENTER, sketch.CENTER);
+    sketch.text(currentDate.toLocaleTimeString(), 0, 0)
+    sketch.pop();
+}
+
+const getDateBasedOnSettings = (sketch: p5) => {
+    if (settings.clock.speedUp) {
+        fastTime.setTime(normalTime.getTime() + (sketch.millis() * settings.clock.timeFactor));
+    } else {
+        normalTime = new Date();
+    }
+    let currentDate = settings.clock.speedUp ? fastTime : normalTime;
+    if (settings.clock.fake) {
+        currentDate.setHours(settings.clock.time.hours.value);
+        currentDate.setMinutes(settings.clock.time.minutes.value);
+        currentDate.setSeconds(settings.clock.time.seconds.value);
+        currentDate.setMilliseconds(settings.clock.time.milliseconds);
+    }
+    return currentDate;
+}
+
+const configureGui = () => {
+    let customizeSketchGui = new GUI();
+    customizeSketchGui.open(false);
+    customizeSketchGui.addColor(settings, 'glowColor').listen();
+    customizeSketchGui.add(settings, 'sinOffsetEnabled').listen();
+    customizeSketchGui.add(settings, 'rotationEnabled').listen();
+    customizeSketchGui.add(settings, 'blendMode', blendModeOptions).onChange((value: blendModes) => {
+        setBlendMode(value);
+    });
+
+    const presetsGui = customizeSketchGui.addFolder('Presets');
+    presetsGui.add(actions, 'haveFun').name('have fun');
+    presetsGui.add(actions, 'hypnotize').name('Hypnotize');
+    presetsGui.add(actions, 'calmWithText').name('Calm with text');
+
+    const clockGui = customizeSketchGui.addFolder('Clock')
+    clockGui.add(settings.clock, 'speedUp').listen();
+    clockGui.add(settings.clock, 'timeFactor', 1, 10000, 1).listen();
+
+    const timePartsGui = clockGui.addFolder('Time Parts');
+    timePartsGui.add(settings.clock, 'fake').name('Enable fake values').listen();
+    timePartsGui.add(settings.clock.time.hours, 'value').min(0).max(24).step(1).name('Hour').listen();
+    timePartsGui.addColor(settings.clock.time.hours, 'glowColor').name("Hour glow color").listen();
+    timePartsGui.add(settings.clock.time.minutes, 'value').min(0).max(60).step(1).name('Minute').listen();
+    timePartsGui.addColor(settings.clock.time.minutes, 'glowColor').name("Minute glow color").listen();
+    timePartsGui.add(settings.clock.time.seconds, 'value').min(0).max(60).step(1).name('Second').listen();
+    timePartsGui.addColor(settings.clock.time.seconds, 'glowColor').name("Second glow color").listen();
+    timePartsGui.add(settings.clock.time, 'milliseconds', 0, 1000, 1).listen();
+    timePartsGui.add(settings.clock, 'displayInBackground').listen();
+
+    const lightingRigLeftGui = customizeSketchGui.addFolder('Lighting Rig Left');
+    lightingRigLeftGui.add(settings.lightingRigs.left, 'x', -1000, 1000, 10).listen();
+    lightingRigLeftGui.add(settings.lightingRigs.left, 'y', -1000, 1000, 10).listen();
+    lightingRigLeftGui.add(settings.lightingRigs.left, 'rotation', 0, 360, 10).listen();
+    lightingRigLeftGui.add(settings.lightingRigs.left, 'scale', 0, 1, 0.01).listen();
+
+    const lightingRigMiddleGui = customizeSketchGui.addFolder('Lighting Rig Middle');
+    lightingRigMiddleGui.add(settings.lightingRigs.middle, 'x', -1000, 1000, 10).listen();
+    lightingRigMiddleGui.add(settings.lightingRigs.middle, 'y', -1000, 1000, 10).listen();
+    lightingRigMiddleGui.add(settings.lightingRigs.middle, 'rotation', 0, 360, 10).listen();
+    lightingRigMiddleGui.add(settings.lightingRigs.middle, 'scale', 0, 1, 0.01).listen();
+
+    const lightingRigRightGui = customizeSketchGui.addFolder('Lighting Rig Right');
+    lightingRigRightGui.add(settings.lightingRigs.right, 'x', -1000, 1000, 10).listen();
+    lightingRigRightGui.add(settings.lightingRigs.right, 'y', -1000, 1000, 10).listen();
+    lightingRigRightGui.add(settings.lightingRigs.right, 'rotation', 0, 360, 10).listen();
+    lightingRigRightGui.add(settings.lightingRigs.right, 'scale', 0, 1, 0.01).listen();
+}
 
 new p5(sketch);

@@ -21,15 +21,19 @@ export interface ILightingRigSettings {
     y: number,
     rotation: number
 }
+export interface ITimePartSettings {
+    value: number,
+    glowColor: string,
+}
 
 export interface IClockSettings {
     fake: boolean,
     speedUp: boolean,
     timeFactor: number,
     time: {
-        hours: number,
-        minutes: number,
-        seconds: number,
+        hours: ITimePartSettings,
+        minutes: ITimePartSettings,
+        seconds: ITimePartSettings,
         milliseconds: number
     },
     displayInBackground: boolean
