@@ -54,8 +54,8 @@ export class LightingRig {
         let tubeWidth = 10;
         let cornerRadius = 5;
 
-        let halwidthBaseLine = this.rectangleWidth * 0.5;
-        let amplitudeHalfWidth = (halwidthBaseLine - (halwidthBaseLine * 0.3)) / 2;
+        let halfwidthBaseLine = this.rectangleWidth * 0.5;
+        let amplitudeHalfWidth = (halfwidthBaseLine - (halfwidthBaseLine * 0.3)) / 2;
         let thirdWidthBaseline = this.rectangleWidth * 0.3;
         let amplitudeThirdWidth = (thirdWidthBaseline - (thirdWidthBaseline * 0.5)) / 2;
         let quarterWidthBaseline = this.rectangleWidth * 0.25;
@@ -68,43 +68,43 @@ export class LightingRig {
         let seconds = currentDate.getSeconds();
         let secondsWithMilliseconds = currentDate.getSeconds() + milliseconds / 1000;
         let secondsAngle = sketch.map(secondsWithMilliseconds, 0, 59, 0, 360);
-        let thirdWidthAlternatingBasedOnSeconds = thirdWidthBaseline - amplitudeThirdWidth * sketch.cos(secondsAngle);
+        let oneThirdWidthAlternatingBasedOnSeconds = thirdWidthBaseline - amplitudeThirdWidth * sketch.cos(secondsAngle);
+        let halfWidthAlternatingBasedOnSeconds = halfwidthBaseLine - amplitudeHalfWidth * sketch.cos(secondsAngle);
 
         let minutes = currentDate.getMinutes();
         let minutesWithSeconds = minutes + sketch.map(secondsWithMilliseconds, 0, 59, 0, 100) / 100;
         let minutesAngle = sketch.map(minutesWithSeconds, 0, 59, 0, 360);
-        let halfWidthAlternatingBasedOnMinutes = halwidthBaseLine - amplitudeHalfWidth * sketch.cos(minutesAngle);
+        let halfWidthAlternatingBasedOnMinutes = halfwidthBaseLine - amplitudeHalfWidth * sketch.cos(minutesAngle);
         let quarterWidthAlternatingBasedOnMinutes = quarterWidthBaseline - amplitudeQuarterWidth * sketch.cos(minutesAngle);
         let oneTenthWidthAlternatingBasedOnMinutes = oneTenthWidthBaseline - amplitudeOneTenthWidth * sketch.cos(minutesAngle);
+        let twoTenthsWidthAlternatingBasedOnMinutes = oneTenthWidthBaseline * 2 - amplitudeOneTenthWidth * sketch.cos(minutesAngle);
+        let oneThirdWidthAlternatingBasedOnMinutes = thirdWidthBaseline - amplitudeThirdWidth * sketch.cos(minutesAngle);
 
         let hours = currentDate.getHours();
         let hoursWithMinutes = hours + minutesWithSeconds / 60;
         let hoursAngle = sketch.map(hoursWithMinutes, 0, 24, 0, 360);
         let twoThirdWidthAlternatingBasedOnHours = thirdWidthBaseline * 1.6 - amplitudeTwoThirdWidth * sketch.cos(hoursAngle);
         let quarterWidthAlternatingBasedOnHours = quarterWidthBaseline - amplitudeQuarterWidth * sketch.cos(hoursAngle);
-        let oneThirdWidthAlternatingBasedOnHours = thirdWidthBaseline - amplitudeThirdWidth * sketch.cos(hoursAngle);
+        let oneThirdWidthAlternatingBasedOnHours = thirdWidthBaseline - amplitudeThirdWidth * 2 * sketch.cos(hoursAngle);
 
-        let tubeLightWithChangingSecondsValueGlowColor = settings.clock.time.seconds.glowColor;
-        let tubeLightWithChangingMinutesValueGlowColor = settings.clock.time.minutes.glowColor;
-        let tubeLightWithChangingHoursValueGlowColor = settings.clock.time.hours.glowColor;
         // draw vertical light tubes
         let verticalLightTubes = [
             // left side
-            new LightTube(this.rectangleStart, this.rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
-            new LightTube(this.rectangleStart, this.rectangleWidth * 0.25, tubeWidth, oneThirdWidthAlternatingBasedOnHours, tubeLightWithChangingHoursValueGlowColor, cornerRadius),
+            new LightTube(this.rectangleStart, this.rectangleStart, tubeWidth, oneThirdWidthAlternatingBasedOnSeconds, settings.clock.time.seconds.glowColor, cornerRadius),
+            new LightTube(this.rectangleStart, this.rectangleWidth * 0.25, tubeWidth, oneThirdWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
             // left middle
-            new LightTube(-this.rectangleWidth * 0.25, -this.rectangleWidth * 0.125, tubeWidth, halfWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
-            new LightTube(-this.rectangleWidth * 0.25, -this.rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
+            new LightTube(-this.rectangleWidth * 0.25, -this.rectangleWidth * 0.125, tubeWidth, halfWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
+            new LightTube(-this.rectangleWidth * 0.25, -this.rectangleStart, tubeWidth, oneThirdWidthAlternatingBasedOnSeconds, settings.clock.time.seconds.glowColor, cornerRadius),
             // middle
-            new LightTube(0, this.rectangleStart, tubeWidth, this.rectangleWidth * 0.15, settings.glowColor, cornerRadius),
-            new LightTube(0, 0, tubeWidth, this.rectangleWidth * 0.3, settings.glowColor, cornerRadius),
-            new LightTube(0, -this.rectangleStart + 50, tubeWidth, oneTenthWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
+            new LightTube(0, this.rectangleStart, tubeWidth, twoTenthsWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
+            new LightTube(0, 0, tubeWidth, oneThirdWidthAlternatingBasedOnSeconds, settings.clock.time.seconds.glowColor, cornerRadius),
+            new LightTube(0, -this.rectangleStart + 50, tubeWidth, oneTenthWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
             // right middle
-            new LightTube(this.rectangleWidth * 0.25, -this.rectangleStart * 0.6, tubeWidth, quarterWidthAlternatingBasedOnHours, tubeLightWithChangingHoursValueGlowColor, cornerRadius),
-            new LightTube(this.rectangleWidth * 0.25, this.rectangleStart * 0.5, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
-            new LightTube(this.rectangleWidth * 0.25, this.rectangleStart * 1.3, tubeWidth, oneTenthWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
+            new LightTube(this.rectangleWidth * 0.25, -this.rectangleStart * 0.6, tubeWidth, quarterWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
+            new LightTube(this.rectangleWidth * 0.25, this.rectangleStart * 0.5, tubeWidth, oneThirdWidthAlternatingBasedOnSeconds, settings.clock.time.seconds.glowColor, cornerRadius),
+            new LightTube(this.rectangleWidth * 0.25, this.rectangleStart * 1.3, tubeWidth, oneTenthWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
             // right side
-            new LightTube(-this.rectangleStart, -this.rectangleStart * 0.3, tubeWidth, halfWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
+            new LightTube(-this.rectangleStart, -this.rectangleStart * 0.3, tubeWidth, halfWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
 
         ];
         verticalLightTubes.forEach((lightTube) => {
@@ -117,21 +117,21 @@ export class LightingRig {
         sketch.rotate(90)
         let horizontalLightTubes = [
             // top
-            new LightTube(this.rectangleStart, this.rectangleStart * 0.8, tubeWidth, twoThirdWidthAlternatingBasedOnHours, tubeLightWithChangingHoursValueGlowColor, cornerRadius),
-            new LightTube(this.rectangleStart, -this.rectangleStart * 0.5, tubeWidth, this.rectangleWidth * 0.2, settings.glowColor, cornerRadius),
+            new LightTube(this.rectangleStart, this.rectangleStart * 0.8, tubeWidth, twoThirdWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
+            new LightTube(this.rectangleStart, -this.rectangleStart * 0.5, tubeWidth, oneThirdWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
             // top middle
-            new LightTube(-this.rectangleWidth * 0.25, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
-            new LightTube(-this.rectangleWidth * 0.25, this.rectangleStart, tubeWidth, this.rectangleWidth * 0.35, settings.glowColor, cornerRadius),
-            new LightTube(-this.rectangleWidth * 0.25, this.rectangleWidth * 0.5, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
+            new LightTube(-this.rectangleWidth * 0.25, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
+            new LightTube(-this.rectangleWidth * 0.25, this.rectangleStart, tubeWidth, oneThirdWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
+            new LightTube(-this.rectangleWidth * 0.25, this.rectangleWidth * 0.5, tubeWidth, oneThirdWidthAlternatingBasedOnSeconds, settings.clock.time.seconds.glowColor, cornerRadius),
             // middle
-            new LightTube(0, this.rectangleStart * 0.5, tubeWidth, this.rectangleWidth * 0.35, settings.glowColor, cornerRadius),
-            new LightTube(0, -this.rectangleStart * 1.1, tubeWidth, this.rectangleWidth * 0.35, settings.glowColor, cornerRadius),
+            new LightTube(0, this.rectangleStart * 0.5, tubeWidth, oneThirdWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
+            new LightTube(0, -this.rectangleStart * 1.1, tubeWidth, oneThirdWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
             // bottom middle
-            new LightTube(this.rectangleWidth * 0.25, -this.rectangleStart * 0.2, tubeWidth, this.rectangleWidth * 0.5, settings.glowColor, cornerRadius),
+            new LightTube(this.rectangleWidth * 0.25, -this.rectangleStart * 0.25, tubeWidth, halfWidthAlternatingBasedOnSeconds, settings.clock.time.seconds.glowColor, cornerRadius),
             // bottom
-            new LightTube(-this.rectangleStart, this.rectangleStart, tubeWidth, thirdWidthAlternatingBasedOnSeconds, tubeLightWithChangingSecondsValueGlowColor, cornerRadius),
-            new LightTube(-this.rectangleStart, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, tubeLightWithChangingMinutesValueGlowColor, cornerRadius),
-            new LightTube(-this.rectangleStart, -this.rectangleStart, tubeWidth, this.rectangleWidth * 0.25, settings.glowColor, cornerRadius),
+            new LightTube(-this.rectangleStart, this.rectangleStart, tubeWidth, oneThirdWidthAlternatingBasedOnSeconds, settings.clock.time.seconds.glowColor, cornerRadius),
+            new LightTube(-this.rectangleStart, 0, tubeWidth, quarterWidthAlternatingBasedOnMinutes, settings.clock.time.minutes.glowColor, cornerRadius),
+            new LightTube(-this.rectangleStart, -this.rectangleStart, tubeWidth, oneThirdWidthAlternatingBasedOnHours, settings.clock.time.hours.glowColor, cornerRadius),
         ];
         horizontalLightTubes.forEach((lightTube) => {
             if (seconds === 0) {
