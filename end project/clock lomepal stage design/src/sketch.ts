@@ -241,14 +241,15 @@ const getDateBasedOnSettings = (sketch: p5) => {
 
 const configureGui = () => {
     let customizeSketchGui = new GUI();
+    customizeSketchGui.title("Settings & Presets");
     customizeSketchGui.open(false);
-    customizeSketchGui.add(settings, 'sinOffsetEnabled').listen();
-    customizeSketchGui.add(settings, 'sinOffsetMultiplier', 0, 300, 1).listen();
-    customizeSketchGui.add(settings, 'rotationEnabled').listen();
-    customizeSketchGui.add(settings, 'blendMode', blendModeOptions).onChange((value: blendModes) => {
+    customizeSketchGui.add(settings, 'sinOffsetEnabled').name("Enable lighting rig offset based on sin").listen();
+    customizeSketchGui.add(settings, 'sinOffsetMultiplier', 0, 300, 1).min(0).max(300).step(1).name("Multiply sin value by").listen();
+    customizeSketchGui.add(settings, 'rotationEnabled').name("Enable rotation").listen();
+    customizeSketchGui.add(settings, 'blendMode', blendModeOptions).name("Blend mode").onChange((value: blendModes) => {
         setBlendMode(value, settings);
     });
-    customizeSketchGui.add(settings, 'flashInterval', 0, 60, 1).listen();
+    customizeSketchGui.add(settings, 'flashInterval').min(0).max(60).step(1).name("Flash interval in seconds").listen();
 
     const backgroundGui = customizeSketchGui.addFolder('Background');
     backgroundGui.open(false);
@@ -264,8 +265,8 @@ const configureGui = () => {
 
     const clockGui = customizeSketchGui.addFolder('Clock')
     clockGui.open(false);
-    clockGui.add(settings.clock, 'speedUp').listen();
-    clockGui.add(settings.clock, 'timeFactor', 1, 10000, 1).listen();
+    clockGui.add(settings.clock, 'speedUp').name("Speed up time").listen();
+    clockGui.add(settings.clock, 'timeFactor', 1, 10000, 1).name("Speed up by factor").listen();
 
     const timePartsGui = clockGui.addFolder('Time Parts');
     timePartsGui.add(settings.clock, 'fake').name('Enable fake values').listen();
@@ -276,7 +277,7 @@ const configureGui = () => {
     timePartsGui.add(settings.clock.time.seconds, 'value').min(0).max(60).step(1).name('Second').listen();
     timePartsGui.addColor(settings.clock.time.seconds, 'glowColor').name("Second glow color").listen();
     timePartsGui.add(settings.clock.time, 'milliseconds', 0, 1000, 1).listen();
-    timePartsGui.add(settings.clock, 'displayInBackground').listen();
+    timePartsGui.add(settings.clock, 'displayInBackground').name("Display clock in background").listen();
 
     const lightingRigLeftGui = customizeSketchGui.addFolder('Lighting Rig Left');
     lightingRigLeftGui.open(false);
