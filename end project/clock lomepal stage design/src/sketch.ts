@@ -124,6 +124,7 @@ const actions = {
         settings.lightingRigs.middle.x = 0;
         settings.lightingRigs.right.x = 400;
         settings.backgroundSettings.enabled = true;
+        settings.backgroundSettings.color = "#000000";
         settings.flashInterval = 60;
         setBlendMode("BLEND", settings);
     },
