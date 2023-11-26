@@ -159,7 +159,8 @@ let settings = {
             minutes: 0,
             seconds: 0,
             milliseconds: 0
-        }
+        },
+        displayInBackground: true
     },
     glowColor: "#ff0000"
 }
@@ -187,6 +188,7 @@ const sketch = (sketch: p5) => {
         clockGui.add(settings.clock.time, 'minutes', 0, 60, 1);
         clockGui.add(settings.clock.time, 'seconds', 0, 60, 1);
         clockGui.add(settings.clock.time, 'milliseconds', 0, 1000, 1);
+        clockGui.add(settings.clock, 'displayInBackground');
         const lightingRigLeftGui = customizeSketchGui.addFolder('Lighting Rig Left');
         lightingRigLeftGui.add(settings.lightingRigs.left, 'x', -1000, 1000, 10);
         lightingRigLeftGui.add(settings.lightingRigs.left, 'y', -1000, 1000, 10);
@@ -238,6 +240,14 @@ const sketch = (sketch: p5) => {
             currentDate.setMinutes(settings.clock.time.minutes);
             currentDate.setSeconds(settings.clock.time.seconds);
             currentDate.setMilliseconds(settings.clock.time.milliseconds);
+        }
+        if (settings.clock.displayInBackground) {
+            sketch.push();
+            sketch.textSize(100);
+            sketch.fill(255);
+            sketch.textAlign(sketch.CENTER, sketch.CENTER);
+            sketch.text(currentDate.toLocaleTimeString(), 0, 0)
+            sketch.pop();
         }
         let minutesAngle = 0;
         let hoursWithMinutes = currentDate.getHours() + currentDate.getMinutes() / 60;
