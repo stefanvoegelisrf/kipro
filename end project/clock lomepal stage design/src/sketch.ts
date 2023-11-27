@@ -1,4 +1,4 @@
-import GUI from 'lil-gui';
+import GUI, { Controller } from 'lil-gui';
 import p5 from 'p5';
 import { ISettings, blendModes } from './settings';
 import { LightingRig } from './lightingrig';
@@ -55,7 +55,11 @@ let settings: ISettings = {
     sinOffsetEnabled: true,
     sinOffsetMultiplier: 60,
     rotationEnabled: true,
-    blendMode: "BLEND"
+    blendMode: "BLEND",
+    demoMode: false,
+    demoModeInterval: 10,
+    randomDemoMode: false,
+    randomDemoModeInterval: 10
 }
 const drawLightingRig = (sketch: p5, currentDate: Date) => {
     let lightingRig = new LightingRig();
@@ -65,154 +69,231 @@ const drawLightingRig = (sketch: p5, currentDate: Date) => {
 let normalTime = new Date();
 let fastTime = new Date(normalTime);
 let rubikMonoOne: p5.Font;
+let demoModeIndex = 0;
+let demoModeIntervalId: number | undefined = undefined;
+let demoModeButtonController: Controller | undefined = undefined;
+let randomDemoModeButtonController: Controller | undefined = undefined;
+
+const setNextPreset = () => {
+    const presets = Object.keys(actions);
+    let nextPreset = actions.presets.calmWithText;
+    switch (demoModeIndex) {
+        case 0:
+            nextPreset = actions.presets.calmWithText;
+            break;
+        case 1:
+            nextPreset = actions.presets.haveFun;
+            break;
+        case 2:
+            nextPreset = actions.presets.hypnotize;
+            break;
+        case 3:
+            nextPreset = actions.presets.stageSettingMoody;
+            break;
+        case 4:
+            nextPreset = actions.presets.pauseTheTime;
+            break;
+        case 5:
+            nextPreset = actions.presets.multipleLayers;
+            break;
+        default:
+            nextPreset = actions.presets.calmWithText;
+            break;
+    }
+    demoModeIndex++;
+
+    if (demoModeIndex >= presets.length) {
+        demoModeIndex = 0;
+    }
+
+    nextPreset();
+}
+
+const setNextRandomPreset = () => {
+    actions.presets.surpriseMe();
+}
 
 const actions = {
-    haveFun() {
-        settings.rotationEnabled = true;
-        settings.sinOffsetEnabled = true;
-        settings.sinOffsetMultiplier = 80;
-        settings.clock.speedUp = true;
-        settings.clock.timeFactor = 250;
-        settings.clock.displayInBackground = false;
-        settings.clock.time.hours.glowColor = "#fe218b";
-        settings.clock.time.minutes.glowColor = "#fed700";
-        settings.clock.time.seconds.glowColor = "#21b0fe";
-        settings.lightingRigs.left.scale = 2;
-        settings.lightingRigs.middle.scale = 2;
-        settings.lightingRigs.right.scale = 2;
-        settings.lightingRigs.left.x = 0;
-        settings.lightingRigs.middle.x = 0;
-        settings.lightingRigs.right.x = 0;
-        settings.backgroundSettings.enabled = false;
-        settings.flashInterval = 20;
-        setBlendMode("SUBTRACT", settings);
+    presets: {
+        haveFun() {
+            settings.rotationEnabled = true;
+            settings.sinOffsetEnabled = true;
+            settings.sinOffsetMultiplier = 80;
+            settings.clock.speedUp = true;
+            settings.clock.timeFactor = 250;
+            settings.clock.displayInBackground = false;
+            settings.clock.time.hours.glowColor = "#fe218b";
+            settings.clock.time.minutes.glowColor = "#fed700";
+            settings.clock.time.seconds.glowColor = "#21b0fe";
+            settings.lightingRigs.left.scale = 2;
+            settings.lightingRigs.middle.scale = 2;
+            settings.lightingRigs.right.scale = 2;
+            settings.lightingRigs.left.x = 0;
+            settings.lightingRigs.middle.x = 0;
+            settings.lightingRigs.right.x = 0;
+            settings.backgroundSettings.enabled = false;
+            settings.flashInterval = 20;
+            setBlendMode("SUBTRACT", settings);
+        },
+        hypnotize() {
+            settings.rotationEnabled = true;
+            settings.sinOffsetEnabled = true;
+            settings.clock.fake = false;
+            settings.clock.speedUp = true;
+            settings.clock.timeFactor = 10;
+            settings.clock.displayInBackground = false;
+            settings.clock.time.hours.glowColor = "#0A00B8";
+            settings.clock.time.minutes.glowColor = "#7209B8";
+            settings.clock.time.seconds.glowColor = "#B8128C";
+            settings.lightingRigs.left.scale = 2;
+            settings.lightingRigs.middle.scale = 2;
+            settings.lightingRigs.right.scale = 2;
+            settings.lightingRigs.left.x = 0;
+            settings.lightingRigs.middle.x = 0;
+            settings.lightingRigs.right.x = 0;
+            settings.backgroundSettings.alpha = 100;
+            settings.flashInterval = 10;
+            setBlendMode("SUBTRACT", settings);
+        },
+        calmWithText() {
+            settings.rotationEnabled = true;
+            settings.sinOffsetEnabled = true;
+            settings.sinOffsetMultiplier = 60;
+            settings.clock.fake = false;
+            settings.clock.speedUp = false;
+            settings.clock.displayInBackground = true;
+            settings.clock.time.hours.glowColor = "#0A00B8";
+            settings.clock.time.minutes.glowColor = "#7209B8";
+            settings.clock.time.seconds.glowColor = "#B8128C";
+            settings.lightingRigs.left.scale = 1;
+            settings.lightingRigs.middle.scale = 1;
+            settings.lightingRigs.right.scale = 1;
+            settings.lightingRigs.left.x = -400;
+            settings.lightingRigs.middle.x = 0;
+            settings.lightingRigs.right.x = 400;
+            settings.backgroundSettings.enabled = true;
+            settings.backgroundSettings.color = "#000000";
+            settings.flashInterval = 60;
+            setBlendMode("BLEND", settings);
+        },
+        stageSettingMoody() {
+            settings.rotationEnabled = true;
+            settings.sinOffsetEnabled = true;
+            settings.sinOffsetMultiplier = 30;
+            settings.clock.fake = false;
+            settings.clock.speedUp = false;
+            settings.clock.displayInBackground = false;
+            settings.clock.time.hours.glowColor = "#ffbe0b"
+            settings.clock.time.minutes.glowColor = "#fb5607"
+            settings.clock.time.seconds.glowColor = "#ff006e"
+            settings.lightingRigs.left.scale = 1.5;
+            settings.lightingRigs.middle.scale = 1.5;
+            settings.lightingRigs.right.scale = 1.5;
+            settings.lightingRigs.left.x = -400;
+            settings.lightingRigs.middle.x = 0;
+            settings.lightingRigs.right.x = 400;
+            settings.backgroundSettings.enabled = true
+            settings.flashInterval = 30;
+            setBlendMode("BLEND", settings);
+        },
+        pauseTheTime() {
+            settings.rotationEnabled = true;
+            settings.sinOffsetEnabled = true;
+            settings.sinOffsetMultiplier = 100;
+            settings.clock.fake = true;
+            settings.clock.time.hours.value = 12;
+            settings.clock.time.minutes.value = 35;
+            settings.clock.time.seconds.value = 10;
+            settings.clock.speedUp = false;
+            settings.clock.displayInBackground = false;
+            settings.clock.time.hours.glowColor = "#65736E"
+            settings.clock.time.minutes.glowColor = "#5CF2BA"
+            settings.clock.time.seconds.glowColor = "#F25C5C"
+            settings.backgroundSettings.enabled = true;
+            settings.backgroundSettings.alpha = 30;
+            settings.backgroundSettings.color = "#000000";
+            settings.lightingRigs.left.scale = 1.5;
+            settings.lightingRigs.middle.scale = 1.5;
+            settings.lightingRigs.right.scale = 1.5;
+            settings.lightingRigs.left.x = 0;
+            settings.lightingRigs.middle.x = 0;
+            settings.lightingRigs.right.x = 0;
+            setBlendMode("BURN", settings);
+        },
+        multipleLayers() {
+            settings.sinOffsetEnabled = true;
+            settings.sinOffsetMultiplier = 50;
+            settings.rotationEnabled = true;
+            settings.backgroundSettings.enabled = true;
+            settings.backgroundSettings.color = "#cc908a"
+            settings.backgroundSettings.alpha = 170;
+            settings.clock.time.hours.glowColor = "#38cc7e";
+            settings.clock.time.minutes.glowColor = "#7a6246";
+            settings.clock.time.seconds.glowColor = "#c3841c";
+            settings.clock.fake = false;
+            settings.clock.displayInBackground = true;
+            settings.clock.speedUp = false;
+            settings.lightingRigs.left.scale = 1.115
+            settings.lightingRigs.left.x = 215;
+            settings.lightingRigs.middle.scale = 0.142;
+            settings.lightingRigs.middle.x = -215;
+            settings.lightingRigs.right.scale = 1.939;
+            settings.lightingRigs.right.x = -80;
+            setBlendMode("BLEND", settings);
+        },
+        surpriseMe() {
+            settings.rotationEnabled = Math.random() > 0.5;
+            settings.sinOffsetEnabled = Math.random() > 0.5;
+            settings.sinOffsetMultiplier = Math.random() * 300;
+            settings.clock.fake = false;
+            settings.clock.speedUp = Math.random() > 0.5;
+            settings.clock.timeFactor = Math.random() * 10000;
+            settings.clock.displayInBackground = Math.random() > 0.5;
+            settings.clock.time.hours.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            settings.clock.time.minutes.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            settings.clock.time.seconds.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+            settings.lightingRigs.left.scale = Math.random() * 2;
+            settings.lightingRigs.middle.scale = Math.random() * 2;
+            settings.lightingRigs.right.scale = Math.random() * 2;
+            settings.lightingRigs.left.x = (Math.random() - 0.5) * 500;
+            settings.lightingRigs.middle.x = (Math.random() - 0.5) * 500;
+            settings.lightingRigs.right.x = (Math.random() - 0.5) * 500;
+            settings.backgroundSettings.enabled = Math.random() > 0.5;
+            settings.backgroundSettings.alpha = Math.random() * 255;
+            settings.backgroundSettings.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+        }
     },
-    hypnotize() {
-        settings.rotationEnabled = true;
-        settings.sinOffsetEnabled = true;
-        settings.clock.fake = false;
-        settings.clock.speedUp = true;
-        settings.clock.timeFactor = 10;
-        settings.clock.displayInBackground = false;
-        settings.clock.time.hours.glowColor = "#0A00B8";
-        settings.clock.time.minutes.glowColor = "#7209B8";
-        settings.clock.time.seconds.glowColor = "#B8128C";
-        settings.lightingRigs.left.scale = 2;
-        settings.lightingRigs.middle.scale = 2;
-        settings.lightingRigs.right.scale = 2;
-        settings.lightingRigs.left.x = 0;
-        settings.lightingRigs.middle.x = 0;
-        settings.lightingRigs.right.x = 0;
-        settings.backgroundSettings.alpha = 100;
-        settings.flashInterval = 10;
-        setBlendMode("SUBTRACT", settings);
-    },
-    calmWithText() {
-        settings.rotationEnabled = true;
-        settings.sinOffsetEnabled = true;
-        settings.sinOffsetMultiplier = 60;
-        settings.clock.fake = false;
-        settings.clock.speedUp = false;
-        settings.clock.displayInBackground = true;
-        settings.clock.time.hours.glowColor = "#0A00B8";
-        settings.clock.time.minutes.glowColor = "#7209B8";
-        settings.clock.time.seconds.glowColor = "#B8128C";
-        settings.lightingRigs.left.scale = 1;
-        settings.lightingRigs.middle.scale = 1;
-        settings.lightingRigs.right.scale = 1;
-        settings.lightingRigs.left.x = -400;
-        settings.lightingRigs.middle.x = 0;
-        settings.lightingRigs.right.x = 400;
-        settings.backgroundSettings.enabled = true;
-        settings.backgroundSettings.color = "#000000";
-        settings.flashInterval = 60;
-        setBlendMode("BLEND", settings);
-    },
-    stageSettingMoody() {
-        settings.rotationEnabled = true;
-        settings.sinOffsetEnabled = true;
-        settings.sinOffsetMultiplier = 30;
-        settings.clock.fake = false;
-        settings.clock.speedUp = false;
-        settings.clock.displayInBackground = false;
-        settings.clock.time.hours.glowColor = "#ffbe0b"
-        settings.clock.time.minutes.glowColor = "#fb5607"
-        settings.clock.time.seconds.glowColor = "#ff006e"
-        settings.lightingRigs.left.scale = 1.5;
-        settings.lightingRigs.middle.scale = 1.5;
-        settings.lightingRigs.right.scale = 1.5;
-        settings.lightingRigs.left.x = -400;
-        settings.lightingRigs.middle.x = 0;
-        settings.lightingRigs.right.x = 400;
-        settings.backgroundSettings.enabled = true
-        settings.flashInterval = 30;
-        setBlendMode("BLEND", settings);
-    },
-    pauseTheTime() {
-        settings.rotationEnabled = true;
-        settings.sinOffsetEnabled = true;
-        settings.sinOffsetMultiplier = 100;
-        settings.clock.fake = true;
-        settings.clock.time.hours.value = 12;
-        settings.clock.time.minutes.value = 35;
-        settings.clock.time.seconds.value = 10;
-        settings.clock.speedUp = false;
-        settings.clock.displayInBackground = false;
-        settings.clock.time.hours.glowColor = "#65736E"
-        settings.clock.time.minutes.glowColor = "#5CF2BA"
-        settings.clock.time.seconds.glowColor = "#F25C5C"
-        settings.backgroundSettings.enabled = true;
-        settings.backgroundSettings.alpha = 30;
-        settings.backgroundSettings.color = "#000000";
-        settings.lightingRigs.left.scale = 1.5;
-        settings.lightingRigs.middle.scale = 1.5;
-        settings.lightingRigs.right.scale = 1.5;
-        settings.lightingRigs.left.x = 0;
-        settings.lightingRigs.middle.x = 0;
-        settings.lightingRigs.right.x = 0;
-        setBlendMode("BURN", settings);
-    },
-    multipleLayers() {
-        settings.sinOffsetEnabled = true;
-        settings.sinOffsetMultiplier = 50;
-        settings.rotationEnabled = true;
-        settings.backgroundSettings.enabled = true;
-        settings.backgroundSettings.color = "#cc908a"
-        settings.backgroundSettings.alpha = 170;
-        settings.clock.time.hours.glowColor = "#38cc7e";
-        settings.clock.time.minutes.glowColor = "#7a6246";
-        settings.clock.time.seconds.glowColor = "#c3841c";
-        settings.clock.fake = false;
-        settings.clock.displayInBackground = true;
-        settings.clock.speedUp = false;
-        settings.lightingRigs.left.scale = 1.115
-        settings.lightingRigs.left.x = 215;
-        settings.lightingRigs.middle.scale = 0.142;
-        settings.lightingRigs.middle.x = -215;
-        settings.lightingRigs.right.scale = 1.939;
-        settings.lightingRigs.right.x = -80;
-        setBlendMode("BLEND", settings);
-    },
-    surpriseMe() {
-        settings.rotationEnabled = Math.random() > 0.5;
-        settings.sinOffsetEnabled = Math.random() > 0.5;
-        settings.sinOffsetMultiplier = Math.random() * 300;
-        settings.clock.fake = false;
-        settings.clock.speedUp = Math.random() > 0.5;
-        settings.clock.timeFactor = Math.random() * 10000;
-        settings.clock.displayInBackground = Math.random() > 0.5;
-        settings.clock.time.hours.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
-        settings.clock.time.minutes.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
-        settings.clock.time.seconds.glowColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
-        settings.lightingRigs.left.scale = Math.random() * 2;
-        settings.lightingRigs.middle.scale = Math.random() * 2;
-        settings.lightingRigs.right.scale = Math.random() * 2;
-        settings.lightingRigs.left.x = (Math.random() - 0.5) * 500;
-        settings.lightingRigs.middle.x = (Math.random() - 0.5) * 500;
-        settings.lightingRigs.right.x = (Math.random() - 0.5) * 500;
-        settings.backgroundSettings.enabled = Math.random() > 0.5;
-        settings.backgroundSettings.alpha = Math.random() * 255;
-        settings.backgroundSettings.color = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    demo: {
+        toggleDemoMode() {
+            settings.demoMode = !settings.demoMode;
+            if (settings.demoMode) {
+                if (settings.randomDemoMode) {
+                    this.toggleRandomDemoMode();
+                }
+                demoModeButtonController?.name("Disable demo mode");
+                demoModeIntervalId = window.setInterval(() => {
+                    setNextPreset();
+                }, settings.demoModeInterval * 1000);
+            } else {
+                demoModeButtonController?.name("Enable demo mode");
+                window.clearInterval(demoModeIntervalId);
+            }
+        },
+        toggleRandomDemoMode() {
+            settings.randomDemoMode = !settings.randomDemoMode;
+            if (settings.randomDemoMode) {
+                if (settings.demoMode) {
+                    this.toggleDemoMode();
+                }
+                randomDemoModeButtonController?.name("Disable random demo mode");
+                demoModeIntervalId = window.setInterval(() => {
+                    setNextRandomPreset();
+                }, settings.randomDemoModeInterval * 1000);
+            } else {
+                randomDemoModeButtonController?.name("Enable random demo mode");
+                window.clearInterval(demoModeIntervalId);
+            }
+        }
     }
 }
 
@@ -319,13 +400,20 @@ const configureGui = () => {
     customizeSketchGui.open(false);
 
     const presetsGui = customizeSketchGui.addFolder('Presets');
-    presetsGui.add(actions, 'haveFun').name('Speed me up');
-    presetsGui.add(actions, 'hypnotize').name('Hypnotize me slowly');
-    presetsGui.add(actions, 'calmWithText').name('I want to read the time');
-    presetsGui.add(actions, 'stageSettingMoody').name("I'm in the mood for flowers");
-    presetsGui.add(actions, 'pauseTheTime').name("Pause the time please.");
-    presetsGui.add(actions, 'multipleLayers').name("Lay all your layers on me");
-    presetsGui.add(actions, 'surpriseMe').name("Surprise me");
+    presetsGui.add(actions.presets, 'haveFun').name('Speed me up');
+    presetsGui.add(actions.presets, 'hypnotize').name('Hypnotize me slowly');
+    presetsGui.add(actions.presets, 'calmWithText').name('I want to read the time');
+    presetsGui.add(actions.presets, 'stageSettingMoody').name("I'm in the mood for flowers");
+    presetsGui.add(actions.presets, 'pauseTheTime').name("Pause the time please.");
+    presetsGui.add(actions.presets, 'multipleLayers').name("Lay all your layers on me");
+    presetsGui.add(actions.presets, 'surpriseMe').name("Surprise me");
+
+    const demoModeGui = presetsGui.addFolder('Demo Mode');
+    demoModeGui.open(false);
+    demoModeButtonController = demoModeGui.add(actions.demo, 'toggleDemoMode').name("Enable demo mode").listen();
+    demoModeGui.add(settings, 'demoModeInterval', 1, 60, 1).name("Demo interval").listen();
+    randomDemoModeButtonController = demoModeGui.add(actions.demo, 'toggleRandomDemoMode').name("Enable random demo mode").listen();
+    demoModeGui.add(settings, 'randomDemoModeInterval', 1, 60, 1).name("Random interval").listen();
 
     const settingsGui = customizeSketchGui.addFolder('Settings');
     settingsGui.open(false);

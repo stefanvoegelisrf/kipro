@@ -17,6 +17,10 @@ export interface ISettings {
         color: string,
         alpha: number
     },
+    demoMode: boolean,
+    demoModeInterval: number,
+    randomDemoMode: boolean,
+    randomDemoModeInterval: number,
 }
 
 export type blendModes = "BLEND" | "ADD" | "DARKEST" | "LIGHTEST" | "DIFFERENCE" | "EXCLUSION" | "MULTIPLY" | "SCREEN" | "REPLACE" | "OVERLAY" | "HARD_LIGHT" | "SOFT_LIGHT" | "DODGE" | "BURN" | "SUBTRACT";
