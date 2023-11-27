@@ -172,6 +172,27 @@ const actions = {
         settings.lightingRigs.right.x = 0;
         setBlendMode("BURN", settings);
     },
+    multipleLayers() {
+        settings.sinOffsetEnabled = true;
+        settings.sinOffsetMultiplier = 50;
+        settings.rotationEnabled = true;
+        settings.backgroundSettings.enabled = true;
+        settings.backgroundSettings.color = "#cc908a"
+        settings.backgroundSettings.alpha = 170;
+        settings.clock.time.hours.glowColor = "#38cc7e";
+        settings.clock.time.minutes.glowColor = "#7a6246";
+        settings.clock.time.seconds.glowColor = "#c3841c";
+        settings.clock.fake = false;
+        settings.clock.displayInBackground = true;
+        settings.clock.speedUp = false;
+        settings.lightingRigs.left.scale = 1.115
+        settings.lightingRigs.left.x = 215;
+        settings.lightingRigs.middle.scale = 0.142;
+        settings.lightingRigs.middle.x = -215;
+        settings.lightingRigs.right.scale = 1.939;
+        settings.lightingRigs.right.x = -80;
+        setBlendMode("BLEND", settings);
+    },
     surpriseMe() {
         settings.rotationEnabled = Math.random() > 0.5;
         settings.sinOffsetEnabled = Math.random() > 0.5;
@@ -302,7 +323,8 @@ const configureGui = () => {
     presetsGui.add(actions, 'hypnotize').name('Hypnotize me slowly');
     presetsGui.add(actions, 'calmWithText').name('I want to read the time');
     presetsGui.add(actions, 'stageSettingMoody').name("I'm in the mood for flowers");
-    presetsGui.add(actions, 'pauseTheTime').name("Stuck in time");
+    presetsGui.add(actions, 'pauseTheTime').name("Pause the time please.");
+    presetsGui.add(actions, 'multipleLayers').name("Lay all your layers on me");
     presetsGui.add(actions, 'surpriseMe').name("Surprise me");
 
     const settingsGui = customizeSketchGui.addFolder('Settings');
