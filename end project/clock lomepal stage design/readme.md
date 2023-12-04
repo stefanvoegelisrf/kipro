@@ -1,6 +1,6 @@
-# Abstract clock lighting rig
+# Mauvais Ordre - Abstract clock
 
-- [Abstract clock lighting rig](#abstract-clock-lighting-rig)
+- [Mauvais Ordre - Abstract clock](#mauvais-ordre---abstract-clock)
   - [Brief description](#brief-description)
   - [Presets](#presets)
   - [Settings](#settings)
