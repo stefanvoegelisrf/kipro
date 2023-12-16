@@ -74,6 +74,7 @@ let demoModeIndex = 0;
 let demoModeIntervalId: number | undefined = undefined;
 let demoModeButtonController: Controller | undefined = undefined;
 let randomDemoModeButtonController: Controller | undefined = undefined;
+let isPortrait = window.innerHeight > window.innerWidth;
 
 const setNextPreset = () => {
     const presets = Object.keys(actions);
@@ -342,7 +343,9 @@ const clockSketch = (sketch: p5) => {
         // draw lighting rig on the left
         sketch.push();
         sketch.scale(settings.lightingRigs.left.scale);
-        sketch.translate(settings.lightingRigs.left.x + sinOffset, settings.lightingRigs.left.y)
+        sketch.translate(
+            isPortrait ? settings.lightingRigs.left.x * 0.5 + Math.abs(sinOffset) : settings.lightingRigs.left.x + sinOffset
+            , isPortrait ? settings.lightingRigs.left.y - sinOffset : settings.lightingRigs.left.y)
         sketch.rotate(settings.lightingRigs.right.rotation + minutesAngle);
         drawLightingRig(sketch, currentDate);
         sketch.pop();
@@ -358,24 +361,51 @@ const clockSketch = (sketch: p5) => {
         // draw lighting rig on the right
         sketch.push();
         sketch.scale(settings.lightingRigs.right.scale);
-        sketch.translate(settings.lightingRigs.right.x - sinOffset, settings.lightingRigs.right.y)
+        // sketch.translate(settings.lightingRigs.right.x - sinOffset, settings.lightingRigs.right.y)
+        sketch.translate(
+            isPortrait ? settings.lightingRigs.right.x * 0.5 - Math.abs(sinOffset) : settings.lightingRigs.right.x - sinOffset
+            , isPortrait ? settings.lightingRigs.right.y - sinOffset : settings.lightingRigs.right.y)
         sketch.rotate(settings.lightingRigs.right.rotation - minutesAngle);
         drawLightingRig(sketch, currentDate);
         sketch.pop();
     }
 
     sketch.windowResized = function () {
+        isPortrait = window.innerHeight > window.innerWidth;
+        console.log(isPortrait);
         sketch.resizeCanvas(sketch.windowWidth, sketch.windowHeight);
     }
 };
 
 const drawBackgroundClock = (sketch: p5, currentDate: Date) => {
     sketch.push();
-    sketch.textSize(200);
     sketch.fill(255);
-    sketch.textFont(rubikMonoOne);
     sketch.textAlign(sketch.CENTER, sketch.CENTER);
-    sketch.text(currentDate.toLocaleTimeString(), 0, 0)
+    sketch.textFont(rubikMonoOne);
+    let textSize = 200;
+    if (isPortrait) {
+        sketch.translate(0, -150);
+        sketch.textSize(textSize);
+        // draw time parts separately
+        sketch.text(String(currentDate.getHours()).padStart(2, '0'), 0, 0)
+        sketch.translate(0, +150);
+        sketch.text(String(currentDate.getMinutes()).padStart(2, '0'), 0, 0)
+        sketch.translate(0, +150);
+        sketch.text(String(currentDate.getSeconds()).padStart(2, '0'), 0, 0)
+    }
+    else {
+        if (sketch.width >= 1920) {
+            textSize = 200;
+        }
+        else if (sketch.width >= 1280) {
+            textSize = 150;
+        }
+        else {
+            textSize = 100;
+        }
+        sketch.textSize(textSize);
+        sketch.text(currentDate.toLocaleTimeString(), 0, 0)
+    }
     sketch.pop();
 }
 
