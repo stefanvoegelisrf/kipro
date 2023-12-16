@@ -21,7 +21,7 @@
 ## End project
 
 - [End project](end-project/)
-- [End project - Clock](clock-lomepal-stage-design/dist/)
+- [End project - Clock](end-project/clock-lomepal-stage-design/dist/)
 
 ## Generative art
 
