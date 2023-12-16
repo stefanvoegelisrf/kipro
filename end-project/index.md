@@ -132,11 +132,11 @@ Applicable APIs: Weather, climate, Twitter, airplanes, ...
 
 ### Lomepal stage design inspired clock
 
-> See: [Sketch](clock%20lomepal%20stage%20design/dist)
+> See: [Sketch](clock-lomepal-stage-design/dist)
 
 #### Inspired by
 
-![Stage layout lomepal concert](clock%20lomepal%20stage%20design/IMG_6142.jpeg)
+![Stage layout lomepal concert](clock-lomepal-stage-design/IMG_6142.jpeg)
 
 I went to a concert of the french artist Lomepal. The stage design was very flexible and allowed different layouts which were changed throughout the concert.
 I did not memorize the whole stage layout, but some parts of the lighting inspired me to create a watch.
