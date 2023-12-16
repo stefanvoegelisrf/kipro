@@ -63,7 +63,7 @@ export class LightTube {
             let alpha = sketch.map(i, 0, steps, this.maxAlpha * glowAlphaFactor, 0); // Adjusted alpha
             let spread = sketch.map(i, 0, steps, 0, this.glowMaxRadius * glowSpreadFactor); // Adjusted spread
             let glowColorRgb = hexToRgb(this.glowColor);
-            sketch.stroke(glowColorRgb.r, glowColorRgb.g, glowColorRgb.b, alpha);
+            sketch.stroke(glowColorRgb.red, glowColorRgb.green, glowColorRgb.blue, alpha);
             sketch.rect(this.x, this.y, (this.width + spread) * scaleFactor, (this.height + spread) * scaleFactor, glowBorder);
         }
 

@@ -313,7 +313,7 @@ const clockSketch = (sketch: p5) => {
         applyBlendMode(sketch, settings.blendMode);
         if (settings.backgroundSettings.enabled) {
             let backgroundRgb = hexToRgb(settings.backgroundSettings.color);
-            sketch.background(backgroundRgb.r, backgroundRgb.g, backgroundRgb.b, settings.backgroundSettings.alpha);
+            sketch.background(backgroundRgb.red, backgroundRgb.green, backgroundRgb.blue, settings.backgroundSettings.alpha);
         }
         sketch.translate(sketch.width / 2, sketch.height / 2);
         let currentDate = getDateBasedOnSettings(sketch);

@@ -3,10 +3,10 @@ import { ISettings, blendModes } from "./settings";
 
 export function hexToRgb(hex: string) {
     //convert hex to rgb
-    let r = parseInt(hex.slice(1, 3), 16);
-    let g = parseInt(hex.slice(3, 5), 16);
-    let b = parseInt(hex.slice(5, 7), 16);
-    return { r, g, b }
+    let red = parseInt(hex.slice(1, 3), 16);
+    let green = parseInt(hex.slice(3, 5), 16);
+    let blue = parseInt(hex.slice(5, 7), 16);
+    return { red: red, green: green, blue: blue }
 }
 export function setBlendMode  (blendMode: blendModes, settings: ISettings)  {
     settings.blendMode = blendMode;
