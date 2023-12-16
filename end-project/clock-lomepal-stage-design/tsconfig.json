@@ -6,6 +6,10 @@
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
-    }
+        "allowSyntheticDefaultImports": true,
+    },
+    "include": [
+        "src/**/*",
+        "assets/**/*",
+    ]
 }

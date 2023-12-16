@@ -3,6 +3,7 @@ import p5 from 'p5';
 import { ISettings, blendModes } from './settings';
 import { LightingRig } from './lightingrig';
 import { applyBlendMode, blendModeOptions, hexToRgb, setBlendMode } from './utils';
+import rubikMonoOneUrl from '../assets/fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf';
 
 let settings: ISettings = {
     lightingRigs: {
@@ -300,7 +301,7 @@ const actions = {
 const clockSketch = (sketch: p5) => {
     sketch.preload = () => {
         // Load the font
-        rubikMonoOne = sketch.loadFont('assets/fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf');
+        rubikMonoOne = sketch.loadFont(rubikMonoOneUrl);
     };
     sketch.setup = function () {
         configureGui();
