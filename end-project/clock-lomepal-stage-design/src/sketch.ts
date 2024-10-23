@@ -77,7 +77,6 @@ let randomDemoModeButtonController: Controller | undefined = undefined;
 let isPortrait = window.innerHeight > window.innerWidth;
 
 const setNextPreset = () => {
-    const presets = Object.keys(actions);
     let nextPreset = actions.presets.calmWithText;
     switch (demoModeIndex) {
         case 0:
@@ -103,7 +102,7 @@ const setNextPreset = () => {
             break;
     }
     demoModeIndex++;
-
+    const presets = Object.keys(actions.presets);
     if (demoModeIndex >= presets.length) {
         demoModeIndex = 0;
     }
@@ -498,6 +497,22 @@ const configureGui = () => {
     lightingRigRightGui.add(settings.lightingRigs.right, 'y', -1000, 1000, 10).listen();
     lightingRigRightGui.add(settings.lightingRigs.right, 'rotation', 0, 360, 10).listen();
     lightingRigRightGui.add(settings.lightingRigs.right, 'scale', 0, 1, 0.01).listen();
+
+    customizeSketchGui.hide();
+    document.addEventListener("keypress", (event) => {
+        switch (event.key) {
+            case "m":
+                customizeSketchGui.show(customizeSketchGui._hidden);
+                break;
+            case "r":
+                setNextRandomPreset();
+                break;
+            case "p":
+                setNextPreset();
+                break;
+
+        }
+    })
 }
 
 new p5(clockSketch);
